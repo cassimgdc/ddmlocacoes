@@ -5,7 +5,7 @@ import Layout from '@/components/layout/Layout';
 import ServiceCard from '@/components/home/ServiceCard';
 import DifferentialItem from '@/components/home/DifferentialItem';
 import EquipmentCard from '@/components/home/EquipmentCard';
-import TestimonialCard from '@/components/home/TestimonialCard';
+
 import FAQSection from '@/components/home/FAQSection';
 import MediaCard from '@/components/home/MediaCard';
 import {
@@ -129,32 +129,6 @@ const Index = () => {
     },
   ];
 
-  const testimonials = [
-    {
-      name: 'Carlos Oliveira',
-      location: 'Sete Lagoas - MG',
-      text: 'Serviço excelente! O operador foi muito profissional e cuidadoso com meu terreno. Recomendo!',
-      rating: 5,
-    },
-    {
-      name: 'Maria Santos',
-      location: 'Prudente de Morais - MG',
-      text: 'Contratei para limpeza do lote e fiquei muito satisfeita. Preço justo e trabalho bem feito.',
-      rating: 5,
-    },
-    {
-      name: 'José Silva',
-      location: 'Capim Branco - MG',
-      text: 'Precisava de uma vala urgente e eles atenderam no mesmo dia. Muito ágeis!',
-      rating: 5,
-    },
-    {
-      name: 'Ana Paula Costa',
-      location: 'Funilândia - MG',
-      text: 'Fiz a terraplanagem do meu sítio com eles. Trabalho impecável e dentro do prazo.',
-      rating: 5,
-    },
-  ];
 
   const faqItems = [
     {
@@ -444,23 +418,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="section-padding bg-muted">
-        <div className="container-ddm">
-          <div className="text-center mb-12">
-            <Badge variant="secondary" className="mb-4">Depoimentos</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              O que nossos clientes dizem
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {testimonials.map((testimonial, index) => (
-              <TestimonialCard key={testimonial.name} {...testimonial} delay={index * 100} />
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* FAQ Section */}
       <section id="faq" className="section-padding bg-background">
