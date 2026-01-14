@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -70,6 +71,11 @@ const Contato = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>Contato e Orçamento | DDM Locações - Retroescavadeira Sete Lagoas</title>
+        <meta name="description" content="Solicite orçamento para aluguel de retroescavadeira em Sete Lagoas. Atendimento rápido pelo WhatsApp (31) 97106-7272. Resposta em minutos." />
+        <link rel="canonical" href="https://dig-and-haul-pro.lovable.app/contato" />
+      </Helmet>
       {/* Header */}
       <section className="pt-28 pb-12 md:pt-36 md:pb-16">
         <div className="container-ddm">
