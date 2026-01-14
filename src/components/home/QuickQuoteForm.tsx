@@ -49,7 +49,7 @@ const QuickQuoteForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.local || !formData.tipoServico) {
       return;
     }
@@ -58,7 +58,12 @@ const QuickQuoteForm = () => {
 
     const message = formatWhatsAppMessage();
     const whatsappUrl = `https://wa.me/5531971067272?text=${message}`;
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+
+    const w = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    if (!w) {
+      window.location.assign(whatsappUrl);
+    }
+
     setIsSubmitting(false);
   };
 
