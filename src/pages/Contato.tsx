@@ -297,12 +297,10 @@ const Contato = () => {
                         id="telefone"
                         type="tel"
                         inputMode="numeric"
-                        pattern="[0-9]*"
                         placeholder="(31) 99999-9999"
                         value={phone}
                         onChange={(e) => handlePhoneChange(e.target.value)}
                         className="h-12 flex-1 text-base bg-muted/50 border-border/50 focus:border-primary"
-                        required
                         autoComplete="tel-national"
                       />
                     </div>
