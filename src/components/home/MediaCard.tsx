@@ -36,7 +36,18 @@ const MediaCard = ({
   const isShorts = src.includes('/shorts/');
 
   const toggleMute = () => {
-    setIsMuted(!isMuted);
+    // Usa postMessage para mudar mute sem recarregar o iframe
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      const newMuted = !isMuted;
+      setIsMuted(newMuted);
+      iframeRef.current.contentWindow.postMessage(
+        JSON.stringify({
+          event: 'command',
+          func: newMuted ? 'mute' : 'unMute',
+        }),
+        '*'
+      );
+    }
   };
 
   // Build YouTube embed URL with autoplay, loop, and mute parameters
@@ -51,6 +62,7 @@ const MediaCard = ({
       modestbranding: '1',
       rel: '0',
       showinfo: '0',
+      enablejsapi: '1', // Necessário para postMessage funcionar
     });
     return `https://www.youtube.com/embed/${youtubeId}?${params.toString()}`;
   };
@@ -67,10 +79,9 @@ const MediaCard = ({
       {/* Content container */}
       <div className="relative bg-card rounded-lg overflow-hidden">
         {type === 'video' && youtubeId ? (
-          <div className={`relative ${isShorts ? 'aspect-[9/16] max-h-[380px] md:max-h-[450px]' : 'aspect-video'}`}>
+          <div className={`relative ${isShorts ? 'aspect-[9/16]' : 'aspect-video'}`}>
             <iframe
               ref={iframeRef}
-              key={isMuted ? 'muted' : 'unmuted'} // Force re-render on mute change
               src={getYouTubeEmbedUrl()}
               title={alt || "Vídeo DDM Locações"}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
