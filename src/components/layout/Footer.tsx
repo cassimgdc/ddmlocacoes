@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom';
-import { Phone, MapPin, MessageCircle, Clock } from 'lucide-react';
+import { MapPin, MessageCircle, Clock, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import logoImg from '@/assets/logo-ddm.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const whatsappLink = 'https://wa.me/5531971067272?text=Olá! Gostaria de solicitar um orçamento.';
 
   return (
     <footer className="bg-secondary border-t border-border pb-24 md:pb-0">
@@ -50,15 +49,13 @@ const Footer = () => {
             <h3 className="font-bold text-foreground text-sm md:text-base mb-3">Contato</h3>
             <ul className="space-y-2.5 text-xs md:text-sm">
               <li>
-                <a
-                  href={whatsappLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/contato"
                   className="flex items-center gap-2 text-muted-foreground hover:text-primary active:text-primary transition-colors touch-feedback"
                 >
                   <MessageCircle className="w-4 h-4 text-ddm-whatsapp flex-shrink-0" />
                   (31) 97106-7272
-                </a>
+                </Link>
               </li>
               <li className="flex items-center gap-2 text-muted-foreground">
                 <MapPin className="w-4 h-4 text-primary flex-shrink-0" />
@@ -75,13 +72,14 @@ const Footer = () => {
           <div className="col-span-2 lg:col-span-1">
             <h3 className="font-bold text-foreground text-sm md:text-base mb-3">Orçamento</h3>
             <p className="text-muted-foreground text-xs md:text-sm mb-3">
-              Solicite um orçamento rápido pelo WhatsApp.
+              Solicite um orçamento rápido.
             </p>
-            <Button variant="whatsapp" size="default" className="w-full md:w-auto touch-feedback" asChild>
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+            <Button variant="cta" size="default" className="w-full md:w-auto touch-feedback" asChild>
+              <Link to="/contato">
                 <MessageCircle className="w-4 h-4" />
-                WhatsApp
-              </a>
+                Pedir Orçamento
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </Button>
           </div>
         </div>

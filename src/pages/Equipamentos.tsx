@@ -159,9 +159,9 @@ const Equipamentos = () => {
             Estamos sempre expandindo nossa frota. Entre em contato e conte-nos o que você precisa.
           </p>
           <Button variant="cta" size="lg" asChild>
-            <a href="https://wa.me/5531971067272?text=Olá! Gostaria de saber sobre outros equipamentos disponíveis." target="_blank" rel="noopener noreferrer">
-              Falar pelo WhatsApp
-            </a>
+            <Link to="/contato">
+              Pedir Orçamento
+            </Link>
           </Button>
         </div>
       </section>

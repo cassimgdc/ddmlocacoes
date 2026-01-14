@@ -1,10 +1,9 @@
 import { Clock, Calendar, CheckCircle2, ArrowRight, MessageCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
 const PricingSection = () => {
-  const whatsappLink = 'https://wa.me/5531971067272?text=Olá! Gostaria de solicitar um orçamento para locação de retroescavadeira.';
-
   return (
     <section id="precos" className="section-padding bg-secondary/50">
       <div className="container-ddm">
@@ -54,9 +53,9 @@ const PricingSection = () => {
             </ul>
 
             <Button variant="outline" size="lg" className="w-full" asChild>
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+              <Link to="/contato">
                 Solicitar orçamento
-              </a>
+              </Link>
             </Button>
           </div>
 
@@ -96,11 +95,11 @@ const PricingSection = () => {
             </ul>
 
             <Button variant="cta" size="lg" className="w-full group" asChild>
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+              <Link to="/contato">
                 <MessageCircle className="w-5 h-5" />
                 Pedir orçamento
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
+              </Link>
             </Button>
           </div>
         </div>
