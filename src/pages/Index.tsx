@@ -34,7 +34,7 @@ const Index = () => {
         <div className="container-ddm">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Texto */}
-            <div>
+            <div className="animate-fade-in">
               <Badge className="bg-primary/10 text-primary border-primary/20 mb-4">
                 <MapPin className="w-3 h-3 mr-1" />
                 Sete Lagoas e Região
@@ -76,7 +76,7 @@ const Index = () => {
             </div>
 
             {/* Imagem */}
-            <div className="relative">
+            <div className="relative animate-fade-in stagger-delay-2">
               <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 to-accent/10 rounded-3xl blur-2xl" />
               <img
                 src={case580m}
@@ -91,7 +91,7 @@ const Index = () => {
       {/* Serviços resumidos */}
       <section className="py-16 bg-muted/30">
         <div className="container-ddm">
-          <div className="text-center mb-10">
+          <div className="text-center mb-10 animate-fade-in-up">
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
               Principais Serviços
             </h2>
@@ -101,11 +101,11 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            {services.map((service) => (
+            {services.map((service, index) => (
               <Link
                 key={service.title}
                 to={service.href}
-                className="group card-premium p-6 text-center hover:border-primary/30 transition-all"
+                className={`group card-premium p-6 text-center hover:border-primary/30 transition-all animate-fade-in-up stagger-delay-${index + 1}`}
               >
                 <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-primary group-hover:scale-110 transition-all">
                   <service.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
@@ -115,7 +115,7 @@ const Index = () => {
             ))}
           </div>
 
-          <div className="text-center">
+          <div className="text-center animate-fade-in stagger-delay-5">
             <Button variant="outline" asChild>
               <Link to="/servicos">
                 Ver todos os serviços
@@ -130,14 +130,14 @@ const Index = () => {
       <section className="py-16">
         <div className="container-ddm">
           <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-10">
+            <div className="text-center mb-10 animate-fade-in-up">
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
                 Formas de Contratação
               </h2>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="card-premium p-6">
+              <div className="card-premium p-6 animate-fade-in-up stagger-delay-1">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
                     <Clock className="w-5 h-5 text-primary" />
@@ -152,7 +152,7 @@ const Index = () => {
                 </p>
               </div>
 
-              <div className="card-premium p-6 border-primary/30">
+              <div className="card-premium p-6 border-primary/30 animate-fade-in-up stagger-delay-2">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
                     <Calendar className="w-5 h-5 text-primary" />
@@ -168,7 +168,7 @@ const Index = () => {
               </div>
             </div>
 
-            <p className="text-center text-muted-foreground text-xs mt-6">
+            <p className="text-center text-muted-foreground text-xs mt-6 animate-fade-in stagger-delay-3">
               Valores podem variar conforme tipo de serviço, terreno e deslocamento.
             </p>
           </div>
@@ -177,7 +177,7 @@ const Index = () => {
 
       {/* CTA Final */}
       <section className="py-16 bg-muted/30">
-        <div className="container-ddm text-center">
+        <div className="container-ddm text-center animate-fade-in-up">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
             Pronto para começar?
           </h2>
