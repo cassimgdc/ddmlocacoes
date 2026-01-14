@@ -41,9 +41,9 @@ const Index = () => {
       </Helmet>
       
       {/* Hero */}
-      <section className="relative overflow-hidden pt-20 pb-[calc(4rem+env(safe-area-inset-bottom,0px)+4.5rem)] md:pt-36 md:pb-24">
+      <section className="relative overflow-visible pt-20 pb-[calc(6rem+env(safe-area-inset-bottom,0px)+4.5rem)] md:pt-36 md:pb-24">
         {/* Fundo com a retroescavadeira (mobile) */}
-        <div className="md:hidden pointer-events-none absolute inset-0">
+        <div className="md:hidden pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
           <img
             src={case580m}
@@ -85,16 +85,18 @@ const Index = () => {
               </div>
 
               {/* Botões */}
-              <div className="flex flex-col gap-3 md:flex-row md:gap-4">
-                <Button variant="cta" size="lg" className="w-full md:w-auto" asChild>
-                  <Link to="/contato">
-                    <MessageCircle className="w-5 h-5" />
-                    Pedir Orçamento
-                    <ArrowRight className="w-4 h-4" />
+              <div className="relative z-10 overflow-visible flex flex-col gap-3 md:flex-row md:gap-4">
+                <Button variant="cta" size="lg" className="w-full md:w-auto max-w-full" asChild>
+                  <Link to="/contato" className="max-w-full min-w-0">
+                    <MessageCircle className="w-5 h-5 flex-shrink-0" />
+                    <span className="min-w-0 truncate">Pedir Orçamento</span>
+                    <ArrowRight className="w-4 h-4 flex-shrink-0" />
                   </Link>
                 </Button>
-                <Button variant="outline" size="lg" className="w-full md:w-auto" asChild>
-                  <Link to="/servicos">Ver Serviços</Link>
+                <Button variant="outline" size="lg" className="w-full md:w-auto max-w-full" asChild>
+                  <Link to="/servicos" className="max-w-full min-w-0">
+                    <span className="min-w-0 truncate">Ver Serviços</span>
+                  </Link>
                 </Button>
               </div>
             </div>
