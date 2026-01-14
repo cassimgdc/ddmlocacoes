@@ -59,7 +59,7 @@ const Servicos = () => {
       {/* Header */}
       <section className="pt-28 pb-12 md:pt-36 md:pb-16">
         <div className="container-ddm">
-          <div className="max-w-2xl">
+          <div className="max-w-2xl animate-fade-in">
             <h1 className="text-3xl md:text-4xl font-black text-foreground mb-4">
               Nossos Serviços
             </h1>
@@ -76,7 +76,10 @@ const Servicos = () => {
         <div className="container-ddm">
           <div className="space-y-6">
             {services.map((service, index) => (
-              <div key={service.title} className="card-premium p-6 md:p-8">
+              <div 
+                key={service.title} 
+                className={`card-premium p-6 md:p-8 animate-fade-in-up stagger-delay-${Math.min(index + 1, 6)}`}
+              >
                 <div className="flex flex-col md:flex-row md:items-start gap-6">
                   <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
                     <service.icon className="w-7 h-7 text-primary" />
@@ -110,7 +113,7 @@ const Servicos = () => {
 
       {/* CTA */}
       <section className="py-16 bg-muted/30">
-        <div className="container-ddm text-center">
+        <div className="container-ddm text-center animate-fade-in-up">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
             Precisa de algum desses serviços?
           </h2>

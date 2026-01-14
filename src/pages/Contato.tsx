@@ -73,7 +73,7 @@ const Contato = () => {
       {/* Header */}
       <section className="pt-28 pb-12 md:pt-36 md:pb-16">
         <div className="container-ddm">
-          <div className="max-w-2xl">
+          <div className="max-w-2xl animate-fade-in">
             <h1 className="text-3xl md:text-4xl font-black text-foreground mb-4">
               Contato
             </h1>
@@ -90,7 +90,7 @@ const Contato = () => {
         <div className="container-ddm">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Formulário */}
-            <div>
+            <div className="animate-fade-in-up">
               <h2 className="text-xl font-bold text-foreground mb-6">
                 Orçamento Rápido
               </h2>
@@ -171,7 +171,7 @@ const Contato = () => {
             </div>
 
             {/* Informações */}
-            <div>
+            <div className="animate-fade-in-up stagger-delay-2">
               <h2 className="text-xl font-bold text-foreground mb-6">
                 Informações
               </h2>

@@ -39,7 +39,7 @@ const Equipamento = () => {
         <div className="container-ddm">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Imagem */}
-            <div className="order-2 lg:order-1">
+            <div className="order-2 lg:order-1 animate-fade-in stagger-delay-2">
               <div className="relative">
                 <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 to-accent/10 rounded-3xl blur-2xl" />
                 <img
@@ -51,7 +51,7 @@ const Equipamento = () => {
             </div>
 
             {/* Info */}
-            <div className="order-1 lg:order-2">
+            <div className="order-1 lg:order-2 animate-fade-in">
               <Badge className="bg-ddm-success/10 text-ddm-success border-ddm-success/20 mb-4">
                 <CheckCircle2 className="w-3 h-3 mr-1" />
                 Disponível
@@ -82,13 +82,16 @@ const Equipamento = () => {
       <section className="py-16 bg-muted/30">
         <div className="container-ddm">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center animate-fade-in-up">
               O que ela faz
             </h2>
 
             <div className="grid sm:grid-cols-2 gap-4">
-              {capabilities.map((item) => (
-                <div key={item} className="flex items-center gap-3 p-4 card-premium">
+              {capabilities.map((item, index) => (
+                <div 
+                  key={item} 
+                  className={`flex items-center gap-3 p-4 card-premium animate-fade-in-up stagger-delay-${Math.min(index + 1, 6)}`}
+                >
                   <CheckCircle2 className="w-5 h-5 text-ddm-success flex-shrink-0" />
                   <span className="text-foreground">{item}</span>
                 </div>
@@ -101,7 +104,7 @@ const Equipamento = () => {
       {/* Vídeo em Ação */}
       <section className="py-16">
         <div className="container-ddm">
-          <div className="max-w-2xl mx-auto text-center">
+          <div className="max-w-2xl mx-auto text-center animate-fade-in-up">
             <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
               <Play className="w-4 h-4" />
               <span className="text-sm font-medium">Veja em ação</span>
@@ -114,7 +117,7 @@ const Equipamento = () => {
               Confira a Case 580M em uma obra real na região.
             </p>
 
-            <div className="max-w-sm mx-auto">
+            <div className="max-w-sm mx-auto animate-fade-in stagger-delay-2">
               <MediaCard
                 type="video"
                 src="https://www.youtube.com/shorts/cTclcnHgReA"
@@ -128,13 +131,16 @@ const Equipamento = () => {
       <section className="py-16">
         <div className="container-ddm">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center animate-fade-in-up">
               Especificações
             </h2>
 
             <div className="grid sm:grid-cols-2 gap-4">
-              {features.map((item) => (
-                <div key={item.label} className="p-4 card-premium text-center">
+              {features.map((item, index) => (
+                <div 
+                  key={item.label} 
+                  className={`p-4 card-premium text-center animate-fade-in-up stagger-delay-${index + 1}`}
+                >
                   <p className="text-muted-foreground text-sm mb-1">{item.label}</p>
                   <p className="text-xl font-bold text-foreground">{item.value}</p>
                 </div>
@@ -148,12 +154,12 @@ const Equipamento = () => {
       <section className="py-16 bg-muted/30">
         <div className="container-ddm">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center animate-fade-in-up">
               Contratação
             </h2>
 
             <div className="grid md:grid-cols-2 gap-6">
-              <div className="card-premium p-6">
+              <div className="card-premium p-6 animate-fade-in-up stagger-delay-1">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
                     <Clock className="w-5 h-5 text-primary" />
@@ -179,7 +185,7 @@ const Equipamento = () => {
                 </ul>
               </div>
 
-              <div className="card-premium p-6 border-primary/30">
+              <div className="card-premium p-6 border-primary/30 animate-fade-in-up stagger-delay-2">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
                     <Calendar className="w-5 h-5 text-primary" />
@@ -206,7 +212,7 @@ const Equipamento = () => {
               </div>
             </div>
 
-            <p className="text-center text-muted-foreground text-xs mt-6">
+            <p className="text-center text-muted-foreground text-xs mt-6 animate-fade-in stagger-delay-3">
               Valores podem variar conforme tipo de serviço, terreno e deslocamento.
             </p>
           </div>
@@ -215,7 +221,7 @@ const Equipamento = () => {
 
       {/* CTA */}
       <section className="py-16">
-        <div className="container-ddm text-center">
+        <div className="container-ddm text-center animate-fade-in-up">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
             Interessado?
           </h2>
