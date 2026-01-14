@@ -113,19 +113,15 @@ const Equipamento = () => {
       <section className="py-8 md:py-16">
         <div className="container-ddm">
           <div className="max-w-2xl mx-auto text-center animate-fade-in-up">
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1.5 md:px-4 md:py-2 rounded-full mb-4 md:mb-6">
-              <Play className="w-3.5 h-3.5 md:w-4 md:h-4" />
-              <span className="text-xs md:text-sm font-medium">Veja em ação</span>
-            </div>
-            
-            <h2 className="text-lg md:text-3xl font-bold text-foreground mb-2 md:mb-4">
-              A máquina trabalhando
+            <h2 className="text-xl md:text-3xl font-bold text-foreground mb-2 md:mb-4 flex items-center justify-center gap-2">
+              <Play className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+              Veja em ação
             </h2>
             <p className="text-muted-foreground text-xs md:text-base mb-5 md:mb-8">
               Confira a Case 580M em uma obra real na região.
             </p>
 
-            <div className="max-w-[280px] sm:max-w-sm mx-auto animate-fade-in stagger-delay-2">
+            <div className="max-w-[240px] sm:max-w-[280px] mx-auto animate-fade-in stagger-delay-2">
               <MediaCard
                 type="video"
                 src="https://www.youtube.com/shorts/cTclcnHgReA"
