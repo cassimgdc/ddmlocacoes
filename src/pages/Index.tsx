@@ -41,7 +41,7 @@ const Index = () => {
       </Helmet>
       
       {/* Hero */}
-      <section className="relative pt-20 pb-8 md:pt-36 md:pb-24">
+      <section className="relative overflow-x-hidden pt-20 sm:pt-24 min-h-[100svh] supports-[height:100dvh]:min-h-[100dvh] pb-[calc(140px+env(safe-area-inset-bottom,0px))] md:pt-36 md:pb-24">
         {/* Fundo com a retroescavadeira (mobile) */}
         <div className="md:hidden pointer-events-none absolute inset-0 overflow-x-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
@@ -72,14 +72,14 @@ const Index = () => {
               </p>
 
               {/* Destaques */}
-              <div className="flex gap-3 mb-6 md:mb-8 overflow-x-auto pb-2 scrollbar-hide md:flex-wrap">
+              <div className="flex flex-wrap gap-2 mb-6 md:mb-8">
                 {['Operador experiente', 'Máquina revisada', 'Orçamento rápido'].map((item) => (
                   <div
                     key={item}
-                    className="flex items-center gap-2 text-sm text-foreground whitespace-nowrap bg-muted/50 px-4 py-2 rounded-full border border-border/50"
+                    className="flex items-center gap-2 text-sm text-foreground bg-muted/50 px-4 py-2 rounded-full border border-border/50"
                   >
                     <CheckCircle2 className="w-4 h-4 text-ddm-success flex-shrink-0" />
-                    {item}
+                    <span className="min-w-0">{item}</span>
                   </div>
                 ))}
               </div>
