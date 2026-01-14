@@ -23,8 +23,6 @@ import {
 import case580m from '@/assets/case-580m.png';
 
 const EquipamentoDetalhe = () => {
-  const whatsappLink = 'https://wa.me/5531971067272?text=Olá! Gostaria de solicitar um orçamento para a Retroescavadeira Case 580M.';
-
   const services = [
     { icon: Shovel, name: 'Abertura e limpeza de valas' },
     { icon: Mountain, name: 'Terraplanagem e nivelamento' },
@@ -102,14 +100,14 @@ const EquipamentoDetalhe = () => {
               {/* CTAs */}
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button variant="hero" size="xl" asChild>
-                  <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+                  <Link to="/contato">
                     <MessageCircle className="w-5 h-5" />
                     Pedir Orçamento
-                  </a>
+                  </Link>
                 </Button>
                 <Button variant="heroOutline" size="xl" asChild>
-                  <Link to="/contato">
-                    Formulário Detalhado
+                  <Link to="/servicos">
+                    Ver Serviços
                   </Link>
                 </Button>
               </div>
@@ -269,10 +267,10 @@ const EquipamentoDetalhe = () => {
                 </li>
               </ul>
               <Button variant="cta" size="lg" className="w-full" asChild>
-                <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+                <Link to="/contato">
                   <MessageCircle className="w-5 h-5" />
                   Contratar por Hora
-                </a>
+                </Link>
               </Button>
             </div>
 
@@ -308,10 +306,10 @@ const EquipamentoDetalhe = () => {
                 </li>
               </ul>
               <Button variant="cta" size="lg" className="w-full" asChild>
-                <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+                <Link to="/contato">
                   <MessageCircle className="w-5 h-5" />
                   Consultar Diária
-                </a>
+                </Link>
               </Button>
             </div>
           </div>

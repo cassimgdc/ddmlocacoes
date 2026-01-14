@@ -22,6 +22,7 @@ import {
   User,
   Phone,
   CheckCircle,
+  Wrench,
 } from 'lucide-react';
 import { usePhoneFormat } from '@/hooks/usePhoneFormat';
 import { useSpamProtection } from '@/hooks/useSpamProtection';
@@ -40,9 +41,11 @@ const Contato = () => {
   const [isSuccess, setIsSuccess] = useState(false);
 
   const { 
+    ddi,
     phone, 
     rawPhone, 
-    handlePhoneChange, 
+    handlePhoneChange,
+    handleDdiChange,
     isValidPhone, 
     getPhoneForSubmit,
     getFormattedPhone,
@@ -84,7 +87,7 @@ const Contato = () => {
     return encodeURIComponent(lines.join('\n'));
   };
 
-  const sendToWebhook = async () => {
+  const sendToWebhook = async (): Promise<boolean> => {
     try {
       const payload = {
         nome: formData.nome.trim(),
@@ -98,17 +101,24 @@ const Contato = () => {
         userAgent: navigator.userAgent || null,
       };
 
-      await fetch(WEBHOOK_URL, {
+      // Usando fetch com timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+      const response = await fetch(WEBHOOK_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
-        mode: 'no-cors', // Evita erros de CORS
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
+      return response.ok;
     } catch (error) {
-      // Silently fail - webhook is secondary
       console.error('Webhook error:', error);
+      return false;
     }
   };
 
@@ -116,11 +126,10 @@ const Contato = () => {
     const message = formatWhatsAppMessage();
     const whatsappUrl = `https://wa.me/5531971067272?text=${message}`;
 
-    // iOS/Safari pode bloquear popups; fallback para navegação direta
-    const w = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
-    if (!w) {
-      window.location.assign(whatsappUrl);
-    }
+    // Delay pequeno para garantir que o webhook já foi disparado
+    setTimeout(() => {
+      window.location.href = whatsappUrl;
+    }, 100);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -162,29 +171,28 @@ const Contato = () => {
     // Registra o envio para rate limiting
     registerSubmit(rawPhone);
 
-    // Envia para webhook e abre WhatsApp em paralelo
-    await Promise.all([
-      sendToWebhook(),
-      new Promise<void>((resolve) => {
-        openWhatsApp();
-        resolve();
-      }),
-    ]);
+    // Envia para webhook primeiro
+    sendToWebhook();
 
+    // Marca como sucesso e abre WhatsApp
     setIsSuccess(true);
-    setIsSubmitting(false);
-
+    
     toast({
       title: '✅ Formulário enviado!',
-      description: 'Em instantes você será atendido pelo WhatsApp.',
+      description: 'Abrindo WhatsApp para finalizar...',
     });
 
-    // Reset após sucesso (após 3s para o usuário ver a mensagem)
+    // Abre WhatsApp após breve delay
+    openWhatsApp();
+
+    setIsSubmitting(false);
+
+    // Reset após sucesso (após 5s para o usuário ver a mensagem)
     setTimeout(() => {
       setFormData({ nome: '', local: '', tipoServico: '', detalhes: '' });
       resetPhone();
       setIsSuccess(false);
-    }, 3000);
+    }, 5000);
   };
 
   const isFormValid = formData.nome && formData.local && formData.tipoServico && isValidPhone();
@@ -192,238 +200,219 @@ const Contato = () => {
   return (
     <Layout>
       <Helmet>
-        <title>Contato e Orçamento | DDM Locações - Retroescavadeira Sete Lagoas</title>
-        <meta name="description" content="Solicite orçamento para aluguel de retroescavadeira em Sete Lagoas. Atendimento rápido pelo WhatsApp (31) 97106-7272. Resposta em minutos." />
+        <title>Solicitar Orçamento | DDM Locações - Retroescavadeira Sete Lagoas</title>
+        <meta name="description" content="Solicite orçamento para aluguel de retroescavadeira em Sete Lagoas. Atendimento rápido pelo WhatsApp. Resposta em minutos." />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <link rel="canonical" href="https://ddmlocacoes.lovable.app/contato" />
       </Helmet>
       
       {/* Header */}
-      <section className="pt-20 pb-4 md:pt-36 md:pb-16">
+      <section className="pt-20 pb-4 md:pt-32 md:pb-8">
         <div className="container-ddm">
-          <div className="max-w-2xl animate-fade-in">
+          <div className="max-w-xl mx-auto text-center animate-fade-in">
             <h1 className="text-2xl md:text-4xl font-black text-foreground mb-2 md:mb-4">
               Solicitar Orçamento
             </h1>
-            <p className="text-muted-foreground text-sm md:text-lg">
-              Preencha o formulário abaixo e você será direcionado ao WhatsApp para finalizar o atendimento.
+            <p className="text-muted-foreground text-sm md:text-base">
+              Preencha seus dados e você será direcionado ao WhatsApp.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Conteúdo */}
+      {/* Formulário Principal */}
       <section className="pb-8 md:pb-16">
         <div className="container-ddm">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-            {/* Formulário */}
-            <div className="animate-fade-in-up order-2 lg:order-1">
-              <h2 className="text-base md:text-xl font-bold text-foreground mb-4 md:mb-6">
-                Dados para Orçamento
-              </h2>
+          <div className="max-w-lg mx-auto">
+            {/* Card do Formulário */}
+            <div className="relative animate-fade-in-up">
+              {/* Glow effect */}
+              <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 via-accent/10 to-primary/20 rounded-3xl blur-xl opacity-50" />
+              
+              <div className="relative card-premium p-6 md:p-8">
+                {/* Mensagem de sucesso */}
+                {isSuccess && (
+                  <div className="mb-6 p-4 bg-ddm-success/10 border border-ddm-success/30 rounded-xl flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-ddm-success flex-shrink-0" />
+                    <p className="text-sm text-foreground">
+                      Formulário enviado! Redirecionando ao WhatsApp...
+                    </p>
+                  </div>
+                )}
 
-              {/* Mensagem de sucesso */}
-              {isSuccess && (
-                <div className="mb-6 p-4 bg-ddm-success/10 border border-ddm-success/30 rounded-xl flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-ddm-success flex-shrink-0" />
-                  <p className="text-sm text-foreground">
-                    Formulário enviado com sucesso! Em instantes você será atendido pelo WhatsApp.
-                  </p>
-                </div>
-              )}
-
-              <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
-                {/* Honeypot - campo invisível para bots */}
-                <input
-                  type="text"
-                  name="website"
-                  value={honeypot}
-                  onChange={(e) => setHoneypot(e.target.value)}
-                  tabIndex={-1}
-                  autoComplete="off"
-                  aria-hidden="true"
-                  style={{ 
-                    position: 'absolute', 
-                    left: '-9999px', 
-                    opacity: 0,
-                    height: 0,
-                    width: 0,
-                  }}
-                />
-
-                {/* Nome */}
-                <div className="space-y-1.5 md:space-y-2">
-                  <Label htmlFor="nome" className="text-sm flex items-center gap-2">
-                    <User className="w-4 h-4 text-primary" />
-                    Seu nome *
-                  </Label>
-                  <Input
-                    id="nome"
-                    placeholder="Digite seu nome completo"
-                    value={formData.nome}
-                    onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-                    className="h-11 md:h-12 text-base"
-                    required
-                    maxLength={100}
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Honeypot - campo invisível para bots */}
+                  <input
+                    type="text"
+                    name="website"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    style={{ 
+                      position: 'absolute', 
+                      left: '-9999px', 
+                      opacity: 0,
+                      height: 0,
+                      width: 0,
+                    }}
                   />
-                </div>
 
-                {/* Telefone */}
-                <div className="space-y-1.5 md:space-y-2">
-                  <Label htmlFor="telefone" className="text-sm flex items-center gap-2">
-                    <Phone className="w-4 h-4 text-primary" />
-                    Telefone (WhatsApp) *
-                  </Label>
-                  <Input
-                    id="telefone"
-                    type="tel"
-                    inputMode="numeric"
-                    placeholder="+55 (31) 99999-9999"
-                    value={phone}
-                    onChange={(e) => handlePhoneChange(e.target.value)}
-                    className="h-11 md:h-12 text-base"
-                    required
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    Digite apenas números. O DDD é obrigatório.
-                  </p>
-                </div>
+                  {/* Nome */}
+                  <div className="space-y-1.5">
+                    <Label htmlFor="nome" className="text-sm flex items-center gap-2">
+                      <User className="w-4 h-4 text-primary" />
+                      Seu nome *
+                    </Label>
+                    <Input
+                      id="nome"
+                      placeholder="Digite seu nome completo"
+                      value={formData.nome}
+                      onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
+                      className="h-12 text-base bg-muted/50 border-border/50 focus:border-primary"
+                      required
+                      maxLength={100}
+                      autoComplete="name"
+                    />
+                  </div>
 
-                {/* Local */}
-                <div className="space-y-1.5 md:space-y-2">
-                  <Label htmlFor="local" className="text-sm flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-primary" />
-                    Local do serviço *
-                  </Label>
-                  <Input
-                    id="local"
-                    placeholder="Ex: Sete Lagoas, Bairro Centro"
-                    value={formData.local}
-                    onChange={(e) => setFormData({ ...formData, local: e.target.value })}
-                    className="h-11 md:h-12 text-base"
-                    required
-                    maxLength={200}
-                  />
-                </div>
+                  {/* Telefone com DDI separado */}
+                  <div className="space-y-1.5">
+                    <Label htmlFor="telefone" className="text-sm flex items-center gap-2">
+                      <Phone className="w-4 h-4 text-primary" />
+                      Telefone (WhatsApp) *
+                    </Label>
+                    <div className="flex gap-2">
+                      {/* DDI */}
+                      <Input
+                        id="ddi"
+                        value={ddi}
+                        onChange={(e) => handleDdiChange(e.target.value)}
+                        className="h-12 w-20 text-base text-center bg-muted/50 border-border/50 focus:border-primary font-medium"
+                        maxLength={4}
+                      />
+                      {/* Telefone */}
+                      <Input
+                        id="telefone"
+                        type="tel"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        placeholder="(31) 99999-9999"
+                        value={phone}
+                        onChange={(e) => handlePhoneChange(e.target.value)}
+                        className="h-12 flex-1 text-base bg-muted/50 border-border/50 focus:border-primary"
+                        required
+                        autoComplete="tel-national"
+                      />
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      Digite DDD + número. Ex: (31) 97106-7272
+                    </p>
+                  </div>
 
-                {/* Tipo de Serviço */}
-                <div className="space-y-1.5 md:space-y-2">
-                  <Label className="text-sm">Tipo de serviço *</Label>
-                  <Select
-                    value={formData.tipoServico}
-                    onValueChange={(value) => setFormData({ ...formData, tipoServico: value })}
-                    required
+                  {/* Local */}
+                  <div className="space-y-1.5">
+                    <Label htmlFor="local" className="text-sm flex items-center gap-2">
+                      <MapPin className="w-4 h-4 text-primary" />
+                      Local do serviço *
+                    </Label>
+                    <Input
+                      id="local"
+                      placeholder="Ex: Sete Lagoas, Bairro Centro"
+                      value={formData.local}
+                      onChange={(e) => setFormData({ ...formData, local: e.target.value })}
+                      className="h-12 text-base bg-muted/50 border-border/50 focus:border-primary"
+                      required
+                      maxLength={200}
+                      autoComplete="address-level2"
+                    />
+                  </div>
+
+                  {/* Tipo de Serviço */}
+                  <div className="space-y-1.5">
+                    <Label className="text-sm flex items-center gap-2">
+                      <Wrench className="w-4 h-4 text-primary" />
+                      Tipo de serviço *
+                    </Label>
+                    <Select
+                      value={formData.tipoServico}
+                      onValueChange={(value) => setFormData({ ...formData, tipoServico: value })}
+                      required
+                    >
+                      <SelectTrigger className="h-12 text-base bg-muted/50 border-border/50 focus:border-primary">
+                        <SelectValue placeholder="Selecione o serviço" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-card border-border">
+                        {serviceTypes.map((type) => (
+                          <SelectItem key={type} value={type} className="text-base">
+                            {type}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Detalhes */}
+                  <div className="space-y-1.5">
+                    <Label htmlFor="detalhes" className="text-sm">Detalhes (opcional)</Label>
+                    <Textarea
+                      id="detalhes"
+                      placeholder="Descreva brevemente o serviço..."
+                      rows={3}
+                      value={formData.detalhes}
+                      onChange={(e) => setFormData({ ...formData, detalhes: e.target.value })}
+                      className="text-base resize-none bg-muted/50 border-border/50 focus:border-primary"
+                      maxLength={500}
+                    />
+                  </div>
+
+                  {/* Dica */}
+                  <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-xl text-xs">
+                    <Camera className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                    <p className="text-muted-foreground">
+                      Você poderá anexar fotos ou vídeos do terreno na conversa do WhatsApp.
+                    </p>
+                  </div>
+
+                  {/* Botão de envio */}
+                  <Button 
+                    type="submit" 
+                    variant="cta" 
+                    size="lg" 
+                    className="w-full h-14 text-base group touch-feedback"
+                    disabled={isSubmitting || !isFormValid}
                   >
-                    <SelectTrigger className="h-11 md:h-12 text-base">
-                      <SelectValue placeholder="Selecione" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-card border-border">
-                      {serviceTypes.map((type) => (
-                        <SelectItem key={type} value={type} className="text-base">
-                          {type}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Detalhes */}
-                <div className="space-y-1.5 md:space-y-2">
-                  <Label htmlFor="detalhes" className="text-sm">Detalhes (opcional)</Label>
-                  <Textarea
-                    id="detalhes"
-                    placeholder="Descreva o serviço que precisa..."
-                    rows={3}
-                    value={formData.detalhes}
-                    onChange={(e) => setFormData({ ...formData, detalhes: e.target.value })}
-                    className="text-base resize-none"
-                    maxLength={500}
-                  />
-                </div>
-
-                {/* Dica */}
-                <div className="flex items-start gap-3 p-3 md:p-4 bg-muted/50 rounded-xl text-xs md:text-sm">
-                  <Camera className="w-4 h-4 md:w-5 md:h-5 text-primary flex-shrink-0 mt-0.5" />
-                  <p className="text-muted-foreground">
-                    Após enviar, você pode anexar fotos ou vídeos do terreno 
-                    na conversa do WhatsApp.
-                  </p>
-                </div>
-
-                {/* Botão de envio */}
-                <Button 
-                  type="submit" 
-                  variant="cta" 
-                  size="lg" 
-                  className="w-full group touch-feedback"
-                  disabled={isSubmitting || !isFormValid}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 className="w-4 h-4 md:w-5 md:h-5 animate-spin" />
-                      Enviando...
-                    </>
-                  ) : (
-                    <>
-                      <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
-                      Enviar Formulário
-                      <ArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:translate-x-1 transition-transform" />
-                    </>
-                  )}
-                </Button>
-              </form>
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        Enviando...
+                      </>
+                    ) : (
+                      <>
+                        <MessageCircle className="w-5 h-5" />
+                        Enviar e Abrir WhatsApp
+                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </>
+                    )}
+                  </Button>
+                </form>
+              </div>
             </div>
 
-            {/* Informações */}
-            <div className="animate-fade-in-up stagger-delay-2 order-1 lg:order-2">
-              <h2 className="text-base md:text-xl font-bold text-foreground mb-4 md:mb-6">
-                Informações
-              </h2>
-
-              <div className="space-y-2 md:space-y-4">
-                <div className="flex items-center gap-3 md:gap-4 p-3 md:p-4 card-premium">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-ddm-whatsapp rounded-xl flex items-center justify-center flex-shrink-0">
-                    <MessageCircle className="w-5 h-5 md:w-6 md:h-6 text-white" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="font-bold text-foreground text-sm md:text-base">
-                      Atendimento via WhatsApp
-                    </p>
-                    <p className="text-muted-foreground text-xs md:text-sm">Resposta rápida</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3 md:gap-4 p-3 md:p-4 card-premium">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-muted rounded-xl flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-5 h-5 md:w-6 md:h-6 text-primary" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="font-bold text-foreground text-sm md:text-base">Sete Lagoas - MG</p>
-                    <p className="text-muted-foreground text-xs md:text-sm">E cidades da região</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3 md:gap-4 p-3 md:p-4 card-premium">
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-muted rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-5 h-5 md:w-6 md:h-6 text-primary" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="font-bold text-foreground text-sm md:text-base">Seg - Sáb: 7h às 18h</p>
-                    <p className="text-muted-foreground text-xs md:text-sm">Horário de atendimento</p>
-                  </div>
-                </div>
+            {/* Informações secundárias */}
+            <div className="mt-8 grid grid-cols-3 gap-3 text-center animate-fade-in stagger-delay-2">
+              <div className="p-3 rounded-xl bg-muted/20">
+                <MessageCircle className="w-5 h-5 text-ddm-whatsapp mx-auto mb-1" />
+                <p className="text-xs text-muted-foreground">Resposta rápida</p>
               </div>
-
-              {/* Dica */}
-              <div className="mt-5 md:mt-8 p-4 md:p-6 bg-muted/30 rounded-xl">
-                <h3 className="font-bold text-foreground text-sm md:text-base mb-2 md:mb-3">
-                  Para agilizar seu orçamento:
-                </h3>
-                <ul className="space-y-1.5 md:space-y-2 text-xs md:text-sm text-muted-foreground">
-                  <li>• Informe o local exato do serviço</li>
-                  <li>• Descreva o tipo de trabalho necessário</li>
-                  <li>• Envie fotos ou vídeos do terreno</li>
-                </ul>
+              <div className="p-3 rounded-xl bg-muted/20">
+                <MapPin className="w-5 h-5 text-primary mx-auto mb-1" />
+                <p className="text-xs text-muted-foreground">Sete Lagoas</p>
+              </div>
+              <div className="p-3 rounded-xl bg-muted/20">
+                <Clock className="w-5 h-5 text-primary mx-auto mb-1" />
+                <p className="text-xs text-muted-foreground">Seg-Sáb</p>
               </div>
             </div>
           </div>
@@ -431,7 +420,7 @@ const Contato = () => {
       </section>
 
       {/* Spacer for fixed bottom CTA */}
-      <div className="h-16 md:hidden" />
+      <div className="h-20 md:hidden" />
     </Layout>
   );
 };

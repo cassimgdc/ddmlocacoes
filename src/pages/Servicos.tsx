@@ -14,8 +14,6 @@ import {
 } from 'lucide-react';
 
 const Servicos = () => {
-  const whatsappLink = 'https://wa.me/5531971067272?text=Olá! Gostaria de solicitar um orçamento.';
-
   const services = [
     {
       icon: Shovel,
@@ -131,11 +129,11 @@ const Servicos = () => {
             Solicite um orçamento sem compromisso. Respondemos rapidamente.
           </p>
           <Button variant="cta" size="lg" className="group touch-feedback w-full sm:w-auto" asChild>
-            <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+            <Link to="/contato">
               <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
               Pedir Orçamento
               <ArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
+            </Link>
           </Button>
         </div>
       </section>

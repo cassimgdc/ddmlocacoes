@@ -26,8 +26,6 @@ const EquipmentCard = ({
   featured = false,
   delay = 0 
 }: EquipmentCardProps) => {
-  const whatsappLink = `https://wa.me/5531971067272?text=Olá! Gostaria de solicitar um orçamento para a ${name}.`;
-
   if (featured) {
     return (
       <div 
@@ -85,11 +83,11 @@ const EquipmentCard = ({
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-3">
               <Button variant="cta" size="lg" className="flex-1 group" asChild>
-                <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+                <Link to="/contato">
                   <MessageCircle className="w-5 h-5" />
                   Pedir Orçamento
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
+                </Link>
               </Button>
               <Button variant="outline" size="lg" asChild>
                 <Link to={`/equipamentos/${id}`}>
@@ -165,9 +163,9 @@ const EquipmentCard = ({
         {!comingSoon && (
           <div className="flex gap-2">
             <Button variant="cta" size="sm" className="flex-1" asChild>
-              <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+              <Link to="/contato">
                 Orçamento
-              </a>
+              </Link>
             </Button>
             <Button variant="outline" size="sm" asChild>
               <Link to={`/equipamentos/${id}`}>
