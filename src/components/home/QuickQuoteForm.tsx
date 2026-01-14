@@ -32,17 +32,17 @@ const QuickQuoteForm = () => {
 
   const formatWhatsAppMessage = () => {
     const lines = [
-      `Olá! Quero orçamento.`,
-      ``,
-      `📍 *Local:* ${formData.local}`,
-      `🔧 *Serviço:* ${formData.tipoServico}`,
+      'Ola! Quero orcamento.',
+      '',
+      `Local: ${formData.local}`,
+      `Servico: ${formData.tipoServico}`,
     ];
 
     if (formData.detalhes) {
-      lines.push(`📝 *Detalhes:* ${formData.detalhes}`);
+      lines.push(`Detalhes: ${formData.detalhes}`);
     }
 
-    lines.push(``, `Posso enviar fotos/vídeo em seguida.`);
+    lines.push('', 'Posso enviar fotos/video em seguida.');
 
     return encodeURIComponent(lines.join('\n'));
   };
@@ -56,11 +56,10 @@ const QuickQuoteForm = () => {
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      const whatsappUrl = `https://wa.me/5531971067272?text=${formatWhatsAppMessage()}`;
-      window.open(whatsappUrl, '_blank');
-      setIsSubmitting(false);
-    }, 300);
+    const message = formatWhatsAppMessage();
+    const whatsappUrl = `https://wa.me/5531971067272?text=${message}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    setIsSubmitting(false);
   };
 
   const handleInputChange = (field: string, value: string) => {

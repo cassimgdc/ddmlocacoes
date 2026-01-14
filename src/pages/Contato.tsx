@@ -14,7 +14,6 @@ import {
 import Layout from '@/components/layout/Layout';
 import {
   MessageCircle,
-  Phone,
   MapPin,
   Clock,
   ArrowRight,
@@ -44,14 +43,14 @@ const Contato = () => {
 
   const formatWhatsAppMessage = () => {
     const lines = [
-      `Olá! Quero orçamento.`,
-      ``,
-      `📍 Local: ${formData.local}`,
-      `🔧 Serviço: ${formData.tipoServico}`,
+      'Ola! Quero orcamento.',
+      '',
+      `Local: ${formData.local}`,
+      `Servico: ${formData.tipoServico}`,
     ];
 
     if (formData.detalhes) {
-      lines.push(`📝 Detalhes: ${formData.detalhes}`);
+      lines.push(`Detalhes: ${formData.detalhes}`);
     }
 
     return encodeURIComponent(lines.join('\n'));
@@ -63,10 +62,13 @@ const Contato = () => {
     if (!formData.local || !formData.tipoServico) return;
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      window.open(`https://wa.me/5531971067272?text=${formatWhatsAppMessage()}`, '_blank');
-      setIsSubmitting(false);
-    }, 300);
+    
+    const message = formatWhatsAppMessage();
+    const whatsappUrl = `https://wa.me/5531971067272?text=${message}`;
+    
+    // Abre em nova aba
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    setIsSubmitting(false);
   };
 
   return (
@@ -204,20 +206,6 @@ const Contato = () => {
                   </div>
                 </a>
 
-                <a
-                  href="tel:+5531971067272"
-                  className="flex items-center gap-3 md:gap-4 p-3 md:p-4 card-premium hover:border-primary/30 transition-all group touch-feedback"
-                >
-                  <div className="w-10 h-10 md:w-12 md:h-12 bg-muted rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-5 h-5 md:w-6 md:h-6 text-foreground" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="font-bold text-foreground group-hover:text-primary transition-colors text-sm md:text-base">
-                      (31) 97106-7272
-                    </p>
-                    <p className="text-muted-foreground text-xs md:text-sm">Telefone</p>
-                  </div>
-                </a>
 
                 <div className="flex items-center gap-3 md:gap-4 p-3 md:p-4 card-premium">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-muted rounded-xl flex items-center justify-center flex-shrink-0">

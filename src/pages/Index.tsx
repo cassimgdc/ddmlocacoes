@@ -70,16 +70,16 @@ const Index = () => {
                 ))}
               </div>
 
-              {/* Botões - Full width no mobile */}
-              <div className="flex flex-col gap-3 md:flex-row md:gap-4">
-                <Button variant="cta" size="lg" className="w-full md:w-auto" asChild>
-                  <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+              {/* Botões - Full width no mobile com padding extra */}
+              <div className="flex flex-col gap-3 md:flex-row md:gap-4 px-1">
+                <Button variant="cta" size="lg" className="w-full md:w-auto min-h-[52px]" asChild>
+                  <Link to="/contato">
                     <MessageCircle className="w-5 h-5" />
                     Pedir Orçamento
                     <ArrowRight className="w-4 h-4" />
-                  </a>
+                  </Link>
                 </Button>
-                <Button variant="outline" size="lg" className="w-full md:w-auto" asChild>
+                <Button variant="outline" size="lg" className="w-full md:w-auto min-h-[52px]" asChild>
                   <Link to="/servicos">
                     Ver Serviços
                   </Link>
@@ -87,13 +87,13 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Imagem */}
-            <div className="relative animate-fade-in stagger-delay-2 order-1 lg:order-2">
+            {/* Imagem - Centralizada */}
+            <div className="relative animate-fade-in stagger-delay-2 order-1 lg:order-2 flex items-center justify-center">
               <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 to-accent/10 rounded-3xl blur-2xl" />
               <img
                 src={case580m}
                 alt="Retroescavadeira Case 580M"
-                className="relative w-full max-w-[220px] sm:max-w-sm md:max-w-md mx-auto"
+                className="relative w-full max-w-[200px] sm:max-w-xs md:max-w-sm lg:max-w-md object-contain"
               />
             </div>
           </div>
