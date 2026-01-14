@@ -11,12 +11,7 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-[100dvh] min-h-screen flex flex-col">
       <Header />
-      <main 
-        className="flex-1"
-        style={{
-          paddingBottom: 'calc(96px + env(safe-area-inset-bottom, 0px))',
-        }}
-      >
+      <main className="flex-1">
         {children}
       </main>
       <Footer />
