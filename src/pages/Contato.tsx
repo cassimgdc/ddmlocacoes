@@ -125,11 +125,9 @@ const Contato = () => {
   const openWhatsApp = () => {
     const message = formatWhatsAppMessage();
     const whatsappUrl = `https://wa.me/5531971067272?text=${message}`;
-
-    // Delay pequeno para garantir que o webhook já foi disparado
-    setTimeout(() => {
-      window.location.href = whatsappUrl;
-    }, 100);
+    
+    // Abre em nova aba
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -171,19 +169,17 @@ const Contato = () => {
     // Registra o envio para rate limiting
     registerSubmit(rawPhone);
 
-    // Envia para webhook primeiro
+    // Dispara webhook e abre WhatsApp em paralelo
     sendToWebhook();
+    openWhatsApp();
 
-    // Marca como sucesso e abre WhatsApp
+    // Marca como sucesso
     setIsSuccess(true);
     
     toast({
       title: '✅ Formulário enviado!',
-      description: 'Abrindo WhatsApp para finalizar...',
+      description: 'WhatsApp aberto em nova aba.',
     });
-
-    // Abre WhatsApp após breve delay
-    openWhatsApp();
 
     setIsSubmitting(false);
 
