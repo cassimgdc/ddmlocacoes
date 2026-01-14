@@ -37,7 +37,7 @@ const Index = () => {
       </Helmet>
       
       {/* Hero */}
-      <section className="relative overflow-x-hidden pt-20 sm:pt-24 min-h-[100svh] supports-[height:100dvh]:min-h-[100dvh] pb-[calc(140px+env(safe-area-inset-bottom,0px))] md:pt-36 md:pb-24">
+      <section className="relative overflow-x-hidden pt-20 sm:pt-24 pb-8 md:pt-32 md:pb-16">
         {/* Fundo com a retroescavadeira (mobile) */}
         <div className="md:hidden pointer-events-none absolute inset-0 overflow-x-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
@@ -81,15 +81,15 @@ const Index = () => {
               </div>
 
               {/* Botões do Hero */}
-              <div className="flex flex-col gap-4 mt-2 md:flex-row md:gap-4 md:mt-0">
-                <Button variant="cta" size="lg" className="w-full md:w-auto h-14" asChild>
+              <div className="flex flex-col gap-3 mt-2 md:flex-row md:gap-4 md:mt-0">
+                <Button variant="cta" size="default" className="w-full md:w-auto md:h-12" asChild>
                   <Link to="/contato">
-                    <MessageCircle className="w-5 h-5 flex-shrink-0" />
+                    <MessageCircle className="w-4 h-4 flex-shrink-0" />
                     Pedir Orçamento
-                    <ArrowRight className="w-4 h-4 flex-shrink-0" />
+                    <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
                   </Link>
                 </Button>
-                <Button variant="outline" size="lg" className="w-full md:w-auto h-14" asChild>
+                <Button variant="outline" size="default" className="w-full md:w-auto md:h-12" asChild>
                   <Link to="/servicos">
                     Ver Serviços
                   </Link>
