@@ -21,9 +21,9 @@ const FAQSection = ({ items }: FAQSectionProps) => {
         <AccordionItem 
           key={index} 
           value={`item-${index}`}
-          className="bg-card rounded-xl border border-border/50 px-6 data-[state=open]:shadow-md transition-all"
+          className="card-premium px-6 data-[state=open]:shadow-glow data-[state=open]:border-primary/30 transition-all duration-300"
         >
-          <AccordionTrigger className="text-left font-semibold text-foreground hover:text-primary py-5">
+          <AccordionTrigger className="text-left font-semibold text-foreground hover:text-primary py-5 [&[data-state=open]]:text-primary">
             {item.question}
           </AccordionTrigger>
           <AccordionContent className="text-muted-foreground pb-5 leading-relaxed">
