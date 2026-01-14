@@ -1,13 +1,10 @@
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
 interface MobileBottomBarProps {
   isHidden?: boolean;
 }
-
-const whatsappLink = `https://wa.me/5531971067272?text=${encodeURIComponent(
-  'Olá! Gostaria de solicitar um orçamento.',
-)}`;
 
 const MobileBottomBar = ({ isHidden = false }: MobileBottomBarProps) => {
   return (
@@ -21,11 +18,12 @@ const MobileBottomBar = ({ isHidden = false }: MobileBottomBarProps) => {
         right: '16px',
       }}
     >
-      <Button variant="whatsapp" size="lg" className="w-full h-14 shadow-xl" asChild>
-        <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+      <Button variant="cta" size="lg" className="w-full h-14 shadow-xl" asChild>
+        <Link to="/contato">
           <MessageCircle className="w-5 h-5" />
-          Orçamento pelo WhatsApp
-        </a>
+          Pedir Orçamento
+          <ArrowRight className="w-4 h-4" />
+        </Link>
       </Button>
     </div>
   );

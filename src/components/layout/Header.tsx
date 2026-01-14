@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, MessageCircle } from 'lucide-react';
+import { Menu, MessageCircle, ArrowRight } from 'lucide-react';
 import logoImg from '@/assets/logo-ddm.png';
 import MobileMenu from './MobileMenu';
 import MobileBottomBar from './MobileBottomBar';
@@ -25,10 +25,6 @@ const Header = () => {
     { href: '/equipamento', label: 'Equipamento' },
     { href: '/contato', label: 'Contato' },
   ];
-
-  const whatsappLink = `https://wa.me/5531971067272?text=${encodeURIComponent(
-    'Olá! Gostaria de solicitar um orçamento.',
-  )}`;
 
   const isActiveLink = (href: string) => {
     if (href === '/') return location.pathname === '/';
@@ -79,13 +75,14 @@ const Header = () => {
               ))}
             </nav>
 
-            {/* Desktop CTA */}
+            {/* Desktop CTA - agora vai para /contato */}
             <div className="hidden md:flex items-center">
               <Button variant="cta" size="default" asChild>
-                <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+                <Link to="/contato">
                   <MessageCircle className="w-4 h-4" />
                   Pedir Orçamento
-                </a>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
               </Button>
             </div>
 
