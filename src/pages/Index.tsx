@@ -39,46 +39,47 @@ const Index = () => {
       </Helmet>
       
       {/* Hero */}
-      <section className="pt-20 pb-8 md:pt-36 md:pb-24">
+      <section className="pt-20 pb-10 md:pt-36 md:pb-24">
         <div className="container-ddm">
-          <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Texto */}
             <div className="animate-fade-in order-2 lg:order-1">
-              <Badge className="bg-primary/10 text-primary border-primary/20 mb-3">
+              <Badge className="bg-primary/10 text-primary border-primary/20 mb-4">
                 <MapPin className="w-3 h-3 mr-1" />
                 Sete Lagoas e Região
               </Badge>
 
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-3 leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-4 leading-tight">
                 Aluguel de Retroescavadeira
               </h1>
 
-              <p className="text-muted-foreground text-sm md:text-lg mb-4 md:mb-6 max-w-lg">
+              <p className="text-muted-foreground text-base md:text-lg mb-6 max-w-lg">
                 Serviço com operador experiente, máquina revisada e atendimento rápido.
               </p>
 
               {/* Destaques - Horizontal scroll on mobile */}
-              <div className="flex gap-3 mb-5 md:mb-8 overflow-x-auto pb-2 -mx-5 px-5 md:mx-0 md:px-0 md:flex-wrap scrollbar-hide">
+              <div className="flex gap-3 mb-6 md:mb-8 overflow-x-auto pb-2 scrollbar-hide md:flex-wrap">
                 {['Operador experiente', 'Máquina revisada', 'Orçamento rápido'].map((item) => (
                   <div 
                     key={item} 
-                    className="flex items-center gap-1.5 text-xs md:text-sm text-foreground whitespace-nowrap bg-muted/50 px-3 py-1.5 rounded-full border border-border/50"
+                    className="flex items-center gap-2 text-sm text-foreground whitespace-nowrap bg-muted/50 px-4 py-2 rounded-full border border-border/50"
                   >
-                    <CheckCircle2 className="w-3.5 h-3.5 text-ddm-success flex-shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-ddm-success flex-shrink-0" />
                     {item}
                   </div>
                 ))}
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Button variant="cta" size="lg" className="group text-sm md:text-base touch-feedback" asChild>
+              {/* Botões - Full width no mobile */}
+              <div className="flex flex-col gap-3 md:flex-row md:gap-4">
+                <Button variant="cta" size="lg" className="w-full md:w-auto" asChild>
                   <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                    <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
+                    <MessageCircle className="w-5 h-5" />
                     Pedir Orçamento
-                    <ArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-4 h-4" />
                   </a>
                 </Button>
-                <Button variant="outline" size="lg" className="text-sm md:text-base touch-feedback" asChild>
+                <Button variant="outline" size="lg" className="w-full md:w-auto" asChild>
                   <Link to="/servicos">
                     Ver Serviços
                   </Link>
@@ -92,22 +93,22 @@ const Index = () => {
               <img
                 src={case580m}
                 alt="Retroescavadeira Case 580M"
-                className="relative w-full max-w-[200px] sm:max-w-sm md:max-w-md mx-auto"
+                className="relative w-full max-w-[220px] sm:max-w-sm md:max-w-md mx-auto"
               />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Serviços - Horizontal scroll on mobile */}
-      <section className="py-8 md:py-16 bg-muted/30">
+      {/* Serviços */}
+      <section className="py-10 md:py-16 bg-muted/30">
         <div className="container-ddm">
-          <div className="flex items-center justify-between mb-5 md:mb-10">
+          <div className="flex items-center justify-between mb-6 md:mb-10">
             <div className="animate-fade-in-up">
-              <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-foreground mb-1">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1">
                 Principais Serviços
               </h2>
-              <p className="text-muted-foreground text-xs md:text-base">
+              <p className="text-muted-foreground text-sm md:text-base">
                 Atendemos diversos tipos de obra
               </p>
             </div>
@@ -120,50 +121,33 @@ const Index = () => {
             </Link>
           </div>
 
-          {/* Mobile: Horizontal scroll / Desktop: Grid */}
-          <div className="md:hidden -mx-5 px-5">
-            <div className="flex gap-3 overflow-x-auto pb-4 scroll-snap-x scrollbar-hide">
-              {services.map((service, index) => (
-                <Link
-                  key={service.title}
-                  to={service.href}
-                  className="group card-premium p-4 min-w-[140px] flex-shrink-0 text-center hover:border-primary/30 transition-all scroll-snap-item touch-feedback"
-                >
-                  <div className="w-11 h-11 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-2 group-hover:bg-primary group-hover:scale-110 transition-all">
-                    <service.icon className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors" />
-                  </div>
-                  <h3 className="font-semibold text-foreground text-xs">{service.title}</h3>
-                </Link>
-              ))}
-              {/* Ver mais card */}
-              <Link
-                to="/servicos"
-                className="group card-premium p-4 min-w-[120px] flex-shrink-0 text-center hover:border-primary/30 transition-all scroll-snap-item touch-feedback flex flex-col items-center justify-center"
-              >
-                <div className="w-11 h-11 bg-muted rounded-xl flex items-center justify-center mx-auto mb-2 group-hover:bg-primary transition-all">
-                  <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary-foreground transition-colors" />
-                </div>
-                <span className="font-semibold text-muted-foreground text-xs group-hover:text-foreground">Ver mais</span>
-              </Link>
-            </div>
-          </div>
-
-          {/* Desktop Grid */}
-          <div className="hidden md:grid md:grid-cols-4 gap-4 mb-8">
+          {/* Grid de serviços - 2 colunas no mobile */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
             {services.map((service, index) => (
               <Link
                 key={service.title}
                 to={service.href}
-                className={`group card-premium p-6 text-center hover:border-primary/30 transition-all animate-fade-in-up stagger-delay-${index + 1}`}
+                className={`group card-premium p-4 md:p-6 text-center hover:border-primary/30 transition-all animate-fade-in-up stagger-delay-${index + 1}`}
               >
                 <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-primary group-hover:scale-110 transition-all">
-                  <service.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
+                  <service.icon className="w-5 h-5 md:w-6 md:h-6 text-primary group-hover:text-primary-foreground transition-colors" />
                 </div>
-                <h3 className="font-semibold text-foreground text-sm">{service.title}</h3>
+                <h3 className="font-semibold text-foreground text-sm md:text-base">{service.title}</h3>
               </Link>
             ))}
           </div>
 
+          {/* CTA Ver todos (Mobile) */}
+          <div className="text-center md:hidden">
+            <Button variant="outline" size="lg" className="w-full" asChild>
+              <Link to="/servicos">
+                Ver todos os serviços
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </Button>
+          </div>
+
+          {/* CTA Ver todos (Desktop) */}
           <div className="text-center animate-fade-in stagger-delay-5 hidden md:block">
             <Button variant="outline" size="default" asChild>
               <Link to="/servicos">
@@ -175,29 +159,29 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Preços - Cards empilhados no mobile */}
-      <section className="py-8 md:py-16">
+      {/* Preços */}
+      <section className="py-10 md:py-16">
         <div className="container-ddm">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-6 md:mb-10 animate-fade-in-up">
-              <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-foreground mb-1 md:mb-2">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
                 Formas de Contratação
               </h2>
             </div>
 
-            <div className="grid gap-3 md:grid-cols-2 md:gap-6">
+            <div className="grid gap-4 md:grid-cols-2 md:gap-6">
               {/* Por Hora */}
-              <div className="card-premium p-4 md:p-6 animate-fade-in-up stagger-delay-1 touch-feedback">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 md:w-10 md:h-10 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-5 h-5 md:w-5 md:h-5 text-primary" />
+              <div className="card-premium p-5 md:p-6 animate-fade-in-up stagger-delay-1">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 md:w-12 md:h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Clock className="w-6 h-6 md:w-5 md:h-5 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-baseline justify-between gap-2">
-                      <h3 className="font-bold text-foreground text-sm md:text-base">Por Hora</h3>
-                      <p className="text-xl md:text-2xl font-black text-primary whitespace-nowrap">R$ 200</p>
+                    <div className="flex items-baseline justify-between gap-2 flex-wrap">
+                      <h3 className="font-bold text-foreground text-base">Por Hora</h3>
+                      <p className="text-2xl font-black text-primary whitespace-nowrap">R$ 200</p>
                     </div>
-                    <p className="text-muted-foreground text-xs md:text-sm mt-0.5">
+                    <p className="text-muted-foreground text-sm mt-1">
                       Mínimo 2h. Operador e combustível inclusos.
                     </p>
                   </div>
@@ -205,17 +189,17 @@ const Index = () => {
               </div>
 
               {/* Por Diária */}
-              <div className="card-premium p-4 md:p-6 border-primary/30 animate-fade-in-up stagger-delay-2 touch-feedback">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 md:w-10 md:h-10 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Calendar className="w-5 h-5 md:w-5 md:h-5 text-primary" />
+              <div className="card-premium p-5 md:p-6 border-primary/30 animate-fade-in-up stagger-delay-2">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 md:w-12 md:h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Calendar className="w-6 h-6 md:w-5 md:h-5 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-baseline justify-between gap-2">
-                      <h3 className="font-bold text-foreground text-sm md:text-base">Por Diária</h3>
+                    <div className="flex items-baseline justify-between gap-2 flex-wrap">
+                      <h3 className="font-bold text-foreground text-base">Por Diária</h3>
                       <p className="text-xl md:text-2xl font-black text-primary whitespace-nowrap">Sob Consulta</p>
                     </div>
-                    <p className="text-muted-foreground text-xs md:text-sm mt-0.5">
+                    <p className="text-muted-foreground text-sm mt-1">
                       8h de trabalho. Melhor custo-benefício.
                     </p>
                   </div>
@@ -223,7 +207,7 @@ const Index = () => {
               </div>
             </div>
 
-            <p className="text-center text-muted-foreground text-xs mt-4 md:mt-6 animate-fade-in stagger-delay-3">
+            <p className="text-center text-muted-foreground text-sm mt-5 md:mt-6 animate-fade-in stagger-delay-3">
               Valores podem variar conforme serviço, terreno e deslocamento.
             </p>
           </div>
@@ -231,19 +215,19 @@ const Index = () => {
       </section>
 
       {/* CTA Final */}
-      <section className="py-10 md:py-16 bg-muted/30 mb-20 md:mb-0">
+      <section className="py-12 md:py-16 bg-muted/30 mb-24 md:mb-0">
         <div className="container-ddm text-center animate-fade-in-up">
-          <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3">
             Pronto para começar?
           </h2>
-          <p className="text-muted-foreground text-xs md:text-base mb-5 max-w-md mx-auto">
+          <p className="text-muted-foreground text-sm md:text-base mb-6 max-w-md mx-auto">
             Solicite um orçamento rápido pelo WhatsApp e receba resposta em minutos.
           </p>
-          <Button variant="whatsapp" size="lg" className="group touch-feedback" asChild>
+          <Button variant="whatsapp" size="lg" className="w-full md:w-auto" asChild>
             <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-              <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
+              <MessageCircle className="w-5 h-5" />
               Chamar no WhatsApp
-              <ArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4" />
             </a>
           </Button>
         </div>
