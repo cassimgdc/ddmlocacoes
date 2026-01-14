@@ -53,9 +53,13 @@ export const usePhoneFormat = () => {
     }
   }, []);
 
-  // Valida se o telefone está completo (10 ou 11 dígitos: DDD + telefone)
+  // Valida se o telefone está completo
+  // 10 dígitos = DDD (2) + telefone fixo (8) - ex: 31 8324-8584
+  // 11 dígitos = DDD (2) + celular com 9 (9) - ex: 31 9 8324-8584
   const isValidPhone = useCallback((): boolean => {
-    return rawPhone.length >= 10 && rawPhone.length <= 11;
+    const length = rawPhone.length;
+    // Aceita 10 dígitos (fixo/celular antigo) ou 11 dígitos (celular com 9)
+    return length === 10 || length === 11;
   }, [rawPhone]);
 
   // Retorna o telefone apenas com números para envio (com DDI)
