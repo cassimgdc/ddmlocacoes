@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Menu, MessageCircle, ArrowRight } from 'lucide-react';
 import logoImg from '@/assets/logo-ddm.png';
 import MobileMenu from './MobileMenu';
-import MobileBottomBar from './MobileBottomBar';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -100,9 +99,6 @@ const Header = () => {
 
       {/* Mobile Menu Drawer */}
       <MobileMenu isOpen={isMobileMenuOpen} onClose={closeMobileMenu} />
-
-      {/* Mobile Bottom CTA Bar */}
-      <MobileBottomBar isHidden={isMobileMenuOpen} />
     </>
   );
 };
