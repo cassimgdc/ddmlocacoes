@@ -69,62 +69,69 @@ const MediaCard = ({
 
   return (
     <div 
-      className="group relative overflow-hidden opacity-0 animate-fade-in-up"
+      className="group relative opacity-0 animate-fade-in-up"
       style={{ animationDelay: `${delay}ms` }}
     >
-      {/* Decorative frame */}
-      <div className="absolute -inset-1 bg-gradient-to-br from-primary/40 via-accent/20 to-primary/40 rounded-2xl blur-sm" />
-      <div className="absolute -inset-0.5 bg-gradient-to-br from-primary/60 to-accent/40 rounded-xl" />
-      
-      {/* Content container */}
-      <div className="relative bg-card rounded-lg overflow-hidden">
-        {type === 'video' && youtubeId ? (
-          <div className={`relative ${isShorts ? 'aspect-[9/16]' : 'aspect-video'}`}>
-            <iframe
-              ref={iframeRef}
-              src={getYouTubeEmbedUrl()}
-              title={alt || "Vídeo DDM Locações"}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="w-full h-full"
-            />
-            
-            {/* Mute/Unmute button */}
-            <button
-              onClick={toggleMute}
-              className="absolute bottom-3 right-3 md:bottom-4 md:right-4 z-10 bg-background/90 backdrop-blur-sm hover:bg-background text-foreground p-2.5 md:p-3 rounded-full shadow-lg transition-all duration-200 hover:scale-110 border border-border/50 touch-feedback"
-              aria-label={isMuted ? 'Ativar som' : 'Desativar som'}
-            >
-              {isMuted ? (
-                <VolumeX className="w-4 h-4 md:w-5 md:h-5" />
-              ) : (
-                <Volume2 className="w-4 h-4 md:w-5 md:h-5" />
-              )}
-            </button>
+      <div className="flex items-center gap-3">
+        {/* Video container */}
+        <div className="relative flex-1 overflow-hidden">
+          {/* Decorative frame */}
+          <div className="absolute -inset-1 bg-gradient-to-br from-primary/40 via-accent/20 to-primary/40 rounded-2xl blur-sm" />
+          <div className="absolute -inset-0.5 bg-gradient-to-br from-primary/60 to-accent/40 rounded-xl" />
+          
+          {/* Content container */}
+          <div className="relative bg-card rounded-lg overflow-hidden">
+            {type === 'video' && youtubeId ? (
+              <div className={`relative ${isShorts ? 'aspect-[9/16]' : 'aspect-video'}`}>
+                <iframe
+                  ref={iframeRef}
+                  src={getYouTubeEmbedUrl()}
+                  title={alt || "Vídeo DDM Locações"}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full"
+                />
 
-            {/* Subtle overlay gradient */}
-            <div className="absolute inset-x-0 bottom-0 h-16 md:h-20 bg-gradient-to-t from-card/60 to-transparent pointer-events-none" />
+                {/* Subtle overlay gradient */}
+                <div className="absolute inset-x-0 bottom-0 h-16 md:h-20 bg-gradient-to-t from-card/60 to-transparent pointer-events-none" />
+              </div>
+            ) : type === 'image' ? (
+              <div className="relative aspect-video overflow-hidden">
+                <img
+                  src={src}
+                  alt={alt}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-card/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </div>
+            ) : (
+              <div className="aspect-video bg-muted flex items-center justify-center">
+                <span className="text-muted-foreground">Mídia não disponível</span>
+              </div>
+            )}
+            
+            {title && (
+              <div className="p-4">
+                <h4 className="font-semibold text-foreground text-sm">{title}</h4>
+              </div>
+            )}
           </div>
-        ) : type === 'image' ? (
-          <div className="relative aspect-video overflow-hidden">
-            <img
-              src={src}
-              alt={alt}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-card/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </div>
-        ) : (
-          <div className="aspect-video bg-muted flex items-center justify-center">
-            <span className="text-muted-foreground">Mídia não disponível</span>
-          </div>
-        )}
-        
-        {title && (
-          <div className="p-4">
-            <h4 className="font-semibold text-foreground text-sm">{title}</h4>
-          </div>
+        </div>
+
+        {/* Mute/Unmute button - outside video */}
+        {type === 'video' && youtubeId && (
+          <button
+            onClick={toggleMute}
+            className="flex-shrink-0 bg-card hover:bg-muted text-foreground p-3 rounded-full shadow-lg transition-all duration-200 hover:scale-110 border border-border/50 touch-feedback"
+            aria-label={isMuted ? 'Ativar som' : 'Desativar som'}
+          >
+            {isMuted ? (
+              <VolumeX className="w-5 h-5" />
+            ) : (
+              <Volume2 className="w-5 h-5" />
+            )}
+          </button>
         )}
       </div>
     </div>
