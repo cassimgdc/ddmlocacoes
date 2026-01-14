@@ -30,6 +30,7 @@ const Footer = () => {
                 { label: 'Início', href: '/' },
                 { label: 'Serviços', href: '/servicos' },
                 { label: 'Equipamento', href: '/equipamento' },
+                { label: 'Dúvidas', href: '/duvidas' },
                 { label: 'Contato', href: '/contato' },
               ].map((link) => (
                 <li key={link.href}>
