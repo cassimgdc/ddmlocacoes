@@ -27,6 +27,10 @@ const MediaCard = ({
   const [isMuted, setIsMuted] = useState(muted);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
+  // Mantém o parâmetro `mute` do iframe estável para evitar reload/restart.
+  // (Autoplay em mobile normalmente exige iniciar mutado.)
+  const initialMutedRef = useRef<boolean>(autoplay ? true : muted);
+
   const getYouTubeId = (url: string) => {
     const match = url.match(/(?:youtube\.com\/(?:shorts\/|watch\?v=)|youtu\.be\/)([^&\n?#]+)/);
     return match ? match[1] : null;
@@ -36,11 +40,13 @@ const MediaCard = ({
   const isShorts = src.includes('/shorts/');
 
   const toggleMute = () => {
+    const newMuted = !isMuted;
+    setIsMuted(newMuted);
+
     // Usa postMessage para mudar mute sem recarregar o iframe
-    if (iframeRef.current && iframeRef.current.contentWindow) {
-      const newMuted = !isMuted;
-      setIsMuted(newMuted);
-      iframeRef.current.contentWindow.postMessage(
+    const win = iframeRef.current?.contentWindow;
+    if (win) {
+      win.postMessage(
         JSON.stringify({
           event: 'command',
           func: newMuted ? 'mute' : 'unMute',
@@ -50,13 +56,13 @@ const MediaCard = ({
     }
   };
 
-  // Build YouTube embed URL with autoplay, loop, and mute parameters
+  // Build YouTube embed URL with autoplay and loop. O mute inicial é fixo para não reiniciar o player.
   const getYouTubeEmbedUrl = () => {
     if (!youtubeId) return '';
     const params = new URLSearchParams({
       autoplay: autoplay ? '1' : '0',
       loop: loop ? '1' : '0',
-      mute: isMuted ? '1' : '0',
+      mute: initialMutedRef.current ? '1' : '0',
       playlist: youtubeId, // Required for loop to work
       controls: '0',
       modestbranding: '1',
