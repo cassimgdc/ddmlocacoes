@@ -67,7 +67,7 @@ const MediaCard = ({
       {/* Content container */}
       <div className="relative bg-card rounded-lg overflow-hidden">
         {type === 'video' && youtubeId ? (
-          <div className={`relative ${isShorts ? 'aspect-[9/16] max-h-[450px]' : 'aspect-video'}`}>
+          <div className={`relative ${isShorts ? 'aspect-[9/16] max-h-[380px] md:max-h-[450px]' : 'aspect-video'}`}>
             <iframe
               ref={iframeRef}
               key={isMuted ? 'muted' : 'unmuted'} // Force re-render on mute change
@@ -81,18 +81,18 @@ const MediaCard = ({
             {/* Mute/Unmute button */}
             <button
               onClick={toggleMute}
-              className="absolute bottom-4 right-4 z-10 bg-background/90 backdrop-blur-sm hover:bg-background text-foreground p-3 rounded-full shadow-lg transition-all duration-200 hover:scale-110 border border-border/50"
+              className="absolute bottom-3 right-3 md:bottom-4 md:right-4 z-10 bg-background/90 backdrop-blur-sm hover:bg-background text-foreground p-2.5 md:p-3 rounded-full shadow-lg transition-all duration-200 hover:scale-110 border border-border/50 touch-feedback"
               aria-label={isMuted ? 'Ativar som' : 'Desativar som'}
             >
               {isMuted ? (
-                <VolumeX className="w-5 h-5" />
+                <VolumeX className="w-4 h-4 md:w-5 md:h-5" />
               ) : (
-                <Volume2 className="w-5 h-5" />
+                <Volume2 className="w-4 h-4 md:w-5 md:h-5" />
               )}
             </button>
 
             {/* Subtle overlay gradient */}
-            <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-card/60 to-transparent pointer-events-none" />
+            <div className="absolute inset-x-0 bottom-0 h-16 md:h-20 bg-gradient-to-t from-card/60 to-transparent pointer-events-none" />
           </div>
         ) : type === 'image' ? (
           <div className="relative aspect-video overflow-hidden">
