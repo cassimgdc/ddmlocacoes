@@ -5,12 +5,15 @@ import Layout from '@/components/layout/Layout';
 import ServiceCard from '@/components/home/ServiceCard';
 import DifferentialItem from '@/components/home/DifferentialItem';
 import EquipmentCard from '@/components/home/EquipmentCard';
-
 import FAQSection from '@/components/home/FAQSection';
 import MediaCard from '@/components/home/MediaCard';
+import QuickQuoteForm from '@/components/home/QuickQuoteForm';
+import QuoteTipCard from '@/components/home/QuoteTipCard';
+import PricingSection from '@/components/home/PricingSection';
 import {
   MessageCircle,
   ArrowRight,
+  ArrowDown,
   Shovel,
   Mountain,
   Trees,
@@ -24,46 +27,45 @@ import {
   CheckCircle2,
   MapPin,
   Phone,
-  DollarSign,
-  Calendar,
+  Camera,
 } from 'lucide-react';
 
 import heroBg from '@/assets/hero-bg.jpg';
 import case580m from '@/assets/case-580m.png';
 
 const Index = () => {
-  const whatsappLink = 'https://wa.me/5531971067272?text=Olá! Gostaria de solicitar um orçamento para locação de máquinas.';
+  const whatsappLink = 'https://wa.me/5531971067272?text=Olá! Gostaria de solicitar um orçamento para locação de retroescavadeira.';
 
   const services = [
     {
       icon: Shovel,
       title: 'Abertura e Limpeza de Valas',
-      description: 'Valas para tubulação, drenagem, esgoto e instalações hidráulicas com precisão.',
+      description: 'Tubulação, drenagem, esgoto e instalações hidráulicas com precisão e rapidez.',
     },
     {
       icon: Mountain,
       title: 'Terraplanagem e Nivelamento',
-      description: 'Preparação do terreno para construção, nivelamento e correção de declives.',
+      description: 'Preparação de terreno para construção civil, correção de declives e platôs.',
     },
     {
       icon: Trees,
       title: 'Limpeza de Lotes e Terrenos',
-      description: 'Remoção de entulho, vegetação e preparação de áreas para obras.',
+      description: 'Remoção de entulho, vegetação densa e preparação completa do lote.',
     },
     {
       icon: Construction,
-      title: 'Escavação para Fossa/Cisterna',
-      description: 'Escavação precisa para fossas sépticas, cisternas e fundações.',
+      title: 'Escavação Especializada',
+      description: 'Fossas sépticas, cisternas e fundações com medidas precisas.',
     },
     {
       icon: Tractor,
       title: 'Serviços Rurais',
-      description: 'Barraginhas, açudes, curvas de nível e preparação de áreas rurais.',
+      description: 'Barraginhas, açudes, curvas de nível e infraestrutura para sítios.',
     },
     {
       icon: Truck,
       title: 'Carregamento e Movimentação',
-      description: 'Carga e descarga de materiais, movimentação de terra e entulho.',
+      description: 'Carga/descarga de materiais, movimentação de terra e entulho.',
     },
   ];
 
@@ -88,80 +90,58 @@ const Index = () => {
       title: 'Segurança e Cuidado',
       description: 'Zelo com seu terreno e conformidade com normas de segurança.',
     },
-    {
-      icon: CheckCircle2,
-      title: 'Pontualidade',
-      description: 'Compromisso com horários e prazos acordados.',
-    },
-    {
-      icon: DollarSign,
-      title: 'Transparência',
-      description: 'Orçamentos claros, sem surpresas no valor final.',
-    },
   ];
 
-  const equipments = [
+  const quoteTips = [
     {
-      id: 'case-580m',
-      name: 'Retroescavadeira Case 580M',
-      image: case580m,
-      available: true,
-      tags: ['Terraplanagem', 'Valas', 'Rural'],
-      services: ['Abertura de valas', 'Terraplanagem', 'Escavação', 'Limpeza de lotes', 'Serviços rurais'],
+      icon: MapPin,
+      title: 'Local do serviço',
+      description: 'Informe cidade, bairro ou endereço aproximado para calcular o deslocamento.',
     },
     {
-      id: 'caminhao',
-      name: 'Caminhão Basculante',
-      image: '',
-      available: false,
-      tags: ['Transporte', 'Entulho'],
-      services: ['Transporte de material', 'Remoção de entulho'],
-      comingSoon: true,
+      icon: Wrench,
+      title: 'Tipo de serviço',
+      description: 'Descreva o que precisa: vala, terraplanagem, limpeza de lote, etc.',
     },
     {
-      id: 'mini-escavadeira',
-      name: 'Mini Escavadeira',
-      image: '',
-      available: false,
-      tags: ['Valas', 'Espaços Reduzidos'],
-      services: ['Valas em áreas pequenas', 'Fundações'],
-      comingSoon: true,
+      icon: Camera,
+      title: 'Fotos ou vídeo',
+      description: 'Imagens do terreno ajudam a dar um orçamento mais preciso e rápido.',
     },
   ];
-
 
   const faqItems = [
     {
-      question: 'Vocês atendem só Sete Lagoas?',
-      answer: 'Não! Atendemos Sete Lagoas e toda a região, incluindo Prudente de Morais, Capim Branco, Funilândia, Jequitibá, Paraopeba, Caetanópolis, Baldim e outras cidades próximas. O valor do deslocamento pode variar conforme a distância.',
+      question: 'Atendem só Sete Lagoas?',
+      answer: 'Não! Atendemos Sete Lagoas e toda a região, incluindo Prudente de Morais, Capim Branco, Funilândia, Jequitibá, Paraopeba, Caetanópolis, Baldim e outras cidades próximas. O deslocamento pode influenciar no valor.',
     },
     {
       question: 'Como funciona o agendamento?',
-      answer: 'É simples! Entre em contato pelo WhatsApp informando o tipo de serviço, localização e data desejada. Verificamos a disponibilidade e confirmamos o agendamento. Quanto antes você entrar em contato, maiores as chances de conseguir a data ideal.',
+      answer: 'Simples: envie uma mensagem pelo WhatsApp com o tipo de serviço, localização e data desejada. Verificamos disponibilidade e confirmamos rapidamente.',
     },
     {
       question: 'Precisa de vistoria antes?',
-      answer: 'Depende do serviço. Para trabalhos simples como abertura de valas pequenas, geralmente não é necessário. Para serviços maiores como terraplanagem, podemos fazer uma visita prévia sem custo para avaliar o terreno e dar um orçamento mais preciso.',
+      answer: 'Depende do serviço. Para trabalhos simples, geralmente não. Para terraplanagens maiores, podemos fazer uma visita prévia sem custo.',
     },
     {
-      question: 'O que pode mudar o valor do serviço?',
-      answer: 'Alguns fatores podem influenciar: tipo de solo (pedra, argila, etc.), condições de acesso ao terreno, distância do deslocamento, tempo estimado do serviço e necessidade de trabalhos extras não previstos inicialmente.',
+      question: 'O que pode mudar o valor?',
+      answer: 'Tipo de solo (pedra, argila), condições de acesso, distância de deslocamento, tempo estimado e serviços extras não previstos.',
     },
     {
-      question: 'Vocês fazem limpeza e movimentação de material?',
-      answer: 'Sim! A retroescavadeira pode fazer carregamento em caminhões, movimentação de terra, entulho e outros materiais. Se precisar de transporte, podemos indicar parceiros de confiança.',
+      question: 'Fazem limpeza e movimentação de material?',
+      answer: 'Sim! Carregamento em caminhões, movimentação de terra e entulho. Se precisar de transporte, indicamos parceiros.',
     },
     {
       question: 'Qual a forma mais rápida de pedir orçamento?',
-      answer: 'WhatsApp! Basta enviar uma mensagem com fotos ou vídeo do local, descrever o serviço desejado e informar sua localização. Respondemos rapidamente com o orçamento.',
+      answer: 'WhatsApp! Envie fotos ou vídeo do local, descreva o serviço e informe sua localização.',
     },
     {
-      question: 'Existe mínimo de horas?',
-      answer: 'Sim, geralmente trabalhamos com mínimo de 2 horas para serviços por hora. Para diárias, o mínimo é de 8 horas trabalhadas.',
+      question: 'Como enviar fotos e vídeos?',
+      answer: 'Após iniciar a conversa no WhatsApp, é só anexar as imagens ou vídeos do terreno. Quanto mais detalhes, melhor o orçamento.',
     },
     {
-      question: 'Quais formas de pagamento?',
-      answer: 'Aceitamos PIX, dinheiro e transferência bancária. O pagamento é feito ao final do serviço, após conferência do trabalho realizado.',
+      question: 'Qual o prazo de resposta no WhatsApp?',
+      answer: 'Geralmente respondemos em minutos durante o horário comercial (Seg-Sáb, 7h às 18h).',
     },
   ];
 
@@ -169,57 +149,68 @@ const Index = () => {
     <Layout>
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image */}
+        {/* Background */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${heroBg})` }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-secondary/95 via-secondary/85 to-secondary/70" />
+          <div className="absolute inset-0 bg-gradient-to-br from-background via-background/90 to-background/70" />
         </div>
 
         {/* Content */}
         <div className="relative container-ddm py-32 text-center">
-          <Badge className="bg-primary/20 text-primary border-primary/30 mb-6 animate-fade-in">
-            <CheckCircle2 className="w-3 h-3 mr-1" />
-            Atendemos Sete Lagoas e Região
+          <Badge className="bg-primary/20 text-primary border-primary/30 mb-6 animate-fade-in px-4 py-2">
+            <MapPin className="w-3.5 h-3.5 mr-2" />
+            Sete Lagoas e Região
           </Badge>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight animate-fade-in-up">
-            Locação de Máquinas<br />
-            <span className="text-primary">com Operador</span>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-foreground mb-6 leading-tight animate-fade-in-up">
+            Retroescavadeira em<br />
+            <span className="text-gradient">Sete Lagoas e Região</span>
           </h1>
           
-          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-8 animate-fade-in-up stagger-1">
-            Atendimento rápido, operador experiente e máquinas revisadas. 
-            Terraplanagem, valas, limpeza de lotes e muito mais.
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-in-up stagger-1">
+            Serviço com operador experiente, atendimento rápido e máquina sempre revisada. 
+            Sua obra começa com segurança.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up stagger-2">
-            <Button variant="hero" size="xl" asChild>
+          {/* Bullets */}
+          <div className="flex flex-wrap justify-center gap-4 mb-10 animate-fade-in-up stagger-2">
+            {['Operador experiente', 'Máquina revisada', 'Atendimento rápido'].map((item) => (
+              <div key={item} className="flex items-center gap-2 text-foreground/80 text-sm">
+                <CheckCircle2 className="w-4 h-4 text-primary" />
+                {item}
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up stagger-3">
+            <Button variant="cta" size="xl" className="group" asChild>
               <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="w-5 h-5" />
-                Pedir Orçamento
+                Orçamento no WhatsApp
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
             </Button>
             <Button variant="heroOutline" size="xl" asChild>
-              <Link to="/equipamentos">
-                Ver Equipamentos
-                <ArrowRight className="w-5 h-5" />
-              </Link>
+              <a href="#servicos">
+                Ver Serviços
+                <ArrowDown className="w-5 h-5" />
+              </a>
             </Button>
           </div>
 
           {/* Quick Info */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center mt-12 animate-fade-in-up stagger-3">
-            <div className="flex items-center gap-2 text-white/70">
+          <div className="flex flex-wrap justify-center gap-6 mt-14 animate-fade-in-up stagger-4">
+            <a href="tel:+5531971067272" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
               <Phone className="w-4 h-4 text-primary" />
               <span>(31) 97106-7272</span>
-            </div>
-            <div className="flex items-center gap-2 text-white/70">
+            </a>
+            <div className="flex items-center gap-2 text-muted-foreground">
               <MapPin className="w-4 h-4 text-primary" />
               <span>Sete Lagoas - MG</span>
             </div>
-            <div className="flex items-center gap-2 text-white/70">
+            <div className="flex items-center gap-2 text-muted-foreground">
               <Clock className="w-4 h-4 text-primary" />
               <span>Seg - Sáb: 7h às 18h</span>
             </div>
@@ -228,22 +219,22 @@ const Index = () => {
 
         {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-2">
-            <div className="w-1 h-2 bg-white/50 rounded-full" />
+          <div className="w-6 h-10 border-2 border-muted-foreground/30 rounded-full flex items-start justify-center p-2">
+            <div className="w-1 h-2 bg-primary rounded-full" />
           </div>
         </div>
       </section>
 
       {/* Services Section */}
-      <section id="servicos" className="section-padding bg-background">
+      <section id="servicos" className="section-padding">
         <div className="container-ddm">
-          <div className="text-center mb-12">
-            <Badge variant="secondary" className="mb-4">Nossos Serviços</Badge>
+          <div className="text-center mb-14">
+            <Badge variant="secondary" className="mb-4 bg-primary/10 text-primary border-primary/20">Nossos Serviços</Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Soluções completas para sua obra
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Da preparação do terreno à finalização do projeto, oferecemos os serviços que você precisa com qualidade e agilidade.
+              Da preparação do terreno à finalização do projeto, oferecemos os serviços que você precisa.
             </p>
           </div>
 
@@ -255,180 +246,126 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Differentials Section */}
-      <section className="section-padding bg-muted">
-        <div className="container-ddm">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <Badge variant="secondary" className="mb-4">Por que nos escolher</Badge>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                Diferenciais que fazem a diferença
-              </h2>
-              <p className="text-muted-foreground mb-8">
-                Não somos apenas mais uma empresa de locação. Nosso compromisso é entregar resultado, com profissionalismo e respeito ao seu tempo e investimento.
-              </p>
-              <Button variant="cta" size="lg" asChild>
-                <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="w-5 h-5" />
-                  Fale Conosco
-                </a>
-              </Button>
-            </div>
-
-            <div className="grid gap-6">
-              {differentials.map((item, index) => (
-                <DifferentialItem key={item.title} {...item} delay={index * 100} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Equipment Section */}
-      <section id="equipamentos" className="section-padding bg-background">
+      <section id="equipamentos" className="section-padding bg-secondary/30">
         <div className="container-ddm">
-          <div className="text-center mb-12">
-            <Badge variant="secondary" className="mb-4">Equipamentos</Badge>
+          <div className="text-center mb-14">
+            <Badge variant="secondary" className="mb-4 bg-primary/10 text-primary border-primary/20">Equipamento</Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Máquinas em destaque
+              Retroescavadeira Case 580M
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Equipamentos de qualidade, revisados e prontos para seu serviço.
+              Equipamento versátil e potente, pronto para atender sua obra.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {equipments.map((equipment, index) => (
-              <EquipmentCard key={equipment.id} {...equipment} delay={index * 100} />
-            ))}
-          </div>
-
-          <div className="text-center mt-8">
-            <Button variant="outline" size="lg" asChild>
-              <Link to="/equipamentos">
-                Ver todos os equipamentos
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </Button>
-          </div>
+          <EquipmentCard
+            id="case-580m"
+            name="Retroescavadeira Case 580M"
+            image={case580m}
+            available={true}
+            featured={true}
+            tags={['Terraplanagem', 'Valas', 'Rural', 'Escavação']}
+            services={[
+              'Abertura de valas e escavações',
+              'Terraplanagem e nivelamento',
+              'Carregamento de materiais',
+              'Limpeza de lotes e terrenos',
+              'Serviços rurais e barraginhas',
+            ]}
+          />
         </div>
       </section>
 
       {/* Pricing Section */}
-      <section className="section-padding bg-secondary">
+      <PricingSection />
+
+      {/* Video Section */}
+      <section className="section-padding">
         <div className="container-ddm">
-          <div className="text-center mb-12">
-            <Badge className="bg-primary/20 text-primary border-primary/30 mb-4">Contratação</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary-foreground mb-4">
-              Como funciona
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Por Hora */}
-            <div className="bg-card rounded-2xl p-8 text-center shadow-lg">
-              <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Clock className="w-8 h-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold text-foreground mb-2">Serviço por Hora</h3>
-              <div className="text-4xl font-bold text-primary mb-2">R$ 200<span className="text-lg text-muted-foreground">/hora</span></div>
-              <p className="text-muted-foreground text-sm mb-4">Ideal para serviços rápidos e pontuais</p>
-              <ul className="text-sm text-left space-y-2 text-muted-foreground">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-ddm-success" />
-                  Mínimo de 2 horas
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-ddm-success" />
-                  Operador incluso
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-ddm-success" />
-                  Combustível incluso
-                </li>
-              </ul>
-            </div>
-
-            {/* Por Diária */}
-            <div className="bg-card rounded-2xl p-8 text-center shadow-lg border-2 border-primary">
-              <Badge className="absolute -mt-12 bg-primary text-primary-foreground">Mais Popular</Badge>
-              <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Calendar className="w-8 h-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold text-foreground mb-2">Serviço por Diária</h3>
-              <div className="text-4xl font-bold text-primary mb-2">Sob Consulta</div>
-              <p className="text-muted-foreground text-sm mb-4">Para obras maiores e projetos completos</p>
-              <ul className="text-sm text-left space-y-2 text-muted-foreground">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-ddm-success" />
-                  8 horas de trabalho
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-ddm-success" />
-                  Melhor custo-benefício
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-ddm-success" />
-                  Desconto para múltiplas diárias
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <p className="text-center text-secondary-foreground/60 text-sm mt-8 max-w-2xl mx-auto">
-            * Os valores podem variar conforme o tipo de serviço, condições do terreno, distância de deslocamento e tempo estimado. 
-            Solicite um orçamento personalizado.
-          </p>
-        </div>
-      </section>
-
-      {/* Media Section */}
-      <section className="section-padding bg-background">
-        <div className="container-ddm">
-          <div className="text-center mb-12">
-            <Badge variant="secondary" className="mb-4">Portfólio</Badge>
+          <div className="text-center mb-14">
+            <Badge variant="secondary" className="mb-4 bg-primary/10 text-primary border-primary/20">Obras Reais</Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Vídeos e fotos de obras reais
+              Veja a máquina em ação
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Confira nosso trabalho em ação. Qualidade que você pode ver.
+              Confira nosso trabalho em obras reais da região.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             <MediaCard
               type="video"
               src="https://www.youtube.com/shorts/cTclcnHgReA"
               alt="Retroescavadeira Case 580M em ação"
+              title="Obra em andamento"
               delay={0}
             />
             <MediaCard
               type="image"
               src={case580m}
               alt="Retroescavadeira Case 580M"
+              title="Case 580M"
               delay={100}
             />
             <MediaCard
               type="image"
               src={heroBg}
               alt="Obra de terraplanagem"
+              title="Terraplanagem"
               delay={200}
             />
           </div>
         </div>
       </section>
 
+      {/* Quick Quote Section */}
+      <section id="orcamento" className="section-padding bg-secondary/30">
+        <div className="container-ddm">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+            <div>
+              <Badge variant="secondary" className="mb-4 bg-primary/10 text-primary border-primary/20">Orçamento Rápido</Badge>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                O que agiliza seu orçamento
+              </h2>
+              <p className="text-muted-foreground mb-8">
+                Quanto mais informações, mais rápido e preciso será o orçamento. Veja o que você pode nos enviar:
+              </p>
+
+              <div className="space-y-4">
+                {quoteTips.map((tip, index) => (
+                  <QuoteTipCard key={tip.title} {...tip} delay={index * 100} />
+                ))}
+              </div>
+
+              {/* Differentials */}
+              <div className="mt-10 pt-10 border-t border-border">
+                <h3 className="font-bold text-foreground mb-6">Por que nos escolher</h3>
+                <div className="grid gap-4">
+                  {differentials.map((item, index) => (
+                    <DifferentialItem key={item.title} {...item} delay={index * 100} />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:sticky lg:top-28">
+              <QuickQuoteForm />
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="section-padding bg-background">
+      <section id="faq" className="section-padding">
         <div className="container-ddm">
-          <div className="text-center mb-12">
-            <Badge variant="secondary" className="mb-4">Dúvidas Frequentes</Badge>
+          <div className="text-center mb-14">
+            <Badge variant="secondary" className="mb-4 bg-primary/10 text-primary border-primary/20">Dúvidas Frequentes</Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Perguntas e Respostas
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Tire suas dúvidas sobre nossos serviços, formas de contratação e área de atendimento.
+              Tire suas dúvidas sobre nossos serviços e área de atendimento.
             </p>
           </div>
 
@@ -439,18 +376,18 @@ const Index = () => {
       </section>
 
       {/* Area Section */}
-      <section className="section-padding bg-muted">
+      <section className="section-padding bg-secondary/30">
         <div className="container-ddm">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge variant="secondary" className="mb-4">Área de Atendimento</Badge>
+              <Badge variant="secondary" className="mb-4 bg-primary/10 text-primary border-primary/20">Área de Atendimento</Badge>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
                 Sete Lagoas e toda a região
               </h2>
-              <p className="text-muted-foreground mb-6">
+              <p className="text-muted-foreground mb-8">
                 Atendemos Sete Lagoas e cidades vizinhas. O valor do deslocamento pode variar conforme a distância.
               </p>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {[
                   'Sete Lagoas',
                   'Prudente de Morais',
@@ -460,33 +397,31 @@ const Index = () => {
                   'Paraopeba',
                   'Caetanópolis',
                   'Baldim',
-                  'Pedro Leopoldo',
-                  'Matozinhos',
-                  'Vespasiano',
                   'E mais...',
                 ].map((city) => (
                   <div key={city} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <MapPin className="w-3 h-3 text-primary" />
+                    <MapPin className="w-3 h-3 text-primary flex-shrink-0" />
                     {city}
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="bg-card rounded-2xl p-8 shadow-lg">
-              <div className="aspect-video bg-muted rounded-lg flex items-center justify-center mb-4">
+            <div className="card-premium p-8">
+              <div className="aspect-video bg-muted rounded-xl flex items-center justify-center mb-6">
                 <div className="text-center">
                   <MapPin className="w-12 h-12 text-primary mx-auto mb-2" />
-                  <p className="text-muted-foreground text-sm">Mapa da região</p>
+                  <p className="text-muted-foreground text-sm">Região de atendimento</p>
                 </div>
               </div>
-              <p className="text-center text-muted-foreground text-sm">
+              <p className="text-center text-muted-foreground text-sm mb-6">
                 Entre em contato para confirmar atendimento na sua cidade.
               </p>
-              <Button variant="cta" size="lg" className="w-full mt-4" asChild>
+              <Button variant="cta" size="lg" className="w-full group" asChild>
                 <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="w-5 h-5" />
                   Consultar Disponibilidade
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
               </Button>
             </div>
