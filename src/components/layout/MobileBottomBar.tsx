@@ -5,7 +5,9 @@ interface MobileBottomBarProps {
   isHidden?: boolean;
 }
 
-const whatsappLink = 'https://wa.me/5531971067272?text=Olá! Gostaria de solicitar um orçamento.';
+const whatsappLink = `https://wa.me/5531971067272?text=${encodeURIComponent(
+  'Olá! Gostaria de solicitar um orçamento.',
+)}`;
 
 const MobileBottomBar = ({ isHidden = false }: MobileBottomBarProps) => {
   return (

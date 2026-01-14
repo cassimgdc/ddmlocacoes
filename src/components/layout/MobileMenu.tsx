@@ -15,7 +15,9 @@ const navLinks = [
   { href: '/contato', label: 'Contato', icon: Phone },
 ];
 
-const whatsappLink = 'https://wa.me/5531971067272?text=Olá! Gostaria de solicitar um orçamento.';
+const whatsappLink = `https://wa.me/5531971067272?text=${encodeURIComponent(
+  'Olá! Gostaria de solicitar um orçamento.',
+)}`;
 
 const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
   const location = useLocation();

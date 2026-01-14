@@ -29,7 +29,9 @@ const Contato = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const whatsappLink = 'https://wa.me/5531971067272?text=Olá! Gostaria de solicitar um orçamento.';
+  const whatsappLink = `https://wa.me/5531971067272?text=${encodeURIComponent(
+    'Olá! Gostaria de solicitar um orçamento.',
+  )}`;
 
   const serviceTypes = [
     'Abertura de valas',
@@ -58,16 +60,20 @@ const Contato = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.local || !formData.tipoServico) return;
 
     setIsSubmitting(true);
-    
+
     const message = formatWhatsAppMessage();
     const whatsappUrl = `https://wa.me/5531971067272?text=${message}`;
-    
-    // Abre em nova aba
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+
+    // iOS/Safari pode bloquear popups; fallback para navegação direta
+    const w = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    if (!w) {
+      window.location.assign(whatsappUrl);
+    }
+
     setIsSubmitting(false);
   };
 
@@ -194,19 +200,18 @@ const Contato = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 md:gap-4 p-3 md:p-4 card-premium hover:border-primary/30 transition-all group touch-feedback"
+                  aria-label="Chamar no WhatsApp"
                 >
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-ddm-whatsapp rounded-xl flex items-center justify-center flex-shrink-0">
                     <MessageCircle className="w-5 h-5 md:w-6 md:h-6 text-white" />
                   </div>
                   <div className="min-w-0">
                     <p className="font-bold text-foreground group-hover:text-primary transition-colors text-sm md:text-base">
-                      (31) 97106-7272
+                      Chamar no WhatsApp
                     </p>
-                    <p className="text-muted-foreground text-xs md:text-sm">WhatsApp</p>
+                    <p className="text-muted-foreground text-xs md:text-sm">Resposta rápida</p>
                   </div>
                 </a>
-
-
                 <div className="flex items-center gap-3 md:gap-4 p-3 md:p-4 card-premium">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-muted rounded-xl flex items-center justify-center flex-shrink-0">
                     <MapPin className="w-5 h-5 md:w-6 md:h-6 text-primary" />

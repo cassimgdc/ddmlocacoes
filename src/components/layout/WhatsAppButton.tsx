@@ -1,7 +1,9 @@
 import { MessageCircle } from 'lucide-react';
 
 const WhatsAppButton = () => {
-  const whatsappLink = 'https://wa.me/5531971067272?text=Olá! Gostaria de solicitar um orçamento para locação de máquinas.';
+  const whatsappLink = `https://wa.me/5531971067272?text=${encodeURIComponent(
+    'Olá! Gostaria de solicitar um orçamento para locação de máquinas.',
+  )}`;
 
   return (
     <a

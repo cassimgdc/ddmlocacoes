@@ -20,7 +20,9 @@ import {
 import case580m from '@/assets/case-580m.png';
 
 const Index = () => {
-  const whatsappLink = 'https://wa.me/5531971067272?text=Olá! Gostaria de solicitar um orçamento.';
+  const whatsappLink = `https://wa.me/5531971067272?text=${encodeURIComponent(
+    'Olá! Gostaria de solicitar um orçamento.',
+  )}`;
 
   const services = [
     { icon: Shovel, title: 'Abertura de Valas', href: '/servicos' },
@@ -39,11 +41,23 @@ const Index = () => {
       </Helmet>
       
       {/* Hero */}
-      <section className="pt-20 pb-10 md:pt-36 md:pb-24">
-        <div className="container-ddm">
+      <section className="relative overflow-hidden pt-20 pb-14 md:pt-36 md:pb-24">
+        {/* Fundo com a retroescavadeira (mobile) */}
+        <div className="md:hidden pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
+          <img
+            src={case580m}
+            alt="Retroescavadeira Case 580M"
+            className="absolute right-[-35%] top-10 w-[560px] max-w-none opacity-70 blur-[0.2px]"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
+        </div>
+
+        <div className="container-ddm relative">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Texto */}
-            <div className="animate-fade-in order-2 lg:order-1">
+            <div className="animate-fade-in">
               <Badge className="bg-primary/10 text-primary border-primary/20 mb-4">
                 <MapPin className="w-3 h-3 mr-1" />
                 Sete Lagoas e Região
@@ -57,11 +71,11 @@ const Index = () => {
                 Serviço com operador experiente, máquina revisada e atendimento rápido.
               </p>
 
-              {/* Destaques - Horizontal scroll on mobile */}
+              {/* Destaques */}
               <div className="flex gap-3 mb-6 md:mb-8 overflow-x-auto pb-2 scrollbar-hide md:flex-wrap">
                 {['Operador experiente', 'Máquina revisada', 'Orçamento rápido'].map((item) => (
-                  <div 
-                    key={item} 
+                  <div
+                    key={item}
                     className="flex items-center gap-2 text-sm text-foreground whitespace-nowrap bg-muted/50 px-4 py-2 rounded-full border border-border/50"
                   >
                     <CheckCircle2 className="w-4 h-4 text-ddm-success flex-shrink-0" />
@@ -70,30 +84,29 @@ const Index = () => {
                 ))}
               </div>
 
-              {/* Botões - Full width no mobile com padding extra */}
-              <div className="flex flex-col gap-3 md:flex-row md:gap-4 px-1">
-                <Button variant="cta" size="lg" className="w-full md:w-auto min-h-[52px]" asChild>
+              {/* Botões */}
+              <div className="flex flex-col gap-3 md:flex-row md:gap-4">
+                <Button variant="cta" size="lg" className="w-full md:w-auto" asChild>
                   <Link to="/contato">
                     <MessageCircle className="w-5 h-5" />
                     Pedir Orçamento
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                 </Button>
-                <Button variant="outline" size="lg" className="w-full md:w-auto min-h-[52px]" asChild>
-                  <Link to="/servicos">
-                    Ver Serviços
-                  </Link>
+                <Button variant="outline" size="lg" className="w-full md:w-auto" asChild>
+                  <Link to="/servicos">Ver Serviços</Link>
                 </Button>
               </div>
             </div>
 
-            {/* Imagem - Centralizada */}
-            <div className="relative animate-fade-in stagger-delay-2 order-1 lg:order-2 flex items-center justify-center">
+            {/* Imagem (desktop) */}
+            <div className="relative animate-fade-in stagger-delay-2 hidden lg:flex items-center justify-center">
               <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 to-accent/10 rounded-3xl blur-2xl" />
               <img
                 src={case580m}
                 alt="Retroescavadeira Case 580M"
-                className="relative w-full max-w-[200px] sm:max-w-xs md:max-w-sm lg:max-w-md object-contain"
+                className="relative w-full max-w-xs md:max-w-sm lg:max-w-md object-contain"
+                loading="lazy"
               />
             </div>
           </div>
