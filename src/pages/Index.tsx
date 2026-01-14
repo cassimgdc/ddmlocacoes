@@ -20,10 +20,6 @@ import {
 import case580m from '@/assets/case-580m.png';
 
 const Index = () => {
-  const whatsappLink = `https://wa.me/5531971067272?text=${encodeURIComponent(
-    'Olá! Gostaria de solicitar um orçamento.',
-  )}`;
-
   const services = [
     { icon: Shovel, title: 'Abertura de Valas', href: '/servicos' },
     { icon: Mountain, title: 'Terraplanagem', href: '/servicos' },
@@ -236,14 +232,14 @@ const Index = () => {
             Pronto para começar?
           </h2>
           <p className="text-muted-foreground text-sm md:text-base mb-6 max-w-md mx-auto">
-            Solicite um orçamento rápido pelo WhatsApp e receba resposta em minutos.
+            Preencha o formulário e receba atendimento pelo WhatsApp em minutos.
           </p>
-          <Button variant="whatsapp" size="lg" className="w-full md:w-auto" asChild>
-            <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+          <Button variant="cta" size="lg" className="w-full md:w-auto" asChild>
+            <Link to="/contato">
               <MessageCircle className="w-5 h-5" />
-              Chamar no WhatsApp
+              Solicitar Orçamento
               <ArrowRight className="w-4 h-4" />
-            </a>
+            </Link>
           </Button>
         </div>
       </section>

@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { X, MessageCircle, Home, Wrench, Tractor, Phone } from 'lucide-react';
+import { X, MessageCircle, Home, Wrench, Tractor, Phone, ArrowRight } from 'lucide-react';
 import { useEffect } from 'react';
 
 interface MobileMenuProps {
@@ -14,10 +14,6 @@ const navLinks = [
   { href: '/equipamento', label: 'Equipamento', icon: Tractor },
   { href: '/contato', label: 'Contato', icon: Phone },
 ];
-
-const whatsappLink = `https://wa.me/5531971067272?text=${encodeURIComponent(
-  'Olá! Gostaria de solicitar um orçamento.',
-)}`;
 
 const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
   const location = useLocation();
@@ -109,13 +105,14 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
           })}
         </nav>
 
-        {/* CTA WhatsApp - Fixed at bottom */}
+        {/* CTA Orçamento - Fixed at bottom */}
         <div className="absolute bottom-0 left-0 right-0 p-5 border-t border-border/50 bg-background safe-area-bottom">
-          <Button variant="whatsapp" size="lg" className="w-full h-14 text-base" asChild>
-            <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+          <Button variant="cta" size="lg" className="w-full h-14 text-base" asChild>
+            <Link to="/contato" onClick={onClose}>
               <MessageCircle className="w-5 h-5" />
-              Chamar no WhatsApp
-            </a>
+              Pedir Orçamento
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </Button>
         </div>
       </div>
