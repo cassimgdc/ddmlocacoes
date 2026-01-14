@@ -11,12 +11,12 @@ const whatsappLink = `https://wa.me/5531971067272?text=${encodeURIComponent(
 
 const MobileBottomBar = ({ isHidden = false }: MobileBottomBarProps) => {
   return (
-    <div 
+    <div
       className={`md:hidden fixed bottom-0 left-0 right-0 z-40 transition-transform duration-300 ${
         isHidden ? 'translate-y-full' : 'translate-y-0'
       }`}
     >
-      <div className="bg-background/95 backdrop-blur-md border-t border-border px-4 py-3 safe-area-bottom">
+      <div className="bg-background/95 backdrop-blur-md border-t border-border px-4 py-3 safe-area-bottom-lg">
         <Button variant="whatsapp" size="lg" className="w-full h-12" asChild>
           <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
             <MessageCircle className="w-5 h-5" />

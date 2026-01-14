@@ -41,14 +41,14 @@ const Index = () => {
       </Helmet>
       
       {/* Hero */}
-      <section className="relative overflow-hidden pt-20 pb-14 md:pt-36 md:pb-24">
+      <section className="relative overflow-hidden pt-20 pb-[calc(4rem+env(safe-area-inset-bottom,0px)+4.5rem)] md:pt-36 md:pb-24">
         {/* Fundo com a retroescavadeira (mobile) */}
         <div className="md:hidden pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
           <img
             src={case580m}
             alt="Retroescavadeira Case 580M"
-            className="absolute right-[-35%] top-10 w-[560px] max-w-none opacity-70 blur-[0.2px]"
+            className="absolute right-[-20%] top-1/2 -translate-y-1/2 w-[680px] max-w-none opacity-75"
             loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
