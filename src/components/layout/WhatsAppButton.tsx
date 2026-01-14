@@ -1,19 +1,24 @@
-import { MessageCircle, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { MessageCircle } from 'lucide-react';
 
 const WhatsAppButton = () => {
+  const whatsappNumber = '5531971067272';
+  const whatsappUrl = `https://wa.me/${whatsappNumber}`;
+
   return (
-    <Link
-      to="/contato"
-      className="hidden md:flex fixed bottom-6 right-6 z-50 items-center gap-2 bg-primary text-primary-foreground px-5 py-3 rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300 group"
-      aria-label="Solicitar orçamento"
+    <a
+      href={whatsappUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-ddm-whatsapp text-white rounded-full shadow-lg hover:scale-110 hover:shadow-xl transition-all duration-300"
+      style={{
+        bottom: 'calc(24px + env(safe-area-inset-bottom, 0px))',
+      }}
+      aria-label="Falar pelo WhatsApp"
     >
-      <MessageCircle className="w-5 h-5" />
-      <span className="font-semibold">Pedir Orçamento</span>
-      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+      <MessageCircle className="w-7 h-7" />
       <span className="absolute -top-1 -right-1 w-3 h-3 bg-ddm-success rounded-full animate-ping" />
       <span className="absolute -top-1 -right-1 w-3 h-3 bg-ddm-success rounded-full" />
-    </Link>
+    </a>
   );
 };
 
