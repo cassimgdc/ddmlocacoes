@@ -122,15 +122,12 @@ const Contato = () => {
     }
   };
 
-  const openWhatsApp = () => {
+  const getWhatsAppUrl = () => {
     const message = formatWhatsAppMessage();
-    const whatsappUrl = `https://wa.me/5531971067272?text=${message}`;
-    
-    // Abre em nova aba
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    return `https://wa.me/5531971067272?text=${message}`;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     // Validação básica
@@ -164,14 +161,18 @@ const Contato = () => {
       return;
     }
 
+    // IMPORTANTE: Abre WhatsApp IMEDIATAMENTE no evento do clique
+    // (antes de qualquer async) para evitar bloqueio de popup
+    const whatsappUrl = getWhatsAppUrl();
+    window.open(whatsappUrl, '_blank');
+
     setIsSubmitting(true);
 
     // Registra o envio para rate limiting
     registerSubmit(rawPhone);
 
-    // Dispara webhook e abre WhatsApp em paralelo
+    // Dispara webhook em background
     sendToWebhook();
-    openWhatsApp();
 
     // Marca como sucesso
     setIsSuccess(true);
