@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { X, MessageCircle, Home, Wrench, Tractor, Phone, ArrowRight } from 'lucide-react';
+import { X, MessageCircle, Home, Wrench, Tractor, Phone, ArrowRight, HelpCircle } from 'lucide-react';
 import { useEffect } from 'react';
 
 interface MobileMenuProps {
@@ -12,6 +12,7 @@ const navLinks = [
   { href: '/', label: 'Início', icon: Home },
   { href: '/servicos', label: 'Serviços', icon: Wrench },
   { href: '/equipamento', label: 'Equipamento', icon: Tractor },
+  { href: '/duvidas', label: 'Dúvidas', icon: HelpCircle },
   { href: '/contato', label: 'Contato', icon: Phone },
 ];
 
