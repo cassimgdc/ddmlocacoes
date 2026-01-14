@@ -7,9 +7,11 @@ import {
   CheckCircle2,
   Clock,
   Calendar,
+  Play,
 } from 'lucide-react';
 
 import case580m from '@/assets/case-580m.png';
+import MediaCard from '@/components/home/MediaCard';
 
 const Equipamento = () => {
   const whatsappLink = 'https://wa.me/5531971067272?text=Olá! Gostaria de solicitar um orçamento para a Retroescavadeira Case 580M.';
@@ -91,6 +93,32 @@ const Equipamento = () => {
                   <span className="text-foreground">{item}</span>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Vídeo em Ação */}
+      <section className="py-16">
+        <div className="container-ddm">
+          <div className="max-w-2xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
+              <Play className="w-4 h-4" />
+              <span className="text-sm font-medium">Veja em ação</span>
+            </div>
+            
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+              A máquina trabalhando
+            </h2>
+            <p className="text-muted-foreground mb-8">
+              Confira a Case 580M em uma obra real na região.
+            </p>
+
+            <div className="max-w-sm mx-auto">
+              <MediaCard
+                type="video"
+                src="https://www.youtube.com/shorts/cTclcnHgReA"
+              />
             </div>
           </div>
         </div>
