@@ -84,18 +84,18 @@ const Index = () => {
                 ))}
               </div>
 
-              {/* Botões */}
-              <div className="relative z-10 overflow-visible flex flex-col gap-3 md:flex-row md:gap-4">
-                <Button variant="cta" size="lg" className="w-full md:w-auto max-w-full" asChild>
-                  <Link to="/contato" className="max-w-full min-w-0">
+              {/* Botões do Hero */}
+              <div className="flex flex-col gap-4 mt-2 md:flex-row md:gap-4 md:mt-0">
+                <Button variant="cta" size="lg" className="w-full md:w-auto h-14" asChild>
+                  <Link to="/contato">
                     <MessageCircle className="w-5 h-5 flex-shrink-0" />
-                    <span className="min-w-0 truncate">Pedir Orçamento</span>
+                    Pedir Orçamento
                     <ArrowRight className="w-4 h-4 flex-shrink-0" />
                   </Link>
                 </Button>
-                <Button variant="outline" size="lg" className="w-full md:w-auto max-w-full" asChild>
-                  <Link to="/servicos" className="max-w-full min-w-0">
-                    <span className="min-w-0 truncate">Ver Serviços</span>
+                <Button variant="outline" size="lg" className="w-full md:w-auto h-14" asChild>
+                  <Link to="/servicos">
+                    Ver Serviços
                   </Link>
                 </Button>
               </div>
