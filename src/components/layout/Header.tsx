@@ -45,13 +45,13 @@ const Header = () => {
         }`}
       >
         <div className="container-ddm">
-          <div className="flex items-center justify-between h-16 md:h-20">
+          <div className="flex items-center justify-between h-20 md:h-24">
             {/* Logo */}
             <Link to="/" className="flex items-center group">
               <img 
                 src={logoImg} 
                 alt="DDM Locações" 
-                className="h-12 md:h-14 w-auto transition-all duration-300 group-hover:scale-105 group-hover:brightness-110 group-hover:drop-shadow-[0_0_8px_hsl(var(--primary)/0.4)]"
+                className="h-20 md:h-28 w-auto transition-all duration-300 group-hover:scale-105 group-hover:brightness-110 group-hover:drop-shadow-[0_0_8px_hsl(var(--primary)/0.4)]"
               />
             </Link>
 
