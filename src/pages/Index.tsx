@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Layout from '@/components/layout/Layout';
@@ -29,6 +30,11 @@ const Index = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>DDM Locações - Aluguel de Retroescavadeira em Sete Lagoas | Terraplanagem e Escavação</title>
+        <meta name="description" content="Aluguel de retroescavadeira Case 580M com operador experiente em Sete Lagoas e região. Terraplanagem, abertura de valas, limpeza de lotes. A partir de R$ 200/hora. Orçamento rápido pelo WhatsApp." />
+        <link rel="canonical" href="https://dig-and-haul-pro.lovable.app/" />
+      </Helmet>
       {/* Hero */}
       <section className="pt-24 pb-12 md:pt-36 md:pb-24">
         <div className="container-ddm">

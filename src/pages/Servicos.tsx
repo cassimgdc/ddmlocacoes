@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
 import {
@@ -56,6 +57,11 @@ const Servicos = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>Serviços de Retroescavadeira em Sete Lagoas | DDM Locações</title>
+        <meta name="description" content="Terraplanagem, abertura de valas, limpeza de lotes, escavação de fossas e cisternas, serviços rurais. Retroescavadeira Case 580M com operador em Sete Lagoas." />
+        <link rel="canonical" href="https://dig-and-haul-pro.lovable.app/servicos" />
+      </Helmet>
       {/* Header */}
       <section className="pt-28 pb-12 md:pt-36 md:pb-16">
         <div className="container-ddm">

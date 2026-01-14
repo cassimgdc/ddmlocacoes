@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Layout from '@/components/layout/Layout';
@@ -34,6 +35,11 @@ const Equipamento = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>Retroescavadeira Case 580M para Aluguel | DDM Locações Sete Lagoas</title>
+        <meta name="description" content="Alugue a Retroescavadeira Case 580M com operador experiente. 95 HP, escavação até 4,5m. A partir de R$ 200/hora em Sete Lagoas e região. Veja especificações." />
+        <link rel="canonical" href="https://dig-and-haul-pro.lovable.app/equipamento" />
+      </Helmet>
       {/* Header */}
       <section className="pt-28 pb-12 md:pt-36 md:pb-16">
         <div className="container-ddm">
