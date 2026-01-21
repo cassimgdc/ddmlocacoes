@@ -157,8 +157,8 @@ const Index = () => {
 
                 <div className="mb-4">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-3xl md:text-4xl font-black text-gradient-vivid">R$ 200*</span>
-                    <span className="text-muted-foreground">/hora</span>
+                    <span className="text-3xl md:text-4xl font-black text-gradient-vivid">R$ 200</span>
+                    <span className="text-muted-foreground">/hora*</span>
                   </div>
                 </div>
 
@@ -241,7 +241,7 @@ const Index = () => {
             </div>
 
             <p className="text-center text-muted-foreground text-sm mt-5 md:mt-6 opacity-0 animate-fade-in stagger-3">
-              Valores podem variar conforme serviço, terreno e deslocamento.
+              *Valores podem variar conforme serviço, terreno e deslocamento.
             </p>
           </div>
         </div>
