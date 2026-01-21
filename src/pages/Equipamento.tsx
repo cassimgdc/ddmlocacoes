@@ -355,7 +355,7 @@ const Equipamento = () => {
 
           {/* Disclaimer */}
           <p className="text-center text-xs text-muted-foreground mt-6 opacity-0 animate-fade-in-up stagger-4">
-            * Valores sujeitos a alteração conforme distância, tipo de serviço e condições do terreno.
+            *Valores podem variar conforme serviço, terreno e deslocamento.
           </p>
         </div>
       </section>
