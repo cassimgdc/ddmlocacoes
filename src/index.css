@@ -90,43 +90,43 @@ html {
     /* Base - Tons claros suaves */
     --background: 220 20% 97%;
     --background-secondary: 220 15% 94%;
-    --foreground: 222 47% 11%;
+    --foreground: 220 25% 15%;
 
     /* Cards - Branco com sombra sutil */
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 220 25% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 220 25% 15%;
 
     /* Primary - Amarelo DDM (mais saturado no claro) */
     --primary: 42 100% 45%;
-    --primary-foreground: 0 0% 100%;
+    --primary-foreground: 220 25% 10%;
 
     /* Secondary - Tom escuro para contraste */
-    --secondary: 220 15% 92%;
-    --secondary-foreground: 222 47% 15%;
+    --secondary: 220 18% 90%;
+    --secondary-foreground: 220 25% 20%;
 
-    /* Muted - Cinza suave */
-    --muted: 220 15% 94%;
-    --muted-foreground: 220 10% 40%;
+    /* Muted - Cinza suave com melhor contraste */
+    --muted: 220 18% 92%;
+    --muted-foreground: 220 15% 35%;
 
     /* Accent - Laranja para destaques */
-    --accent: 28 100% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 220 15% 88%;
+    --accent-foreground: 220 25% 15%;
 
     --destructive: 0 84% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 88%;
-    --input: 220 15% 92%;
+    --border: 220 15% 82%;
+    --input: 220 20% 94%;
     --ring: 42 100% 45%;
 
     /* DDM Custom para light */
     --ddm-yellow: 42 100% 45%;
     --ddm-orange: 28 100% 50%;
     --ddm-charcoal: 222 47% 11%;
-    --ddm-slate: 220 10% 40%;
+    --ddm-slate: 220 15% 35%;
     --ddm-light: 220 20% 97%;
     --ddm-success: 142 76% 36%;
     --ddm-whatsapp: 142 70% 40%;
@@ -134,25 +134,25 @@ html {
     /* Gradients para light */
     --gradient-hero: linear-gradient(135deg, hsl(220 20% 97%) 0%, hsl(220 15% 94%) 100%);
     --gradient-cta: linear-gradient(135deg, hsl(42 100% 45%) 0%, hsl(28 100% 50%) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(220 15% 98%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(220 15% 97%) 100%);
     --gradient-glow: linear-gradient(135deg, hsl(42 100% 45% / 0.15) 0%, hsl(28 100% 50% / 0.08) 100%);
 
-    /* Shadows para light - mais suaves */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    /* Shadows para light - mais presentes */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.06);
     --shadow-cta: 0 10px 40px -10px hsl(42 100% 45% / 0.4);
     --shadow-glow: 0 0 30px -5px hsl(42 100% 45% / 0.2);
 
     /* Sidebar para light */
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 222 47% 11%;
+    --sidebar-foreground: 220 25% 15%;
     --sidebar-primary: 42 100% 45%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 220 15% 94%;
-    --sidebar-accent-foreground: 222 47% 15%;
-    --sidebar-border: 220 15% 88%;
+    --sidebar-accent-foreground: 220 25% 15%;
+    --sidebar-border: 220 15% 85%;
     --sidebar-ring: 42 100% 45%;
   }
 }
@@ -298,7 +298,38 @@ html {
 
   /* Light mode adjustments for specific components */
   .light .glass {
-    @apply bg-white/80;
+    @apply bg-white/85;
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  /* Light mode - form inputs with better visibility */
+  .light input,
+  .light textarea,
+  .light [data-radix-select-trigger] {
+    background-color: hsl(220 20% 96%) !important;
+    border-color: hsl(220 15% 82%) !important;
+  }
+
+  .light input:focus,
+  .light textarea:focus,
+  .light [data-radix-select-trigger][data-state="open"] {
+    border-color: hsl(var(--primary)) !important;
+  }
+
+  .light input::placeholder,
+  .light textarea::placeholder {
+    color: hsl(220 12% 50%);
+  }
+
+  /* Light mode card-premium enhancement */
+  .light .card-premium {
+    background: white;
+    box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.06);
+    border-color: hsl(220 15% 85%);
+  }
+
+  .light .card-premium::before {
+    background: white;
   }
 
   /* Animated underline for links */

@@ -220,13 +220,13 @@ const Contato = () => {
       {/* Formulário Principal */}
       <section className="pb-8 md:pb-16">
         <div className="container-ddm">
-          <div className="max-w-lg mx-auto">
+          <div className="max-w-md mx-auto">
             {/* Card do Formulário */}
             <div className="relative animate-fade-in-up">
               {/* Glow effect */}
-              <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 via-accent/10 to-primary/20 rounded-3xl blur-xl opacity-50" />
+              <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 via-accent/10 to-primary/20 rounded-3xl blur-xl opacity-40 dark:opacity-50" />
               
-              <div className="relative card-premium p-6 md:p-8">
+              <div className="relative card-premium p-5 md:p-6">
                 {/* Mensagem de sucesso */}
                 {isSuccess && (
                   <div className="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-xl flex items-center gap-3">
