@@ -208,7 +208,7 @@ const Index = () => {
                   <div className="flex items-baseline gap-2">
                     <span className="text-3xl md:text-4xl font-black text-gradient-vivid">Sob Consulta</span>
                   </div>
-                  <p className="text-sm text-muted-foreground mt-1">Valor varia conforme distância</p>
+                  <p className="text-sm text-muted-foreground mt-1">Os valores variam conforme tipo de serviço, deslocamento, tempo estimado e condições do terreno</p>
                 </div>
 
                 <ul className="space-y-2 mb-4">
