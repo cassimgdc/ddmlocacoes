@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { InputWithCheck } from '@/components/ui/input-with-check';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import {
@@ -18,7 +19,6 @@ import {
   Clock,
   ArrowRight,
   Loader2,
-  Camera,
   User,
   Phone,
   CheckCircle,
@@ -27,6 +27,7 @@ import {
 import { usePhoneFormat } from '@/hooks/usePhoneFormat';
 import { useSpamProtection } from '@/hooks/useSpamProtection';
 import { toast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
 const WEBHOOK_URL = 'https://n8n2.easybr.site/webhook/14f30970-8945-456f-9c1e-eba82b566d91';
 
@@ -194,6 +195,12 @@ const Contato = () => {
 
   const isFormValid = formData.nome && formData.local && formData.tipoServico && isValidPhone();
 
+  // Validações por campo para checkmarks
+  const isNomeValid = formData.nome.trim().length >= 2;
+  const isLocalValid = formData.local.trim().length > 0;
+  const isTipoServicoValid = formData.tipoServico !== '';
+  const isTelefoneValid = isValidPhone();
+
   return (
     <Layout>
       <Helmet>
@@ -262,7 +269,7 @@ const Contato = () => {
                       <User className="w-3.5 h-3.5 text-primary" />
                       Seu nome *
                     </Label>
-                    <Input
+                    <InputWithCheck
                       id="nome"
                       placeholder="Nome completo"
                       value={formData.nome}
@@ -271,6 +278,7 @@ const Contato = () => {
                       required
                       maxLength={100}
                       autoComplete="name"
+                      isValid={isNomeValid}
                     />
                   </div>
 
@@ -288,16 +296,24 @@ const Contato = () => {
                         className="h-10 w-16 text-sm text-center bg-muted/50 border-border/50 focus:border-primary font-medium"
                         maxLength={4}
                       />
-                      <Input
-                        id="telefone"
-                        type="tel"
-                        inputMode="numeric"
-                        placeholder="(31) 99999-9999"
-                        value={phone}
-                        onChange={(e) => handlePhoneChange(e.target.value)}
-                        className="h-10 flex-1 text-sm bg-muted/50 border-border/50 focus:border-primary"
-                        autoComplete="tel-national"
-                      />
+                      <div className="relative flex-1">
+                        <Input
+                          id="telefone"
+                          type="tel"
+                          inputMode="numeric"
+                          placeholder="(31) 99999-9999"
+                          value={phone}
+                          onChange={(e) => handlePhoneChange(e.target.value)}
+                          className={cn(
+                            "h-10 text-sm bg-muted/50 border-border/50 focus:border-primary",
+                            isTelefoneValid && "border-green-500/50 pr-10"
+                          )}
+                          autoComplete="tel-national"
+                        />
+                        {isTelefoneValid && (
+                          <CheckCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-green-500 animate-scale-in" />
+                        )}
+                      </div>
                     </div>
                   </div>
 
@@ -307,7 +323,7 @@ const Contato = () => {
                       <MapPin className="w-3.5 h-3.5 text-primary" />
                       Local do serviço *
                     </Label>
-                    <Input
+                    <InputWithCheck
                       id="local"
                       placeholder="Ex: Sete Lagoas, Bairro Centro"
                       value={formData.local}
@@ -316,6 +332,7 @@ const Contato = () => {
                       required
                       maxLength={200}
                       autoComplete="address-level2"
+                      isValid={isLocalValid}
                     />
                   </div>
 
@@ -325,22 +342,30 @@ const Contato = () => {
                       <Wrench className="w-3.5 h-3.5 text-primary" />
                       Tipo de serviço *
                     </Label>
-                    <Select
-                      value={formData.tipoServico}
-                      onValueChange={(value) => setFormData({ ...formData, tipoServico: value })}
-                      required
-                    >
-                      <SelectTrigger className="h-10 text-sm bg-muted/50 border-border/50 focus:border-primary">
-                        <SelectValue placeholder="Selecione o serviço" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-card border-border">
-                        {serviceTypes.map((type) => (
-                          <SelectItem key={type} value={type} className="text-sm">
-                            {type}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <div className="relative">
+                      <Select
+                        value={formData.tipoServico}
+                        onValueChange={(value) => setFormData({ ...formData, tipoServico: value })}
+                        required
+                      >
+                        <SelectTrigger className={cn(
+                          "h-10 text-sm bg-muted/50 border-border/50 focus:border-primary",
+                          isTipoServicoValid && "border-green-500/50 pr-10"
+                        )}>
+                          <SelectValue placeholder="Selecione o serviço" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-card border-border">
+                          {serviceTypes.map((type) => (
+                            <SelectItem key={type} value={type} className="text-sm">
+                              {type}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      {isTipoServicoValid && (
+                        <CheckCircle className="absolute right-10 top-1/2 -translate-y-1/2 w-4 h-4 text-green-500 animate-scale-in pointer-events-none" />
+                      )}
+                    </div>
                   </div>
 
                   {/* Detalhes */}

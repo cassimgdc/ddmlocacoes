@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { InputWithCheck } from '@/components/ui/input-with-check';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import {
@@ -10,10 +11,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { MessageCircle, MapPin, Wrench, FileText, ArrowRight, Loader2, User, Phone } from 'lucide-react';
+import { MessageCircle, MapPin, Wrench, FileText, ArrowRight, Loader2, User, Phone, CheckCircle } from 'lucide-react';
 import { usePhoneFormat } from '@/hooks/usePhoneFormat';
 import { useSpamProtection } from '@/hooks/useSpamProtection';
 import { toast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
 const WEBHOOK_URL = 'https://n8n2.easybr.site/webhook/14f30970-8945-456f-9c1e-eba82b566d91';
 
@@ -105,22 +107,28 @@ const QuickQuoteForm = ({ equipmentName }: QuickQuoteFormProps) => {
     }
   };
 
+  // Validações por campo para checkmarks
+  const isNomeValid = formData.nome.trim().length >= 2;
+  const isLocalValid = formData.local.trim().length > 0;
+  const isTipoServicoValid = formData.tipoServico !== '';
+  const isTelefoneValid = isValidPhone();
+
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.nome.trim() || formData.nome.trim().length < 2) {
+    if (!isNomeValid) {
       newErrors.nome = 'Informe seu nome';
     }
     
-    if (!isValidPhone()) {
+    if (!isTelefoneValid) {
       newErrors.telefone = 'Telefone inválido';
     }
     
-    if (!formData.local.trim()) {
+    if (!isLocalValid) {
       newErrors.local = 'Informe o local do serviço';
     }
     
-    if (!formData.tipoServico) {
+    if (!isTipoServicoValid) {
       newErrors.tipoServico = 'Selecione o tipo de serviço';
     }
 
@@ -225,15 +233,15 @@ const QuickQuoteForm = ({ equipmentName }: QuickQuoteFormProps) => {
               <User className="w-4 h-4 text-primary" />
               Seu nome *
             </Label>
-            <Input
+            <InputWithCheck
               id="nome"
               placeholder="Nome completo"
               value={formData.nome}
               onChange={(e) => handleInputChange('nome', e.target.value)}
-              className={`h-11 bg-muted/50 border-border/50 focus:border-primary transition-colors ${
-                errors.nome ? 'border-red-500 focus:border-red-500' : ''
-              }`}
+              className="h-11 bg-muted/50 border-border/50 focus:border-primary transition-colors"
               maxLength={100}
+              isValid={isNomeValid}
+              hasError={!!errors.nome}
             />
             {errors.nome && (
               <p className="text-xs text-red-500">{errors.nome}</p>
@@ -253,20 +261,27 @@ const QuickQuoteForm = ({ equipmentName }: QuickQuoteFormProps) => {
                 className="h-11 w-16 text-center bg-muted/50 border-border/50 font-medium"
                 maxLength={4}
               />
-              <Input
-                id="telefone"
-                type="tel"
-                inputMode="numeric"
-                placeholder="(31) 99999-9999"
-                value={phone}
-                onChange={(e) => {
-                  handlePhoneChange(e.target.value);
-                  if (errors.telefone) setErrors((prev) => ({ ...prev, telefone: '' }));
-                }}
-                className={`h-11 flex-1 bg-muted/50 border-border/50 focus:border-primary transition-colors ${
-                  errors.telefone ? 'border-red-500 focus:border-red-500' : ''
-                }`}
-              />
+              <div className="relative flex-1">
+                <Input
+                  id="telefone"
+                  type="tel"
+                  inputMode="numeric"
+                  placeholder="(31) 99999-9999"
+                  value={phone}
+                  onChange={(e) => {
+                    handlePhoneChange(e.target.value);
+                    if (errors.telefone) setErrors((prev) => ({ ...prev, telefone: '' }));
+                  }}
+                  className={cn(
+                    "h-11 bg-muted/50 border-border/50 focus:border-primary transition-colors",
+                    errors.telefone && "border-red-500 focus:border-red-500",
+                    isTelefoneValid && !errors.telefone && "border-green-500/50 pr-10"
+                  )}
+                />
+                {isTelefoneValid && !errors.telefone && (
+                  <CheckCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-green-500 animate-scale-in" />
+                )}
+              </div>
             </div>
             {errors.telefone && (
               <p className="text-xs text-red-500">{errors.telefone}</p>
@@ -279,15 +294,15 @@ const QuickQuoteForm = ({ equipmentName }: QuickQuoteFormProps) => {
               <MapPin className="w-4 h-4 text-primary" />
               Local do serviço *
             </Label>
-            <Input
+            <InputWithCheck
               id="local"
               placeholder="Ex: Sete Lagoas, Bairro Centro"
               value={formData.local}
               onChange={(e) => handleInputChange('local', e.target.value)}
-              className={`h-11 bg-muted/50 border-border/50 focus:border-primary transition-colors ${
-                errors.local ? 'border-red-500 focus:border-red-500' : ''
-              }`}
+              className="h-11 bg-muted/50 border-border/50 focus:border-primary transition-colors"
               maxLength={200}
+              isValid={isLocalValid}
+              hasError={!!errors.local}
             />
             {errors.local && (
               <p className="text-xs text-red-500">{errors.local}</p>
@@ -300,25 +315,32 @@ const QuickQuoteForm = ({ equipmentName }: QuickQuoteFormProps) => {
               <Wrench className="w-4 h-4 text-primary" />
               Tipo de serviço *
             </Label>
-            <Select
-              value={formData.tipoServico}
-              onValueChange={(value) => handleInputChange('tipoServico', value)}
-            >
-              <SelectTrigger 
-                className={`h-11 bg-muted/50 border-border/50 focus:border-primary transition-colors ${
-                  errors.tipoServico ? 'border-red-500 focus:border-red-500' : ''
-                }`}
+            <div className="relative">
+              <Select
+                value={formData.tipoServico}
+                onValueChange={(value) => handleInputChange('tipoServico', value)}
               >
-                <SelectValue placeholder="Selecione o serviço" />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-border">
-                {serviceTypes.map((type) => (
-                  <SelectItem key={type} value={type} className="focus:bg-primary/10">
-                    {type}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+                <SelectTrigger 
+                  className={cn(
+                    "h-11 bg-muted/50 border-border/50 focus:border-primary transition-colors",
+                    errors.tipoServico && "border-red-500 focus:border-red-500",
+                    isTipoServicoValid && !errors.tipoServico && "border-green-500/50 pr-10"
+                  )}
+                >
+                  <SelectValue placeholder="Selecione o serviço" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border">
+                  {serviceTypes.map((type) => (
+                    <SelectItem key={type} value={type} className="focus:bg-primary/10">
+                      {type}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {isTipoServicoValid && !errors.tipoServico && (
+                <CheckCircle className="absolute right-10 top-1/2 -translate-y-1/2 w-4 h-4 text-green-500 animate-scale-in pointer-events-none" />
+              )}
+            </div>
             {errors.tipoServico && (
               <p className="text-xs text-red-500">{errors.tipoServico}</p>
             )}
