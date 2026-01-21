@@ -235,47 +235,101 @@ const Index = () => {
               </h2>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2 md:gap-6">
+            <div className="grid md:grid-cols-2 gap-4 md:gap-6">
               {/* Por Hora */}
-              <div className="p-5 md:p-6 rounded-2xl bg-card border border-border/50 opacity-0 animate-fade-in-up stagger-1 card-hover-lift gradient-border">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-accent/10 rounded-xl flex items-center justify-center flex-shrink-0">
+              <div className="p-5 md:p-7 rounded-2xl bg-card border border-border/50 opacity-0 animate-fade-in-up stagger-1 card-hover-lift gradient-border">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                     <Clock className="w-6 h-6 text-primary" />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-baseline justify-between gap-2 flex-wrap">
-                      <h3 className="font-bold text-foreground text-base md:text-lg">Por Hora</h3>
-                      <p className="text-2xl md:text-3xl font-black text-gradient-vivid whitespace-nowrap">R$ 200</p>
-                    </div>
-                    <p className="text-muted-foreground text-sm mt-1">
-                      Mínimo 2h. Operador e combustível inclusos.
-                    </p>
+                  <div>
+                    <h3 className="text-lg md:text-xl font-bold text-foreground">Por Hora</h3>
+                    <p className="text-sm text-muted-foreground">Ideal para serviços pontuais</p>
                   </div>
                 </div>
+
+                <div className="mb-4">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-3xl md:text-4xl font-black text-gradient-vivid">R$ 200</span>
+                    <span className="text-muted-foreground">/hora</span>
+                  </div>
+                </div>
+
+                <ul className="space-y-2 mb-4">
+                  <li className="flex items-center gap-3 text-sm text-muted-foreground">
+                    <CheckCircle2 className="w-4 h-4 text-ddm-success" />
+                    Operador experiente incluso
+                  </li>
+                  <li className="flex items-center gap-3 text-sm text-muted-foreground">
+                    <CheckCircle2 className="w-4 h-4 text-ddm-success" />
+                    Combustível incluso
+                  </li>
+                  <li className="flex items-center gap-3 text-sm text-muted-foreground">
+                    <CheckCircle2 className="w-4 h-4 text-ddm-success" />
+                    Mínimo de 2 horas
+                  </li>
+                </ul>
+
+                <Button variant="outline" className="w-full" asChild>
+                  <Link to="/contato">
+                    Solicitar Orçamento
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
+                </Button>
               </div>
 
               {/* Por Diária - Featured */}
-              <div className="relative p-5 md:p-6 rounded-2xl bg-card border-2 border-primary/50 opacity-0 animate-fade-in-up stagger-2 card-hover-lift animate-glow-pulse">
+              <div className="relative p-5 md:p-7 rounded-2xl bg-card border-2 border-primary/50 opacity-0 animate-fade-in-up stagger-2 card-hover-lift animate-glow-pulse">
                 {/* Popular badge */}
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold">
+                  <span className="px-4 py-1 rounded-full bg-primary text-primary-foreground text-sm font-semibold">
                     Mais Popular
                   </span>
                 </div>
-                <div className="flex items-center gap-4 pt-1">
-                  <div className="w-14 h-14 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
+
+                <div className="flex items-center gap-3 mb-4 pt-2">
+                  <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center">
                     <Zap className="w-6 h-6 text-primary-foreground" />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-baseline justify-between gap-2 flex-wrap">
-                      <h3 className="font-bold text-foreground text-base md:text-lg">Por Diária</h3>
-                      <p className="text-xl md:text-2xl font-black text-gradient-vivid whitespace-nowrap">Sob Consulta</p>
-                    </div>
-                    <p className="text-muted-foreground text-sm mt-1">
-                      8h de trabalho. Melhor custo-benefício.
-                    </p>
+                  <div>
+                    <h3 className="text-lg md:text-xl font-bold text-foreground">Por Diária</h3>
+                    <p className="text-sm text-muted-foreground">Melhor custo-benefício</p>
                   </div>
                 </div>
+
+                <div className="mb-4">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-3xl md:text-4xl font-black text-gradient-vivid">Sob Consulta</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-1">Valor varia conforme distância</p>
+                </div>
+
+                <ul className="space-y-2 mb-4">
+                  <li className="flex items-center gap-3 text-sm text-muted-foreground">
+                    <CheckCircle2 className="w-4 h-4 text-ddm-success" />
+                    Operador experiente incluso
+                  </li>
+                  <li className="flex items-center gap-3 text-sm text-muted-foreground">
+                    <CheckCircle2 className="w-4 h-4 text-ddm-success" />
+                    Combustível incluso
+                  </li>
+                  <li className="flex items-center gap-3 text-sm text-muted-foreground">
+                    <CheckCircle2 className="w-4 h-4 text-ddm-success" />
+                    8 horas de trabalho
+                  </li>
+                  <li className="flex items-center gap-3 text-sm text-muted-foreground">
+                    <CheckCircle2 className="w-4 h-4 text-ddm-success" />
+                    Melhor custo por hora
+                  </li>
+                </ul>
+
+                <Button variant="cta" className="w-full group" asChild>
+                  <Link to="/contato">
+                    <MessageCircle className="w-4 h-4 group-hover:animate-wiggle" />
+                    Pedir Orçamento
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </Button>
               </div>
             </div>
 
