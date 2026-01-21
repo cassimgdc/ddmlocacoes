@@ -86,6 +86,7 @@ const ServicesCarousel = ({
   const [isPaused, setIsPaused] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [slideDirection, setSlideDirection] = useState<'left' | 'right' | null>(null);
 
   // Estados para gestos touch no lightbox
   const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
@@ -163,11 +164,15 @@ const ServicesCarousel = ({
   };
 
   const lightboxPrev = () => {
+    setSlideDirection('right');
     setLightboxIndex(prev => (prev === 0 ? servicos.length - 1 : prev - 1));
+    setTimeout(() => setSlideDirection(null), 300);
   };
 
   const lightboxNext = () => {
+    setSlideDirection('left');
     setLightboxIndex(prev => (prev === servicos.length - 1 ? 0 : prev + 1));
+    setTimeout(() => setSlideDirection(null), 300);
   };
 
   // Navegação por teclado no lightbox
@@ -230,15 +235,33 @@ const ServicesCarousel = ({
     setIsDragging(false);
   };
 
-  // Estilo dinâmico para feedback visual durante o arraste
-  const imageStyle = isDragging ? {
-    transform: `translateY(${Math.max(0, touchDelta.y * 0.5)}px)`,
-    opacity: 1 - Math.min(0.5, Math.max(0, touchDelta.y) / 300),
-    transition: 'none'
-  } : {
-    transform: 'translateY(0)',
-    opacity: 1,
-    transition: 'transform 0.2s ease-out, opacity 0.2s ease-out'
+  // Estilo dinâmico para feedback visual durante o arraste e transições
+  const getImageStyle = () => {
+    if (isDragging) {
+      return {
+        transform: `translate(${touchDelta.x * 0.3}px, ${Math.max(0, touchDelta.y * 0.5)}px)`,
+        opacity: 1 - Math.min(0.5, Math.max(0, touchDelta.y) / 300),
+        transition: 'none'
+      };
+    }
+    
+    if (slideDirection === 'left') {
+      return {
+        animation: 'slideInFromRight 0.3s ease-out forwards'
+      };
+    }
+    
+    if (slideDirection === 'right') {
+      return {
+        animation: 'slideInFromLeft 0.3s ease-out forwards'
+      };
+    }
+    
+    return {
+      transform: 'translate(0, 0)',
+      opacity: 1,
+      transition: 'transform 0.2s ease-out, opacity 0.2s ease-out'
+    };
   };
 
   return (
@@ -403,11 +426,21 @@ const ServicesCarousel = ({
               <ChevronLeft className="w-8 h-8 text-white" />
             </button>
 
-            {/* Imagem com feedback visual durante arraste */}
+            {/* Imagem com feedback visual durante arraste e transição de slide */}
             <div 
               className="relative max-w-5xl w-full mx-4 md:mx-16 select-none"
-              style={imageStyle}
+              style={getImageStyle()}
             >
+              <style>{`
+                @keyframes slideInFromRight {
+                  from { transform: translateX(100px); opacity: 0; }
+                  to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideInFromLeft {
+                  from { transform: translateX(-100px); opacity: 0; }
+                  to { transform: translateX(0); opacity: 1; }
+                }
+              `}</style>
               <img 
                 src={servicos[lightboxIndex].imagem} 
                 alt={servicos[lightboxIndex].titulo}
@@ -423,12 +456,6 @@ const ServicesCarousel = ({
             >
               <ChevronRight className="w-8 h-8 text-white" />
             </button>
-
-            {/* Indicador de swipe para mobile */}
-            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-white/40 text-xs md:hidden flex flex-col items-center gap-1">
-              <span className="animate-bounce">↓</span>
-              <span>Puxe para fechar</span>
-            </div>
 
             {/* Contador */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/60 text-sm">
