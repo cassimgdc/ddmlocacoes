@@ -87,6 +87,11 @@ const ServicesCarousel = ({
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
+  // Estados para gestos touch no lightbox
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
+  const [touchDelta, setTouchDelta] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+
   const plugin = useRef(
     Autoplay({ delay: AUTOPLAY_DELAY, stopOnInteraction: true })
   );
@@ -182,6 +187,59 @@ const ServicesCarousel = ({
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [lightboxOpen]);
+
+  // Handlers de gestos touch no lightbox
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    setTouchStart({ x: touch.clientX, y: touch.clientY });
+    setTouchDelta({ x: 0, y: 0 });
+    setIsDragging(true);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!touchStart || !isDragging) return;
+    
+    const touch = e.touches[0];
+    const deltaX = touch.clientX - touchStart.x;
+    const deltaY = touch.clientY - touchStart.y;
+    
+    setTouchDelta({ x: deltaX, y: deltaY });
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart) return;
+    
+    const SWIPE_THRESHOLD = 80;
+    
+    // Swipe Down - Fechar lightbox
+    if (touchDelta.y > SWIPE_THRESHOLD && Math.abs(touchDelta.x) < SWIPE_THRESHOLD) {
+      closeLightbox();
+    }
+    // Swipe Left - Próxima imagem
+    else if (touchDelta.x < -SWIPE_THRESHOLD && Math.abs(touchDelta.y) < SWIPE_THRESHOLD) {
+      lightboxNext();
+    }
+    // Swipe Right - Imagem anterior
+    else if (touchDelta.x > SWIPE_THRESHOLD && Math.abs(touchDelta.y) < SWIPE_THRESHOLD) {
+      lightboxPrev();
+    }
+    
+    // Reset estados
+    setTouchStart(null);
+    setTouchDelta({ x: 0, y: 0 });
+    setIsDragging(false);
+  };
+
+  // Estilo dinâmico para feedback visual durante o arraste
+  const imageStyle = isDragging ? {
+    transform: `translateY(${Math.max(0, touchDelta.y * 0.5)}px)`,
+    opacity: 1 - Math.min(0.5, Math.max(0, touchDelta.y) / 300),
+    transition: 'none'
+  } : {
+    transform: 'translateY(0)',
+    opacity: 1,
+    transition: 'transform 0.2s ease-out, opacity 0.2s ease-out'
+  };
 
   return (
     <div className={className}>
@@ -323,7 +381,12 @@ const ServicesCarousel = ({
       {/* Lightbox Fullscreen */}
       <Dialog open={lightboxOpen} onOpenChange={setLightboxOpen}>
         <DialogContent className="max-w-[95vw] max-h-[95vh] p-0 bg-black/95 border-none">
-          <div className="relative w-full h-full flex items-center justify-center">
+          <div 
+            className="relative w-full h-full flex items-center justify-center touch-pan-y"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             {/* Botão fechar */}
             <button 
               onClick={closeLightbox}
@@ -332,30 +395,40 @@ const ServicesCarousel = ({
               <X className="w-6 h-6 text-white" />
             </button>
 
-            {/* Navegação anterior */}
+            {/* Navegação anterior - escondido em mobile */}
             <button 
               onClick={lightboxPrev}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 hidden md:flex items-center justify-center transition-colors"
             >
               <ChevronLeft className="w-8 h-8 text-white" />
             </button>
 
-            {/* Imagem */}
-            <div className="relative max-w-5xl w-full mx-4 md:mx-16">
+            {/* Imagem com feedback visual durante arraste */}
+            <div 
+              className="relative max-w-5xl w-full mx-4 md:mx-16 select-none"
+              style={imageStyle}
+            >
               <img 
                 src={servicos[lightboxIndex].imagem} 
                 alt={servicos[lightboxIndex].titulo}
-                className="w-full h-auto max-h-[85vh] object-contain rounded-lg"
+                className="w-full h-auto max-h-[85vh] object-contain rounded-lg pointer-events-none"
+                draggable={false}
               />
             </div>
 
-            {/* Navegação próximo */}
+            {/* Navegação próximo - escondido em mobile */}
             <button 
               onClick={lightboxNext}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 hidden md:flex items-center justify-center transition-colors"
             >
               <ChevronRight className="w-8 h-8 text-white" />
             </button>
+
+            {/* Indicador de swipe para mobile */}
+            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-white/40 text-xs md:hidden flex flex-col items-center gap-1">
+              <span className="animate-bounce">↓</span>
+              <span>Puxe para fechar</span>
+            </div>
 
             {/* Contador */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/60 text-sm">
