@@ -4,19 +4,30 @@ import { Button } from '@/components/ui/button';
 import { Menu, MessageCircle, ArrowRight } from 'lucide-react';
 import logoImg from '@/assets/logo-ddm.png';
 import MobileMenu from './MobileMenu';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showMobileCTA, setShowMobileCTA] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
+      
+      // Mostrar CTA mobile apenas após passar do Hero na home, ou sempre em outras páginas
+      const heroThreshold = window.innerHeight * 0.6;
+      const isHomePage = location.pathname === '/';
+      setShowMobileCTA(!isHomePage || window.scrollY > heroThreshold);
     };
+    
+    // Verificar estado inicial
+    handleScroll();
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   const navLinks = [
     { href: '/', label: 'Início' },
@@ -75,8 +86,9 @@ const Header = () => {
               ))}
             </nav>
 
-            {/* Desktop CTA - agora vai para /contato */}
-            <div className="hidden md:flex items-center">
+            {/* Desktop CTA + Theme Toggle */}
+            <div className="hidden md:flex items-center gap-3">
+              <ThemeToggle />
               <Button variant="cta" size="default" asChild>
                 <Link to="/contato">
                   <MessageCircle className="w-4 h-4" />
@@ -86,14 +98,28 @@ const Header = () => {
               </Button>
             </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(true)}
-              className="md:hidden w-11 h-11 flex items-center justify-center rounded-xl bg-muted text-foreground hover:bg-muted/80 active:scale-95 transition-all"
-              aria-label="Abrir menu"
-            >
-              <Menu className="w-6 h-6" />
-            </button>
+            {/* Mobile Controls */}
+            <div className="md:hidden flex items-center gap-2">
+              {/* Mobile CTA - aparece apenas após scroll no Hero */}
+              <div className={`transition-all duration-300 ${showMobileCTA ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}>
+                <Button variant="cta" size="sm" asChild className="h-9 px-3 text-xs">
+                  <Link to="/contato">
+                    <MessageCircle className="w-3.5 h-3.5" />
+                    Orçamento
+                  </Link>
+                </Button>
+              </div>
+              
+              <ThemeToggle />
+              
+              <button
+                onClick={() => setIsMobileMenuOpen(true)}
+                className="w-11 h-11 flex items-center justify-center rounded-xl bg-muted text-foreground hover:bg-muted/80 active:scale-95 transition-all"
+                aria-label="Abrir menu"
+              >
+                <Menu className="w-6 h-6" />
+              </button>
+            </div>
           </div>
         </div>
       </header>

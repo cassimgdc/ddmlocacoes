@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/layout/ScrollToTop";
 import { HelmetProvider, Helmet } from "react-helmet-async";
+import { ThemeProvider } from "@/components/ui/theme-provider";
 import Index from "./pages/Index";
 import Servicos from "./pages/Servicos";
 import Equipamento from "./pages/Equipamento";
@@ -18,10 +19,11 @@ const siteUrl = "https://dig-and-haul-pro.lovable.app";
 const ogImageUrl = `${siteUrl}/og-image.png`;
 
 const App = () => (
-  <HelmetProvider>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Helmet>
+  <ThemeProvider attribute="class" defaultTheme="dark" storageKey="ddm-theme" enableSystem={false}>
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Helmet>
           {/* Primary Meta Tags */}
           <title>DDM Locações - Aluguel de Retroescavadeira em Sete Lagoas</title>
           <meta name="title" content="DDM Locações - Aluguel de Retroescavadeira em Sete Lagoas" />
@@ -117,24 +119,25 @@ const App = () => (
               ]
             }
           })}
-        </script>
-        
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/servicos" element={<Servicos />} />
-            <Route path="/equipamento" element={<Equipamento />} />
-            <Route path="/duvidas" element={<Duvidas />} />
-            <Route path="/contato" element={<Contato />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </HelmetProvider>
+          </script>
+          
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/servicos" element={<Servicos />} />
+              <Route path="/equipamento" element={<Equipamento />} />
+              <Route path="/duvidas" element={<Duvidas />} />
+              <Route path="/contato" element={<Contato />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
+  </ThemeProvider>
 );
 
 export default App;
