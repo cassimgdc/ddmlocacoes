@@ -182,16 +182,16 @@ const Equipamento = () => {
             </p>
           </div>
 
-          {/* Video container - MUCH LARGER with spotlight effect */}
-          <div className="max-w-md md:max-w-lg lg:max-w-xl mx-auto opacity-0 animate-reveal-up stagger-2">
+          {/* Video container - with space for mute button */}
+          <div className="max-w-xs sm:max-w-sm md:max-w-md mx-auto px-16 opacity-0 animate-reveal-up stagger-2">
             <div className="video-spotlight">
               {/* Glow border animation */}
-              <div className="relative rounded-2xl animate-glow-pulse overflow-hidden">
+              <div className="relative rounded-2xl animate-glow-pulse">
                 {/* Gradient border */}
                 <div className="absolute -inset-1 bg-gradient-to-r from-primary via-accent to-primary rounded-2xl opacity-60 blur-sm" />
                 
-                {/* Video card */}
-                <div className="relative bg-card rounded-xl overflow-hidden">
+                {/* Video card - no bg-card wrapper */}
+                <div className="relative rounded-xl overflow-hidden">
                   <MediaCard
                     type="video"
                     src="https://www.youtube.com/shorts/cTclcnHgReA"
