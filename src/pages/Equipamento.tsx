@@ -81,12 +81,12 @@ const Equipamento = () => {
             {/* Right - Content */}
             <div className="order-2 space-y-5 md:space-y-6">
               {/* Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-ddm-success/10 border border-ddm-success/20 opacity-0 animate-fade-in-up">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 opacity-0 animate-fade-in-up">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-ddm-success opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-ddm-success"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                 </span>
-                <span className="text-sm font-medium text-ddm-success">Disponível agora</span>
+                <span className="text-sm font-medium text-green-600 dark:text-green-400">Disponível agora</span>
               </div>
 
               {/* Title */}
@@ -134,7 +134,7 @@ const Equipamento = () => {
       </section>
 
       {/* Capabilities Section */}
-      <section className="py-12 md:py-20 bg-secondary/30 section-glow">
+      <section className="py-12 md:py-20 bg-muted/50 dark:bg-secondary/30 section-glow">
         <div className="container-ddm">
           <div className="text-center mb-8 md:mb-12 opacity-0 animate-fade-in-up">
             <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-3">
@@ -152,8 +152,8 @@ const Equipamento = () => {
                 className="flex items-center gap-3 p-4 md:p-5 rounded-xl bg-card border border-border/50 opacity-0 animate-fade-in-up card-hover-lift"
                 style={{ animationDelay: `${(index + 1) * 100}ms` }}
               >
-                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-ddm-success/10 flex items-center justify-center">
-                  <CheckCircle2 className="w-4 h-4 text-ddm-success" />
+                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center">
+                  <CheckCircle2 className="w-4 h-4 text-green-600 dark:text-green-400" />
                 </div>
                 <span className="text-sm md:text-base font-medium text-foreground">{capability}</span>
               </div>
