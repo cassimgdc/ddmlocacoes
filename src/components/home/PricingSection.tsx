@@ -105,8 +105,7 @@ const PricingSection = () => {
         </div>
 
         <p className="text-center text-muted-foreground text-sm max-w-2xl mx-auto">
-          * Os valores podem variar conforme o tipo de serviço, condições do terreno, 
-          distância de deslocamento e tempo estimado. Solicite um orçamento personalizado.
+          *Valores podem variar conforme serviço, terreno e deslocamento.
         </p>
       </div>
     </section>

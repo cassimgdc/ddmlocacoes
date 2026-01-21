@@ -46,7 +46,7 @@ const Index = () => {
 
             {/* Description */}
             <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto opacity-0 animate-fade-in-up stagger-1">
-              Serviço com operador experiente, máquina revisada e atendimento rápido em Sete Lagoas e região.
+              Serviço com operador experiente, máquina revisada e atendimento rápido em <span className="text-foreground font-semibold">Sete Lagoas e região</span>.
             </p>
 
             {/* Stats row */}
@@ -55,7 +55,7 @@ const Index = () => {
                 <div className="p-2 rounded-lg bg-primary/10">
                   <MapPin className="w-4 h-4 text-primary" />
                 </div>
-                <span className="text-sm text-muted-foreground">Sete Lagoas e região</span>
+                <span className="text-sm text-foreground font-medium">Sete Lagoas e região</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="p-2 rounded-lg bg-primary/10">

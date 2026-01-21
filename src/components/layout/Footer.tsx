@@ -18,7 +18,7 @@ const Footer = () => {
               className="h-10 md:h-16 w-auto mb-3"
             />
             <p className="text-muted-foreground text-xs md:text-sm leading-relaxed">
-              Aluguel de retroescavadeira com operador experiente em Sete Lagoas e região.
+              Aluguel de retroescavadeira com operador experiente em <span className="text-foreground font-medium">Sete Lagoas e região</span>.
             </p>
           </div>
 
