@@ -46,6 +46,10 @@ const Header = () => {
     setIsMobileMenuOpen(false);
   }, []);
 
+  const handleNavClick = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  };
+
   return (
     <>
       <header
@@ -58,7 +62,7 @@ const Header = () => {
         <div className="container-ddm">
           <div className="flex items-center justify-between h-16 md:h-24">
             {/* Logo */}
-            <Link to="/" className="flex items-center group">
+            <Link to="/" className="flex items-center group" onClick={handleNavClick}>
               <img 
                 src={logoImg} 
                 alt="DDM Locações" 
@@ -72,6 +76,7 @@ const Header = () => {
                 <Link
                   key={link.href}
                   to={link.href}
+                  onClick={handleNavClick}
                   className={`relative px-4 py-2 font-medium text-sm transition-colors rounded-lg ${
                     isActiveLink(link.href)
                       ? 'text-primary'

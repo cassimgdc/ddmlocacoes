@@ -79,7 +79,10 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
               <Link
                 key={link.href}
                 to={link.href}
-                onClick={onClose}
+                onClick={() => {
+                  onClose();
+                  window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                }}
                 className={`flex items-center gap-4 px-4 py-4 rounded-xl transition-all duration-200 active:scale-[0.98] ${
                   isActive
                     ? 'bg-primary/15 border border-primary/30'
@@ -109,7 +112,10 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
         {/* CTA Orçamento - Fixed at bottom */}
         <div className="absolute bottom-0 left-0 right-0 p-5 border-t border-border/50 bg-background safe-area-bottom">
           <Button variant="cta" size="lg" className="w-full h-14 text-base" asChild>
-            <Link to="/contato" onClick={onClose}>
+            <Link to="/contato" onClick={() => {
+              onClose();
+              window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+            }}>
               <MessageCircle className="w-5 h-5" />
               Pedir Orçamento
               <ArrowRight className="w-4 h-4" />
