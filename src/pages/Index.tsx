@@ -157,7 +157,7 @@ const Index = () => {
 
                 <div className="mb-4">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-3xl md:text-4xl font-black text-gradient-vivid">R$ 200</span>
+                    <span className="text-3xl md:text-4xl font-black text-gradient-vivid">R$ 200*</span>
                     <span className="text-muted-foreground">/hora</span>
                   </div>
                 </div>
