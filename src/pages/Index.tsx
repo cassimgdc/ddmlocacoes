@@ -375,9 +375,9 @@ const Index = () => {
                 </Link>
               </Button>
               <Button variant="outline" size="xl" asChild className="group w-full sm:w-auto">
-                <a href="tel:+5531991376230">
+                <a href="tel:+5531971067272">
                   <Phone className="w-5 h-5" />
-                  (31) 99137-6230
+                  (31) 97106-7272
                 </a>
               </Button>
             </div>
