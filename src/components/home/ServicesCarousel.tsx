@@ -94,7 +94,7 @@ const ServicesCarousel = ({
   const [isDragging, setIsDragging] = useState(false);
 
   const plugin = useRef(
-    Autoplay({ delay: AUTOPLAY_DELAY, stopOnInteraction: true })
+    Autoplay({ delay: AUTOPLAY_DELAY, stopOnInteraction: false, stopOnMouseEnter: true })
   );
 
   // Circunferência do círculo (2 * PI * r)
