@@ -10,15 +10,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { MessageCircle, MapPin, Wrench, FileText, ArrowRight, Loader2 } from 'lucide-react';
+import { MessageCircle, MapPin, Wrench, FileText, ArrowRight, Loader2, User, Phone } from 'lucide-react';
+import { usePhoneFormat } from '@/hooks/usePhoneFormat';
+import { useSpamProtection } from '@/hooks/useSpamProtection';
+import { toast } from '@/hooks/use-toast';
 
-const QuickQuoteForm = () => {
+const WEBHOOK_URL = 'https://n8n2.easybr.site/webhook/14f30970-8945-456f-9c1e-eba82b566d91';
+
+interface QuickQuoteFormProps {
+  equipmentName?: string;
+}
+
+const QuickQuoteForm = ({ equipmentName }: QuickQuoteFormProps) => {
   const [formData, setFormData] = useState({
+    nome: '',
     local: '',
     tipoServico: '',
     detalhes: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const { 
+    ddi, phone, rawPhone, 
+    handlePhoneChange, handleDdiChange, 
+    isValidPhone, getPhoneForSubmit, getFormattedPhone, resetPhone 
+  } = usePhoneFormat();
+
+  const {
+    honeypot, setHoneypot,
+    checkCanSubmit, registerSubmit, validateData,
+  } = useSpamProtection();
 
   const serviceTypes = [
     'Abertura de valas',
@@ -32,43 +54,138 @@ const QuickQuoteForm = () => {
 
   const formatWhatsAppMessage = () => {
     const lines = [
-      'Ola! Quero orcamento.',
+      '*Olá! Quero orçamento.*',
       '',
-      `Local: ${formData.local}`,
-      `Servico: ${formData.tipoServico}`,
+      `*Nome:* ${formData.nome.trim()}`,
+      `*Telefone:* ${getFormattedPhone()}`,
+      `*Local:* ${formData.local.trim()}`,
+      `*Serviço:* ${formData.tipoServico}`,
     ];
 
-    if (formData.detalhes) {
-      lines.push(`Detalhes: ${formData.detalhes}`);
+    if (equipmentName) {
+      lines.push(`*Equipamento:* ${equipmentName}`);
     }
 
-    lines.push('', 'Posso enviar fotos/video em seguida.');
+    if (formData.detalhes.trim()) {
+      lines.push(`*Detalhes:* ${formData.detalhes.trim()}`);
+    }
+
+    lines.push('', 'Posso enviar fotos/vídeo em seguida.');
 
     return encodeURIComponent(lines.join('\n'));
+  };
+
+  const sendToWebhook = async () => {
+    try {
+      const payload = {
+        nome: formData.nome.trim(),
+        telefone: getFormattedPhone(),
+        telefone_raw: getPhoneForSubmit(),
+        local: formData.local.trim(),
+        tipo_servico: formData.tipoServico,
+        equipamento: equipmentName || null,
+        detalhes: formData.detalhes.trim() || null,
+        data_hora: new Date().toISOString(),
+        origem: equipmentName ? 'site-equipamento' : 'site-formulario-rapido',
+      };
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+
+      await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+    } catch {
+      // Silently fail - WhatsApp is the primary channel
+    }
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.nome.trim() || formData.nome.trim().length < 2) {
+      newErrors.nome = 'Informe seu nome';
+    }
+    
+    if (!isValidPhone()) {
+      newErrors.telefone = 'Telefone inválido';
+    }
+    
+    if (!formData.local.trim()) {
+      newErrors.local = 'Informe o local do serviço';
+    }
+    
+    if (!formData.tipoServico) {
+      newErrors.tipoServico = 'Selecione o tipo de serviço';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.local || !formData.tipoServico) {
+    // Validação visual
+    if (!validateForm()) {
+      toast({
+        title: 'Campos obrigatórios',
+        description: 'Preencha todos os campos marcados.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    // Validação anti-spam
+    const dataValidation = validateData(formData.nome, rawPhone);
+    if (!dataValidation.canSubmit) {
+      toast({ title: 'Erro', description: dataValidation.errorMessage, variant: 'destructive' });
+      return;
+    }
+
+    const spamCheck = checkCanSubmit(rawPhone);
+    if (!spamCheck.canSubmit) {
+      toast({ title: 'Aguarde', description: spamCheck.errorMessage, variant: 'destructive' });
       return;
     }
 
     setIsSubmitting(true);
 
+    // Abre WhatsApp imediatamente
     const message = formatWhatsAppMessage();
     const whatsappUrl = `https://wa.me/5531971067272?text=${message}`;
-
     const w = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
     if (!w) {
       window.location.assign(whatsappUrl);
     }
 
-    setIsSubmitting(false);
+    registerSubmit(rawPhone);
+    sendToWebhook();
+
+    toast({ 
+      title: 'Enviado!', 
+      description: 'WhatsApp aberto em nova aba.',
+    });
+
+    // Reset após delay
+    setTimeout(() => {
+      setFormData({ nome: '', local: '', tipoServico: '', detalhes: '' });
+      resetPhone();
+      setErrors({});
+      setIsSubmitting(false);
+    }, 3000);
   };
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: '' }));
+    }
   };
 
   return (
@@ -81,15 +198,84 @@ const QuickQuoteForm = () => {
           <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/20 text-primary rounded-full text-sm font-semibold mb-2">
             ⚡ Sem compromisso
           </span>
+          {equipmentName && (
+            <p className="text-primary font-medium text-sm mb-1">🚜 {equipmentName}</p>
+          )}
           <p className="text-muted-foreground text-sm">
             Preencha e envie direto para nosso WhatsApp
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Honeypot anti-spam */}
+          <input
+            type="text"
+            name="website"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0, width: 0 }}
+          />
+
+          {/* Nome */}
+          <div className="space-y-1.5">
+            <Label htmlFor="nome" className="text-foreground text-sm flex items-center gap-2">
+              <User className="w-4 h-4 text-primary" />
+              Seu nome *
+            </Label>
+            <Input
+              id="nome"
+              placeholder="Nome completo"
+              value={formData.nome}
+              onChange={(e) => handleInputChange('nome', e.target.value)}
+              className={`h-11 bg-muted/50 border-border/50 focus:border-primary transition-colors ${
+                errors.nome ? 'border-red-500 focus:border-red-500' : ''
+              }`}
+              maxLength={100}
+            />
+            {errors.nome && (
+              <p className="text-xs text-red-500">{errors.nome}</p>
+            )}
+          </div>
+
+          {/* Telefone */}
+          <div className="space-y-1.5">
+            <Label htmlFor="telefone" className="text-foreground text-sm flex items-center gap-2">
+              <Phone className="w-4 h-4 text-primary" />
+              Telefone (WhatsApp) *
+            </Label>
+            <div className="flex gap-2">
+              <Input
+                value={ddi}
+                onChange={(e) => handleDdiChange(e.target.value)}
+                className="h-11 w-16 text-center bg-muted/50 border-border/50 font-medium"
+                maxLength={4}
+              />
+              <Input
+                id="telefone"
+                type="tel"
+                inputMode="numeric"
+                placeholder="(31) 99999-9999"
+                value={phone}
+                onChange={(e) => {
+                  handlePhoneChange(e.target.value);
+                  if (errors.telefone) setErrors((prev) => ({ ...prev, telefone: '' }));
+                }}
+                className={`h-11 flex-1 bg-muted/50 border-border/50 focus:border-primary transition-colors ${
+                  errors.telefone ? 'border-red-500 focus:border-red-500' : ''
+                }`}
+              />
+            </div>
+            {errors.telefone && (
+              <p className="text-xs text-red-500">{errors.telefone}</p>
+            )}
+          </div>
+
           {/* Local */}
-          <div className="space-y-2">
-            <Label htmlFor="local" className="text-foreground flex items-center gap-2">
+          <div className="space-y-1.5">
+            <Label htmlFor="local" className="text-foreground text-sm flex items-center gap-2">
               <MapPin className="w-4 h-4 text-primary" />
               Local do serviço *
             </Label>
@@ -98,23 +284,31 @@ const QuickQuoteForm = () => {
               placeholder="Ex: Sete Lagoas, Bairro Centro"
               value={formData.local}
               onChange={(e) => handleInputChange('local', e.target.value)}
-              className="h-12 bg-muted/50 border-border/50 focus:border-primary"
-              required
+              className={`h-11 bg-muted/50 border-border/50 focus:border-primary transition-colors ${
+                errors.local ? 'border-red-500 focus:border-red-500' : ''
+              }`}
+              maxLength={200}
             />
+            {errors.local && (
+              <p className="text-xs text-red-500">{errors.local}</p>
+            )}
           </div>
 
           {/* Tipo de Serviço */}
-          <div className="space-y-2">
-            <Label className="text-foreground flex items-center gap-2">
+          <div className="space-y-1.5">
+            <Label className="text-foreground text-sm flex items-center gap-2">
               <Wrench className="w-4 h-4 text-primary" />
               Tipo de serviço *
             </Label>
             <Select
               value={formData.tipoServico}
               onValueChange={(value) => handleInputChange('tipoServico', value)}
-              required
             >
-              <SelectTrigger className="h-12 bg-muted/50 border-border/50 focus:border-primary">
+              <SelectTrigger 
+                className={`h-11 bg-muted/50 border-border/50 focus:border-primary transition-colors ${
+                  errors.tipoServico ? 'border-red-500 focus:border-red-500' : ''
+                }`}
+              >
                 <SelectValue placeholder="Selecione o serviço" />
               </SelectTrigger>
               <SelectContent className="bg-card border-border">
@@ -125,11 +319,14 @@ const QuickQuoteForm = () => {
                 ))}
               </SelectContent>
             </Select>
+            {errors.tipoServico && (
+              <p className="text-xs text-red-500">{errors.tipoServico}</p>
+            )}
           </div>
 
           {/* Detalhes */}
-          <div className="space-y-2">
-            <Label htmlFor="detalhes" className="text-foreground flex items-center gap-2">
+          <div className="space-y-1.5">
+            <Label htmlFor="detalhes" className="text-foreground text-sm flex items-center gap-2">
               <FileText className="w-4 h-4 text-primary" />
               Detalhes (opcional)
             </Label>
@@ -139,7 +336,8 @@ const QuickQuoteForm = () => {
               rows={3}
               value={formData.detalhes}
               onChange={(e) => handleInputChange('detalhes', e.target.value)}
-              className="bg-muted/50 border-border/50 focus:border-primary resize-none"
+              className="bg-muted/50 border-border/50 focus:border-primary transition-colors resize-none"
+              maxLength={500}
             />
           </div>
 
@@ -149,7 +347,7 @@ const QuickQuoteForm = () => {
             variant="whatsapp" 
             size="xl" 
             className="w-full group"
-            disabled={isSubmitting || !formData.local || !formData.tipoServico}
+            disabled={isSubmitting}
           >
             {isSubmitting ? (
               <>
