@@ -356,23 +356,13 @@ const Servicos = () => {
               <ChevronLeft className="w-8 h-8 text-white" />
             </button>
 
-            {/* Imagem */}
-            <div className="relative max-w-4xl w-full mx-4 md:mx-16">
+            {/* Imagem - apenas imagem sem overlay de texto */}
+            <div className="relative max-w-5xl w-full mx-4 md:mx-16">
               <img 
                 src={servicos[lightboxIndex].imagem} 
                 alt={servicos[lightboxIndex].titulo}
-                className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
+                className="w-full h-auto max-h-[85vh] object-contain rounded-lg"
               />
-              
-              {/* Info do serviço */}
-              <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 bg-gradient-to-t from-black/80 to-transparent rounded-b-lg">
-                <h3 className="text-lg md:text-2xl font-bold text-white mb-1">
-                  {servicos[lightboxIndex].titulo}
-                </h3>
-                <p className="text-white/80 text-sm md:text-base">
-                  {servicos[lightboxIndex].descricao}
-                </p>
-              </div>
             </div>
 
             {/* Navegação próximo */}
