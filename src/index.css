@@ -281,6 +281,37 @@
     animation: glow 2s ease-in-out infinite alternate;
   }
 
+  /* NEW - Floating animation for hero images */
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  /* NEW - Shine effect for buttons */
+  .animate-shine {
+    background-size: 200% 100%;
+    animation: shine 3s ease-in-out infinite;
+  }
+
+  /* NEW - Scale pulse for attention */
+  .animate-scale-pulse {
+    animation: scalePulse 2s ease-in-out infinite;
+  }
+
+  /* NEW - Glow pulse for video */
+  .animate-glow-pulse {
+    animation: glowPulse 2.5s ease-in-out infinite;
+  }
+
+  /* NEW - Reveal from bottom */
+  .animate-reveal-up {
+    animation: revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* NEW - Border glow animation */
+  .animate-border-glow {
+    animation: borderGlow 3s ease-in-out infinite;
+  }
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -332,12 +363,72 @@
     }
   }
 
+  /* NEW Keyframes */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+
+  @keyframes shine {
+    0% {
+      background-position: 200% center;
+    }
+    100% {
+      background-position: -200% center;
+    }
+  }
+
+  @keyframes scalePulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.02);
+    }
+  }
+
+  @keyframes glowPulse {
+    0%, 100% {
+      box-shadow: 0 0 30px -5px hsl(45 100% 51% / 0.4), 0 0 60px -10px hsl(45 100% 51% / 0.2);
+    }
+    50% {
+      box-shadow: 0 0 50px -5px hsl(45 100% 51% / 0.6), 0 0 80px -10px hsl(45 100% 51% / 0.3);
+    }
+  }
+
+  @keyframes revealUp {
+    from {
+      opacity: 0;
+      transform: translateY(60px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes borderGlow {
+    0%, 100% {
+      border-color: hsl(45 100% 51% / 0.3);
+    }
+    50% {
+      border-color: hsl(45 100% 51% / 0.7);
+    }
+  }
+
+  /* Stagger delays - extended */
   .stagger-1 { animation-delay: 0.1s; }
   .stagger-2 { animation-delay: 0.2s; }
   .stagger-3 { animation-delay: 0.3s; }
   .stagger-4 { animation-delay: 0.4s; }
   .stagger-5 { animation-delay: 0.5s; }
   .stagger-6 { animation-delay: 0.6s; }
+  .stagger-7 { animation-delay: 0.7s; }
+  .stagger-8 { animation-delay: 0.8s; }
 
   .stagger-delay-1 { animation-delay: 0.1s; }
   .stagger-delay-2 { animation-delay: 0.2s; }
@@ -408,5 +499,68 @@
   /* Pull-to-refresh indicator area */
   .ptr-zone {
     overscroll-behavior-y: contain;
+  }
+
+  /* NEW - Card hover effects */
+  .card-hover-lift {
+    @apply transition-all duration-300;
+  }
+
+  .card-hover-lift:hover {
+    @apply -translate-y-2;
+    box-shadow: 0 25px 50px -12px hsl(45 100% 51% / 0.15), 0 12px 24px -8px rgba(0, 0, 0, 0.3);
+  }
+
+  /* NEW - Gradient border */
+  .gradient-border {
+    @apply relative;
+  }
+
+  .gradient-border::before {
+    content: '';
+    @apply absolute -inset-px rounded-2xl pointer-events-none;
+    background: linear-gradient(135deg, hsl(45 100% 51% / 0.5) 0%, hsl(30 100% 50% / 0.3) 50%, hsl(45 100% 51% / 0.5) 100%);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    padding: 2px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .gradient-border:hover::before {
+    opacity: 1;
+  }
+
+  /* NEW - Video spotlight effect */
+  .video-spotlight {
+    @apply relative;
+  }
+
+  .video-spotlight::before {
+    content: '';
+    @apply absolute -inset-8 rounded-3xl pointer-events-none;
+    background: radial-gradient(ellipse at center, hsl(45 100% 51% / 0.15) 0%, transparent 70%);
+  }
+
+  /* NEW - Hero image glow */
+  .hero-image-glow {
+    filter: drop-shadow(0 0 40px hsl(45 100% 51% / 0.3)) drop-shadow(0 20px 40px rgba(0, 0, 0, 0.4));
+  }
+
+  /* NEW - Text gradient enhanced */
+  .text-gradient-vivid {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(45 100% 55%) 0%, hsl(30 100% 50%) 50%, hsl(45 100% 60%) 100%);
+  }
+
+  /* NEW - Section divider glow */
+  .section-glow {
+    @apply relative;
+  }
+
+  .section-glow::after {
+    content: '';
+    @apply absolute inset-x-0 top-0 h-px;
+    background: linear-gradient(90deg, transparent 0%, hsl(45 100% 51% / 0.3) 50%, transparent 100%);
   }
 }

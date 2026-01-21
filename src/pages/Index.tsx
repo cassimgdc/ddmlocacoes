@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import Layout from '@/components/layout/Layout';
 import {
   MessageCircle,
@@ -13,8 +12,12 @@ import {
   CheckCircle2,
   MapPin,
   Clock,
-  Calendar,
+  Shield,
   ChevronRight,
+  Star,
+  Phone,
+  Zap,
+  Play,
 } from 'lucide-react';
 
 import case580m from '@/assets/case-580m.png';
@@ -36,92 +39,138 @@ const Index = () => {
         <link rel="canonical" href="https://dig-and-haul-pro.lovable.app/" />
       </Helmet>
       
-      {/* Hero */}
-      <section className="relative overflow-x-hidden pt-20 sm:pt-24 pb-8 md:pt-32 md:pb-16">
-        {/* Fundo com a retroescavadeira (mobile) */}
-        <div className="md:hidden pointer-events-none absolute inset-0 overflow-x-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
-          <img
-            src={case580m}
-            alt="Retroescavadeira Case 580M"
-            className="absolute right-[-20%] top-1/2 -translate-y-1/2 w-[680px] max-w-none opacity-75"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent" />
-        </div>
+      {/* Hero - Modernized with larger image */}
+      <section className="relative min-h-[85vh] md:min-h-[90vh] flex items-center overflow-hidden pt-16 md:pt-0">
+        {/* Background with gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/30" />
+        
+        {/* Decorative elements */}
+        <div className="absolute top-20 right-10 w-72 md:w-96 h-72 md:h-96 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 left-10 w-48 md:w-64 h-48 md:h-64 bg-accent/5 rounded-full blur-3xl" />
+        
+        {/* Animated grid pattern */}
+        <div className="absolute inset-0 opacity-[0.02]" style={{
+          backgroundImage: 'linear-gradient(hsl(var(--primary)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary)) 1px, transparent 1px)',
+          backgroundSize: '60px 60px'
+        }} />
 
-        <div className="container-ddm relative">
+        <div className="container-ddm relative z-10">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Texto */}
-            <div className="animate-fade-in">
-              <Badge className="bg-primary/10 text-primary border-primary/20 mb-4">
-                <MapPin className="w-3 h-3 mr-1" />
-                Sete Lagoas e Região
-              </Badge>
-
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-foreground mb-4 leading-tight">
-                Aluguel de Retroescavadeira
-              </h1>
-
-              <p className="text-muted-foreground text-base md:text-lg mb-6 max-w-lg">
-                Serviço com operador experiente, máquina revisada e atendimento rápido.
-              </p>
-
-              {/* Destaques */}
-              <div className="flex flex-wrap gap-2 mb-6 md:mb-8">
-                {['Operador experiente', 'Máquina revisada', 'Orçamento rápido'].map((item) => (
-                  <div
-                    key={item}
-                    className="flex items-center gap-2 text-sm text-foreground bg-muted/50 px-4 py-2 rounded-full border border-border/50"
-                  >
-                    <CheckCircle2 className="w-4 h-4 text-ddm-success flex-shrink-0" />
-                    <span className="min-w-0">{item}</span>
-                  </div>
-                ))}
+            {/* Left Content */}
+            <div className="order-2 lg:order-1 text-center lg:text-left space-y-5 md:space-y-6">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 opacity-0 animate-fade-in-up">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                </span>
+                <span className="text-sm font-medium text-primary">Disponível para locação</span>
               </div>
 
-              {/* Botões do Hero */}
-              <div className="flex flex-col gap-3 mt-2 md:flex-row md:gap-4 md:mt-0">
-                <Button variant="cta" size="default" className="w-full md:w-auto md:h-12" asChild>
+              {/* Headline */}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight opacity-0 animate-fade-in-up stagger-1">
+                <span className="text-foreground">Aluguel de</span>
+                <br />
+                <span className="text-gradient-vivid">Retroescavadeira</span>
+              </h1>
+
+              {/* Description */}
+              <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 opacity-0 animate-fade-in-up stagger-2">
+                Serviço com operador experiente, máquina revisada e atendimento rápido em Sete Lagoas e região.
+              </p>
+
+              {/* Stats row */}
+              <div className="flex flex-wrap justify-center lg:justify-start gap-4 md:gap-6 opacity-0 animate-fade-in-up stagger-3">
+                <div className="flex items-center gap-2">
+                  <div className="p-2 rounded-lg bg-primary/10">
+                    <MapPin className="w-4 h-4 text-primary" />
+                  </div>
+                  <span className="text-sm text-muted-foreground">Sete Lagoas e região</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="p-2 rounded-lg bg-primary/10">
+                    <Clock className="w-4 h-4 text-primary" />
+                  </div>
+                  <span className="text-sm text-muted-foreground">Atendimento rápido</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="p-2 rounded-lg bg-primary/10">
+                    <Shield className="w-4 h-4 text-primary" />
+                  </div>
+                  <span className="text-sm text-muted-foreground">Operador incluso</span>
+                </div>
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start opacity-0 animate-fade-in-up stagger-4">
+                <Button variant="cta" size="lg" asChild className="group w-full sm:w-auto">
                   <Link to="/contato">
-                    <MessageCircle className="w-4 h-4 flex-shrink-0" />
+                    <MessageCircle className="w-5 h-5 group-hover:animate-wiggle" />
                     Pedir Orçamento
-                    <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </Button>
-                <Button variant="outline" size="default" className="w-full md:w-auto md:h-12" asChild>
-                  <Link to="/servicos">
-                    Ver Serviços
+                <Button variant="outline" size="lg" asChild className="group w-full sm:w-auto">
+                  <Link to="/equipamento">
+                    <Play className="w-4 h-4" />
+                    Ver Equipamento
                   </Link>
                 </Button>
+              </div>
+
+              {/* Trust indicators */}
+              <div className="flex items-center justify-center lg:justify-start gap-4 pt-2 opacity-0 animate-fade-in-up stagger-5">
+                <div className="flex -space-x-1">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <Star key={i} className="w-4 h-4 text-primary fill-primary" />
+                  ))}
+                </div>
+                <span className="text-sm text-muted-foreground">
+                  Clientes satisfeitos na região
+                </span>
               </div>
             </div>
 
-            {/* Imagem (desktop) */}
-            <div className="relative animate-fade-in stagger-delay-2 hidden lg:flex items-center justify-center">
-              <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 to-accent/10 rounded-3xl blur-2xl" />
-              <img
-                src={case580m}
-                alt="Retroescavadeira Case 580M"
-                className="relative w-full max-w-xs md:max-w-sm lg:max-w-md object-contain"
-                loading="lazy"
-              />
+            {/* Right - Hero Image (MUCH LARGER with floating animation) */}
+            <div className="order-1 lg:order-2 flex justify-center lg:justify-end opacity-0 animate-fade-in-up stagger-2">
+              <div className="relative">
+                {/* Glow effect behind image */}
+                <div className="absolute inset-0 bg-gradient-radial from-primary/20 via-primary/5 to-transparent blur-3xl scale-110" />
+                
+                {/* Main image container with floating animation */}
+                <div className="relative animate-float">
+                  <img 
+                    src={case580m} 
+                    alt="Retroescavadeira Case 580M" 
+                    className="w-full max-w-[280px] sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl h-auto hero-image-glow transition-all duration-500 hover:scale-105"
+                    loading="eager"
+                  />
+                  
+                  {/* Floating badge */}
+                  <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 lg:bottom-4 lg:left-auto lg:right-0 lg:translate-x-0">
+                    <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-card/90 backdrop-blur-sm border border-primary/30 shadow-lg animate-glow-pulse">
+                      <CheckCircle2 className="w-4 h-4 text-ddm-success" />
+                      <span className="text-sm font-semibold text-foreground whitespace-nowrap">Pronta Entrega</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Serviços */}
-      <section className="py-10 md:py-16 bg-muted/30">
+      {/* Services Section - Enhanced with hover effects */}
+      <section className="py-12 md:py-20 bg-muted/30 section-glow">
         <div className="container-ddm">
-          <div className="flex items-center justify-between mb-6 md:mb-10">
-            <div className="animate-fade-in-up">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-1">
-                Principais Serviços
+          <div className="flex items-center justify-between mb-8 md:mb-12">
+            <div className="opacity-0 animate-fade-in-up">
+              <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-3">
+                Nossos Serviços
+              </span>
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
+                O que podemos <span className="text-gradient-vivid">fazer por você</span>
               </h2>
-              <p className="text-muted-foreground text-sm md:text-base">
-                Atendemos diversos tipos de obra
-              </p>
             </div>
             <Link 
               to="/servicos" 
@@ -132,65 +181,71 @@ const Index = () => {
             </Link>
           </div>
 
-          {/* Grid de serviços - 2 colunas no mobile */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
+          {/* Grid de serviços */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mb-6 md:mb-8">
             {services.map((service, index) => (
               <Link
                 key={service.title}
                 to={service.href}
-                className={`group card-premium p-4 md:p-6 text-center hover:border-primary/30 transition-all animate-fade-in-up stagger-delay-${index + 1}`}
+                className="group opacity-0 animate-fade-in-up card-hover-lift gradient-border"
+                style={{ animationDelay: `${(index + 1) * 100}ms` }}
               >
-                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:bg-primary group-hover:scale-110 transition-all">
-                  <service.icon className="w-5 h-5 md:w-6 md:h-6 text-primary group-hover:text-primary-foreground transition-colors" />
+                <div className="relative p-5 md:p-8 rounded-2xl bg-card border border-border/50 text-center transition-all duration-300 h-full">
+                  {/* Icon */}
+                  <div className="mx-auto w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/10 flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 group-hover:bg-primary transition-all duration-300">
+                    <service.icon className="w-6 h-6 md:w-8 md:h-8 text-primary group-hover:text-primary-foreground transition-colors" />
+                  </div>
+                  
+                  {/* Label */}
+                  <h3 className="font-semibold text-foreground text-sm md:text-base group-hover:text-primary transition-colors">
+                    {service.title}
+                  </h3>
+                  
+                  {/* Arrow indicator */}
+                  <div className="absolute bottom-3 right-3 md:bottom-4 md:right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <ArrowRight className="w-4 h-4 text-primary" />
+                  </div>
                 </div>
-                <h3 className="font-semibold text-foreground text-sm md:text-base">{service.title}</h3>
               </Link>
             ))}
           </div>
 
-          {/* CTA Ver todos (Mobile) */}
-          <div className="text-center md:hidden">
-            <Button variant="outline" size="lg" className="w-full" asChild>
+          {/* CTA Ver todos */}
+          <div className="text-center opacity-0 animate-fade-in-up stagger-6">
+            <Button variant="outline" size="lg" asChild className="w-full md:w-auto group">
               <Link to="/servicos">
                 Ver todos os serviços
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </Button>
-          </div>
-
-          {/* CTA Ver todos (Desktop) */}
-          <div className="text-center animate-fade-in stagger-delay-5 hidden md:block">
-            <Button variant="outline" size="default" asChild>
-              <Link to="/servicos">
-                Ver todos os serviços
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Preços */}
-      <section className="py-10 md:py-16">
+      {/* Pricing Section - Enhanced */}
+      <section className="py-12 md:py-20">
         <div className="container-ddm">
           <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-6 md:mb-10 animate-fade-in-up">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
-                Formas de Contratação
+            <div className="text-center mb-8 md:mb-12 opacity-0 animate-fade-in-up">
+              <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-3">
+                Contratação
+              </span>
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
+                Formas de <span className="text-gradient-vivid">Contratação</span>
               </h2>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2 md:gap-6">
               {/* Por Hora */}
-              <div className="card-premium p-5 md:p-6 animate-fade-in-up stagger-delay-1">
+              <div className="p-5 md:p-6 rounded-2xl bg-card border border-border/50 opacity-0 animate-fade-in-up stagger-1 card-hover-lift gradient-border">
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 md:w-12 md:h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-6 h-6 md:w-5 md:h-5 text-primary" />
+                  <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-accent/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Clock className="w-6 h-6 text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-baseline justify-between gap-2 flex-wrap">
-                      <h3 className="font-bold text-foreground text-base">Por Hora</h3>
-                      <p className="text-2xl font-black text-primary whitespace-nowrap">R$ 200</p>
+                      <h3 className="font-bold text-foreground text-base md:text-lg">Por Hora</h3>
+                      <p className="text-2xl md:text-3xl font-black text-gradient-vivid whitespace-nowrap">R$ 200</p>
                     </div>
                     <p className="text-muted-foreground text-sm mt-1">
                       Mínimo 2h. Operador e combustível inclusos.
@@ -199,16 +254,22 @@ const Index = () => {
                 </div>
               </div>
 
-              {/* Por Diária */}
-              <div className="card-premium p-5 md:p-6 border-primary/30 animate-fade-in-up stagger-delay-2">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 md:w-12 md:h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Calendar className="w-6 h-6 md:w-5 md:h-5 text-primary" />
+              {/* Por Diária - Featured */}
+              <div className="relative p-5 md:p-6 rounded-2xl bg-card border-2 border-primary/50 opacity-0 animate-fade-in-up stagger-2 card-hover-lift animate-glow-pulse">
+                {/* Popular badge */}
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <span className="px-3 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold">
+                    Mais Popular
+                  </span>
+                </div>
+                <div className="flex items-center gap-4 pt-1">
+                  <div className="w-14 h-14 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Zap className="w-6 h-6 text-primary-foreground" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-baseline justify-between gap-2 flex-wrap">
-                      <h3 className="font-bold text-foreground text-base">Por Diária</h3>
-                      <p className="text-xl md:text-2xl font-black text-primary whitespace-nowrap">Sob Consulta</p>
+                      <h3 className="font-bold text-foreground text-base md:text-lg">Por Diária</h3>
+                      <p className="text-xl md:text-2xl font-black text-gradient-vivid whitespace-nowrap">Sob Consulta</p>
                     </div>
                     <p className="text-muted-foreground text-sm mt-1">
                       8h de trabalho. Melhor custo-benefício.
@@ -218,29 +279,55 @@ const Index = () => {
               </div>
             </div>
 
-            <p className="text-center text-muted-foreground text-sm mt-5 md:mt-6 animate-fade-in stagger-delay-3">
+            <p className="text-center text-muted-foreground text-sm mt-5 md:mt-6 opacity-0 animate-fade-in stagger-3">
               Valores podem variar conforme serviço, terreno e deslocamento.
             </p>
           </div>
         </div>
       </section>
 
-      {/* CTA Final */}
-      <section className="py-12 md:py-16 bg-muted/30 mb-24 md:mb-0">
-        <div className="container-ddm text-center animate-fade-in-up">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3">
-            Pronto para começar?
-          </h2>
-          <p className="text-muted-foreground text-sm md:text-base mb-6 max-w-md mx-auto">
-            Preencha o formulário e receba atendimento pelo WhatsApp em minutos.
-          </p>
-          <Button variant="cta" size="lg" className="w-full md:w-auto" asChild>
-            <Link to="/contato">
-              <MessageCircle className="w-5 h-5" />
-              Solicitar Orçamento
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </Button>
+      {/* Final CTA Section - Enhanced */}
+      <section className="py-16 md:py-24 relative overflow-hidden mb-20 md:mb-0">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10" />
+        
+        {/* Decorative circles */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[600px] h-[400px] md:h-[600px] border border-primary/10 rounded-full" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] md:w-[400px] h-[250px] md:h-[400px] border border-primary/20 rounded-full" />
+        
+        <div className="container-ddm relative z-10">
+          <div className="max-w-2xl mx-auto text-center space-y-6 md:space-y-8">
+            <div className="opacity-0 animate-fade-in-up">
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
+                <Zap className="w-4 h-4" />
+                Resposta rápida garantida
+              </span>
+            </div>
+            
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground opacity-0 animate-fade-in-up stagger-1">
+              Pronto para começar seu <span className="text-gradient-vivid">projeto?</span>
+            </h2>
+            
+            <p className="text-base md:text-lg text-muted-foreground opacity-0 animate-fade-in-up stagger-2">
+              Preencha o formulário e receba atendimento pelo WhatsApp em minutos.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center opacity-0 animate-fade-in-up stagger-3">
+              <Button variant="cta" size="xl" asChild className="group w-full sm:w-auto">
+                <Link to="/contato">
+                  <MessageCircle className="w-5 h-5 group-hover:animate-wiggle" />
+                  Solicitar Orçamento
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </Button>
+              <Button variant="outline" size="xl" asChild className="group w-full sm:w-auto">
+                <a href="tel:+5531991376230">
+                  <Phone className="w-5 h-5" />
+                  (31) 99137-6230
+                </a>
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
     </Layout>
