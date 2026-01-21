@@ -294,6 +294,9 @@ const ServicesCarousel = ({
                   alt={servico.titulo}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   loading={index === 0 ? "eager" : "lazy"}
+                  decoding={index === 0 ? "sync" : "async"}
+                  width={800}
+                  height={600}
                 />
                 
                 {/* Overlay gradiente no bottom */}
@@ -393,6 +396,10 @@ const ServicesCarousel = ({
               src={servico.imagem} 
               alt={servico.titulo}
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
+              width={64}
+              height={64}
             />
             {currentSlide === index && (
               <div className="absolute inset-0 bg-primary/20" />
@@ -446,6 +453,7 @@ const ServicesCarousel = ({
                 alt={servicos[lightboxIndex].titulo}
                 className="w-full h-auto max-h-[85vh] object-contain rounded-lg pointer-events-none"
                 draggable={false}
+                decoding="async"
               />
             </div>
 

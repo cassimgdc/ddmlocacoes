@@ -39,6 +39,10 @@ const EquipmentCard = ({
               src={image}
               alt={name}
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
+              width={600}
+              height={400}
             />
             <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-card via-card/50 to-transparent" />
             
@@ -118,6 +122,10 @@ const EquipmentCard = ({
             src={image}
             alt={name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            loading="lazy"
+            decoding="async"
+            width={400}
+            height={300}
           />
         )}
         

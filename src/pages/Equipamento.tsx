@@ -74,6 +74,10 @@ const Equipamento = () => {
                     alt="Retroescavadeira Case 580M" 
                     className="w-full max-w-[240px] sm:max-w-sm md:max-w-md lg:max-w-lg h-auto hero-image-glow"
                     loading="eager"
+                    decoding="sync"
+                    width={600}
+                    height={450}
+                    fetchPriority="high"
                   />
                 </div>
               </div>
