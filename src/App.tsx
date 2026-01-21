@@ -7,7 +7,6 @@ import ScrollToTop from "./components/layout/ScrollToTop";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import Index from "./pages/Index";
-import Servicos from "./pages/Servicos";
 import Equipamento from "./pages/Equipamento";
 import Duvidas from "./pages/Duvidas";
 import Contato from "./pages/Contato";
@@ -127,7 +126,6 @@ const App = () => (
             <ScrollToTop />
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/servicos" element={<Servicos />} />
               <Route path="/equipamento" element={<Equipamento />} />
               <Route path="/duvidas" element={<Duvidas />} />
               <Route path="/contato" element={<Contato />} />
