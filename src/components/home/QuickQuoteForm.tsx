@@ -76,20 +76,20 @@ const QuickQuoteForm = () => {
       {/* Glow effect */}
       <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-accent/10 to-primary/20 rounded-3xl blur-xl opacity-50" />
       
-      <div className="relative card-premium p-8 lg:p-10">
-        <div className="text-center mb-8">
-          <span className="inline-flex items-center gap-2 px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-semibold mb-4">
+      <div className="relative card-premium p-6 lg:p-8">
+        <div className="text-center mb-6">
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/20 text-primary rounded-full text-sm font-semibold mb-3">
             ⚡ Resposta em minutos
           </span>
-          <h3 className="text-2xl lg:text-3xl font-bold text-foreground mb-2">
+          <h3 className="text-xl lg:text-2xl font-bold text-foreground mb-1.5">
             Orçamento em 30 segundos
           </h3>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             Preencha e envie direto para nosso WhatsApp
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {/* Local */}
           <div className="space-y-2">
             <Label htmlFor="local" className="text-foreground flex items-center gap-2">
