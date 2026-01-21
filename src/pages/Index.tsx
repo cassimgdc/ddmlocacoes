@@ -247,6 +247,83 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Service Area Section */}
+      <section className="py-12 md:py-20">
+        <div className="container-ddm">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-8 md:mb-12 opacity-0 animate-fade-in-up">
+              <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-3">
+                <MapPin className="w-4 h-4 inline mr-1" />
+                Região
+              </span>
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
+                Área de <span className="text-gradient-vivid">Atendimento</span>
+              </h2>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-6 md:gap-8">
+              {/* Map */}
+              <div className="rounded-2xl overflow-hidden border border-border/50 shadow-lg opacity-0 animate-fade-in-up stagger-1">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d120584.36969178873!2d-44.32807087891628!3d-19.46576840000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa57e99c1e2ac79%3A0x54eb4dcf4c9f4439!2sSete%20Lagoas%2C%20MG!5e0!3m2!1spt-BR!2sbr!4v1705600000000!5m2!1spt-BR!2sbr"
+                  width="100%"
+                  height="300"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Mapa Sete Lagoas"
+                  className="w-full h-[250px] md:h-[300px]"
+                />
+              </div>
+
+              {/* Cities */}
+              <div className="p-5 md:p-7 rounded-2xl bg-card border border-border/50 opacity-0 animate-fade-in-up stagger-2">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <MapPin className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-foreground">Cidades Atendidas</h3>
+                    <p className="text-sm text-muted-foreground">
+                      <span className="text-foreground font-semibold">Sete Lagoas</span> e região
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-2 mb-5">
+                  {[
+                    'Sete Lagoas',
+                    'Prudente de Morais',
+                    'Capim Branco',
+                    'Funilândia',
+                    'Jequitibá',
+                    'Paraopeba',
+                    'Caetanópolis',
+                    'Baldim',
+                  ].map((city, index) => (
+                    <span 
+                      key={city}
+                      className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
+                        index === 0 
+                          ? 'bg-primary text-primary-foreground' 
+                          : 'bg-muted text-muted-foreground'
+                      }`}
+                    >
+                      {city}
+                    </span>
+                  ))}
+                </div>
+
+                <p className="text-sm text-muted-foreground pt-4 border-t border-border/50">
+                  📍 Consulte disponibilidade para outras localidades
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA Section */}
       <section className="py-16 md:py-24 relative overflow-hidden mb-20 md:mb-0">
         {/* Background gradient */}
