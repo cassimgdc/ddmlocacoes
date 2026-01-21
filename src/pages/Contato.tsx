@@ -420,12 +420,54 @@ const Contato = () => {
               </div>
               <div className="p-3 rounded-xl bg-muted/20">
                 <MapPin className="w-5 h-5 text-primary mx-auto mb-1" />
-                <p className="text-xs text-muted-foreground">Sete Lagoas</p>
+                <p className="text-xs text-foreground font-medium">Sete Lagoas e região</p>
               </div>
               <div className="p-3 rounded-xl bg-muted/20">
                 <Clock className="w-5 h-5 text-primary mx-auto mb-1" />
                 <p className="text-xs text-muted-foreground">Seg-Sáb</p>
               </div>
+            </div>
+
+            {/* Área de Atendimento */}
+            <div className="mt-8 p-5 rounded-2xl bg-muted/30 border border-border/50 animate-fade-in stagger-delay-3">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <MapPin className="w-4 h-4 text-primary" />
+                </div>
+                <h3 className="font-semibold text-foreground text-sm">Área de Atendimento</h3>
+              </div>
+              
+              <p className="text-sm text-muted-foreground mb-4">
+                Atendemos <span className="text-foreground font-semibold">Sete Lagoas</span> e cidades vizinhas:
+              </p>
+              
+              <div className="flex flex-wrap gap-2">
+                {[
+                  'Sete Lagoas',
+                  'Prudente de Morais',
+                  'Capim Branco',
+                  'Funilândia',
+                  'Jequitibá',
+                  'Paraopeba',
+                  'Caetanópolis',
+                  'Baldim',
+                ].map((city, index) => (
+                  <span 
+                    key={city}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
+                      index === 0 
+                        ? 'bg-primary text-primary-foreground' 
+                        : 'bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary'
+                    }`}
+                  >
+                    {city}
+                  </span>
+                ))}
+              </div>
+              
+              <p className="text-xs text-muted-foreground mt-4 pt-3 border-t border-border/50">
+                📍 Consulte disponibilidade para outras localidades
+              </p>
             </div>
           </div>
         </div>
