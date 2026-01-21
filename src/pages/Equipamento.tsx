@@ -22,6 +22,7 @@ import {
 
 import case580m from '@/assets/case-580m.png';
 import MediaCard from '@/components/home/MediaCard';
+import QuickQuoteForm from '@/components/home/QuickQuoteForm';
 
 const Equipamento = () => {
   const whatsappLink = 'https://wa.me/5531971067272?text=Olá! Gostaria de solicitar um orçamento para a Retroescavadeira Case 580M.';
@@ -355,33 +356,47 @@ const Equipamento = () => {
         </div>
       </section>
 
-      {/* Final CTA */}
+      {/* Quick Quote Form Section */}
       <section className="py-16 md:py-24 relative overflow-hidden mb-20 md:mb-0">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[500px] h-[400px] md:h-[500px] border border-primary/10 rounded-full" />
+        <div className="absolute bottom-0 right-0 w-72 h-72 bg-accent/5 rounded-full blur-3xl" />
         
         <div className="container-ddm relative z-10">
-          <div className="max-w-2xl mx-auto text-center space-y-6 md:space-y-8">
-            <div className="opacity-0 animate-fade-in-up">
-              <Zap className="w-10 h-10 md:w-12 md:h-12 mx-auto text-primary mb-4" />
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center max-w-6xl mx-auto">
+            {/* Left - Text */}
+            <div className="text-center lg:text-left space-y-5 animate-fade-in-up">
+              <div>
+                <Zap className="w-10 h-10 md:w-12 md:h-12 text-primary mb-4 mx-auto lg:mx-0" />
+              </div>
+              
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
+                Precisa de uma <span className="text-gradient-vivid">retroescavadeira?</span>
+              </h2>
+              
+              <p className="text-muted-foreground text-sm md:text-base max-w-md mx-auto lg:mx-0">
+                Preencha o formulário ao lado e envie diretamente para nosso WhatsApp. Respondemos em minutos!
+              </p>
+
+              <div className="flex flex-wrap gap-4 justify-center lg:justify-start text-sm text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-green-600 dark:text-green-400" />
+                  Resposta rápida
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-green-600 dark:text-green-400" />
+                  Sem compromisso
+                </div>
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-green-600 dark:text-green-400" />
+                  Orçamento grátis
+                </div>
+              </div>
             </div>
-            
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground opacity-0 animate-fade-in-up stagger-1">
-              Precisa de uma <span className="text-gradient-vivid">retroescavadeira?</span>
-            </h2>
-            
-            <p className="text-muted-foreground opacity-0 animate-fade-in-up stagger-2">
-              Solicite um orçamento pelo WhatsApp. Respondemos rapidamente.
-            </p>
-            
-            <div className="opacity-0 animate-fade-in-up stagger-3">
-              <Button variant="whatsapp" size="xl" asChild className="group w-full sm:w-auto">
-                <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="w-5 h-5 group-hover:animate-wiggle" />
-                  Chamar no WhatsApp
-                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                </a>
-              </Button>
+
+            {/* Right - Form */}
+            <div className="animate-fade-in-up" style={{ animationDelay: '150ms' }}>
+              <QuickQuoteForm />
             </div>
           </div>
         </div>
