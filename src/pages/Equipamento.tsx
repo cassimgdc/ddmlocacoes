@@ -259,7 +259,7 @@ const Equipamento = () => {
 
           <div className="grid md:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto">
             {/* Hourly */}
-            <div className="p-5 md:p-7 rounded-2xl bg-card border border-border/50 opacity-0 animate-fade-in-up stagger-1 card-hover-lift gradient-border">
+            <div className="p-5 md:p-7 rounded-2xl bg-card border border-border/50 animate-fade-in-up card-hover-lift gradient-border" style={{ animationDelay: '100ms' }}>
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                   <Clock className="w-6 h-6 text-primary" />
@@ -284,7 +284,7 @@ const Equipamento = () => {
                   { icon: Clock, text: 'Mínimo de 2 horas' },
                 ].map((item, i) => (
                   <li key={i} className="flex items-center gap-3 text-sm text-muted-foreground">
-                    <item.icon className="w-4 h-4 text-ddm-success" />
+                    <item.icon className="w-4 h-4 text-green-600 dark:text-green-400" />
                     {item.text}
                   </li>
                 ))}
@@ -299,7 +299,7 @@ const Equipamento = () => {
             </div>
 
             {/* Daily - Featured */}
-            <div className="relative p-5 md:p-7 rounded-2xl bg-card border-2 border-primary/50 opacity-0 animate-fade-in-up stagger-2 card-hover-lift animate-glow-pulse">
+            <div className="relative p-5 md:p-7 rounded-2xl bg-card border-2 border-primary/50 animate-fade-in-up card-hover-lift animate-glow-pulse" style={{ animationDelay: '200ms' }}>
               {/* Popular badge */}
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                 <span className="px-4 py-1 rounded-full bg-primary text-primary-foreground text-sm font-semibold">
@@ -332,7 +332,7 @@ const Equipamento = () => {
                   { icon: CheckCircle2, text: 'Melhor custo por hora' },
                 ].map((item, i) => (
                   <li key={i} className="flex items-center gap-3 text-sm text-muted-foreground">
-                    <item.icon className="w-4 h-4 text-ddm-success" />
+                    <item.icon className="w-4 h-4 text-green-600 dark:text-green-400" />
                     {item.text}
                   </li>
                 ))}
