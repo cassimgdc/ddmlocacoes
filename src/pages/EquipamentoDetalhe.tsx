@@ -277,7 +277,7 @@ const EquipamentoDetalhe = () => {
             {/* Por Diária */}
             <div className="bg-card rounded-2xl p-8 shadow-lg border-2 border-primary relative">
               <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground">
-                Mais Popular
+                Mais Econômico
               </Badge>
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center">

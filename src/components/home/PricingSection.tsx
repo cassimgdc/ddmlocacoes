@@ -62,7 +62,7 @@ const PricingSection = () => {
           {/* Por Diária */}
           <div className="relative card-premium card-glow p-8 border-primary/30">
             <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-cta">
-              Mais Popular
+              Mais Econômico
             </Badge>
             
             <div className="w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center mb-6 shadow-cta">
