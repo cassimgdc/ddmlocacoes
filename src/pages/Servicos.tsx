@@ -3,54 +3,36 @@ import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
 import {
-  MessageCircle,
-  ArrowRight,
-  Shovel,
-  Mountain,
-  Trees,
-  Construction,
-  Tractor,
-  Truck,
-} from 'lucide-react';
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from '@/components/ui/carousel';
+import { MessageCircle, ArrowRight } from 'lucide-react';
+import Autoplay from 'embla-carousel-autoplay';
+import { useRef } from 'react';
+
+// Imagens dos serviços
+import aberturaValas from '@/assets/servicos/abertura-valas.png';
+import terraplanagem from '@/assets/servicos/terraplanagem.png';
+import limpezaLotes from '@/assets/servicos/limpeza-lotes.png';
+import escavacao from '@/assets/servicos/escavacao.png';
+import servicosRurais from '@/assets/servicos/servicos-rurais.png';
+import carregamento from '@/assets/servicos/carregamento.png';
 
 const Servicos = () => {
-  const services = [
-    {
-      icon: Shovel,
-      title: 'Abertura e Limpeza de Valas',
-      description: 'Escavação de valas para instalação de tubulações de água, esgoto, drenagem pluvial e redes elétricas.',
-      examples: ['Tubulação de água', 'Rede de esgoto', 'Drenagem', 'Cabeamento'],
-    },
-    {
-      icon: Mountain,
-      title: 'Terraplanagem e Nivelamento',
-      description: 'Preparação completa do terreno para construções. Correção de níveis e criação de platôs.',
-      examples: ['Preparação para construção', 'Nivelamento', 'Correção de declives'],
-    },
-    {
-      icon: Trees,
-      title: 'Limpeza de Lotes e Terrenos',
-      description: 'Remoção de vegetação, entulho e materiais do terreno. Deixamos o lote pronto para obra.',
-      examples: ['Remoção de vegetação', 'Limpeza de entulho', 'Destoca'],
-    },
-    {
-      icon: Construction,
-      title: 'Escavação Especializada',
-      description: 'Escavações técnicas para fundações, fossas sépticas, cisternas e piscinas.',
-      examples: ['Fossas sépticas', 'Cisternas', 'Fundações', 'Piscinas'],
-    },
-    {
-      icon: Tractor,
-      title: 'Serviços Rurais',
-      description: 'Abertura de barraginhas, construção de açudes e curvas de nível para contenção.',
-      examples: ['Barraginhas', 'Açudes', 'Curvas de nível'],
-    },
-    {
-      icon: Truck,
-      title: 'Carregamento e Movimentação',
-      description: 'Carga e descarga de materiais, movimentação de terra e entulho na obra.',
-      examples: ['Carga em caminhões', 'Movimentação de terra', 'Remoção de entulho'],
-    },
+  const plugin = useRef(
+    Autoplay({ delay: 5000, stopOnInteraction: true })
+  );
+
+  const servicos = [
+    { titulo: 'Abertura e Limpeza de Valas', imagem: aberturaValas },
+    { titulo: 'Terraplanagem e Nivelamento', imagem: terraplanagem },
+    { titulo: 'Limpeza de Lotes e Terrenos', imagem: limpezaLotes },
+    { titulo: 'Escavação Especializada', imagem: escavacao },
+    { titulo: 'Serviços Rurais', imagem: servicosRurais },
+    { titulo: 'Carregamento e Movimentação', imagem: carregamento },
   ];
 
   return (
@@ -63,58 +45,80 @@ const Servicos = () => {
       </Helmet>
       
       {/* Header */}
-      <section className="pt-20 pb-6 md:pt-36 md:pb-16">
+      <section className="pt-20 pb-4 md:pt-36 md:pb-8">
         <div className="container-ddm">
-          <div className="max-w-2xl animate-fade-in">
-            <h1 className="text-2xl md:text-4xl font-black text-foreground mb-3">
+          <div className="max-w-2xl animate-fade-in text-center mx-auto">
+            <h1 className="text-2xl md:text-4xl font-black text-foreground mb-2">
               Nossos Serviços
             </h1>
             <p className="text-muted-foreground text-sm md:text-lg">
-              Conheça os serviços que realizamos com nossa retroescavadeira Case 580M.
+              Deslize para conhecer todos os serviços que realizamos
             </p>
           </div>
         </div>
       </section>
 
-      {/* Lista de Serviços */}
+      {/* Carrossel de Serviços */}
       <section className="pb-8 md:pb-16">
         <div className="container-ddm">
-          <div className="space-y-3 md:space-y-6">
-            {services.map((service, index) => (
-              <div 
-                key={service.title} 
-                className={`card-premium p-4 md:p-8 animate-fade-in-up stagger-delay-${Math.min(index + 1, 6)} touch-feedback`}
-              >
-                <div className="flex gap-3 md:gap-6">
-                  {/* Ícone */}
-                  <div className="w-11 h-11 md:w-14 md:h-14 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <service.icon className="w-5 h-5 md:w-7 md:h-7 text-primary" />
-                  </div>
-                  
-                  {/* Conteúdo */}
-                  <div className="flex-1 min-w-0">
-                    <h2 className="text-base md:text-xl font-bold text-foreground mb-1 md:mb-2">
-                      {service.title}
-                    </h2>
-                    <p className="text-muted-foreground text-xs md:text-base mb-3 md:mb-4 line-clamp-2 md:line-clamp-none">
-                      {service.description}
-                    </p>
+          <Carousel
+            opts={{
+              loop: true,
+              align: 'center',
+            }}
+            plugins={[plugin.current]}
+            className="w-full animate-fade-in-up"
+            onMouseEnter={plugin.current.stop}
+            onMouseLeave={plugin.current.reset}
+          >
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {servicos.map((servico, index) => (
+                <CarouselItem 
+                  key={servico.titulo} 
+                  className={`pl-2 md:pl-4 basis-[85%] md:basis-[70%] lg:basis-[60%] stagger-delay-${Math.min(index + 1, 6)}`}
+                >
+                  <div className="relative aspect-[3/4] md:aspect-[4/3] rounded-2xl overflow-hidden group cursor-grab active:cursor-grabbing shadow-xl">
+                    {/* Imagem do serviço */}
+                    <img 
+                      src={servico.imagem} 
+                      alt={servico.titulo}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
                     
-                    {/* Tags - horizontal scroll on mobile */}
-                    <div className="flex gap-1.5 md:gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
-                      {service.examples.map((example) => (
-                        <span
-                          key={example}
-                          className="px-2 md:px-3 py-1 bg-muted rounded-full text-[10px] md:text-xs text-muted-foreground whitespace-nowrap flex-shrink-0"
-                        >
-                          {example}
-                        </span>
-                      ))}
+                    {/* Overlay gradiente no bottom */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
+                    
+                    {/* Título do serviço */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
+                      <h2 className="text-lg md:text-2xl font-bold text-white drop-shadow-lg">
+                        {servico.titulo}
+                      </h2>
+                    </div>
+                    
+                    {/* Badge de número */}
+                    <div className="absolute top-3 right-3 md:top-4 md:right-4 w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/90 backdrop-blur-sm flex items-center justify-center">
+                      <span className="text-primary-foreground font-bold text-sm md:text-base">
+                        {index + 1}
+                      </span>
                     </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            
+            {/* Navegação */}
+            <div className="hidden md:block">
+              <CarouselPrevious className="left-4 lg:left-8 w-12 h-12 bg-background/80 backdrop-blur-sm border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all" />
+              <CarouselNext className="right-4 lg:right-8 w-12 h-12 bg-background/80 backdrop-blur-sm border-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all" />
+            </div>
+          </Carousel>
+          
+          {/* Indicador de swipe para mobile */}
+          <div className="flex items-center justify-center gap-2 mt-4 md:hidden text-muted-foreground text-xs">
+            <span>←</span>
+            <span>Arraste para navegar</span>
+            <span>→</span>
           </div>
         </div>
       </section>
