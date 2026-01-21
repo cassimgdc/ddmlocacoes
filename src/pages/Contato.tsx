@@ -237,7 +237,7 @@ const Contato = () => {
                   </div>
                 )}
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-3">
                   {/* Honeypot - campo invisível para bots */}
                   <input
                     type="text"
@@ -257,17 +257,17 @@ const Contato = () => {
                   />
 
                   {/* Nome */}
-                  <div className="space-y-1.5">
-                    <Label htmlFor="nome" className="text-sm flex items-center gap-2">
-                      <User className="w-4 h-4 text-primary" />
+                  <div className="space-y-1">
+                    <Label htmlFor="nome" className="text-xs flex items-center gap-1.5">
+                      <User className="w-3.5 h-3.5 text-primary" />
                       Seu nome *
                     </Label>
                     <Input
                       id="nome"
-                      placeholder="Digite seu nome completo"
+                      placeholder="Nome completo"
                       value={formData.nome}
                       onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-                      className="h-12 text-base bg-muted/50 border-border/50 focus:border-primary"
+                      className="h-10 text-sm bg-muted/50 border-border/50 focus:border-primary"
                       required
                       maxLength={100}
                       autoComplete="name"
@@ -275,21 +275,19 @@ const Contato = () => {
                   </div>
 
                   {/* Telefone com DDI separado */}
-                  <div className="space-y-1.5">
-                    <Label htmlFor="telefone" className="text-sm flex items-center gap-2">
-                      <Phone className="w-4 h-4 text-primary" />
+                  <div className="space-y-1">
+                    <Label htmlFor="telefone" className="text-xs flex items-center gap-1.5">
+                      <Phone className="w-3.5 h-3.5 text-primary" />
                       Telefone (WhatsApp) *
                     </Label>
                     <div className="flex gap-2">
-                      {/* DDI */}
                       <Input
                         id="ddi"
                         value={ddi}
                         onChange={(e) => handleDdiChange(e.target.value)}
-                        className="h-12 w-20 text-base text-center bg-muted/50 border-border/50 focus:border-primary font-medium"
+                        className="h-10 w-16 text-sm text-center bg-muted/50 border-border/50 focus:border-primary font-medium"
                         maxLength={4}
                       />
-                      {/* Telefone */}
                       <Input
                         id="telefone"
                         type="tel"
@@ -297,19 +295,16 @@ const Contato = () => {
                         placeholder="(31) 99999-9999"
                         value={phone}
                         onChange={(e) => handlePhoneChange(e.target.value)}
-                        className="h-12 flex-1 text-base bg-muted/50 border-border/50 focus:border-primary"
+                        className="h-10 flex-1 text-sm bg-muted/50 border-border/50 focus:border-primary"
                         autoComplete="tel-national"
                       />
                     </div>
-                    <p className="text-xs text-muted-foreground">
-                      Digite DDD + número. Ex: (31) 97106-7272
-                    </p>
                   </div>
 
                   {/* Local */}
-                  <div className="space-y-1.5">
-                    <Label htmlFor="local" className="text-sm flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-primary" />
+                  <div className="space-y-1">
+                    <Label htmlFor="local" className="text-xs flex items-center gap-1.5">
+                      <MapPin className="w-3.5 h-3.5 text-primary" />
                       Local do serviço *
                     </Label>
                     <Input
@@ -317,7 +312,7 @@ const Contato = () => {
                       placeholder="Ex: Sete Lagoas, Bairro Centro"
                       value={formData.local}
                       onChange={(e) => setFormData({ ...formData, local: e.target.value })}
-                      className="h-12 text-base bg-muted/50 border-border/50 focus:border-primary"
+                      className="h-10 text-sm bg-muted/50 border-border/50 focus:border-primary"
                       required
                       maxLength={200}
                       autoComplete="address-level2"
@@ -325,9 +320,9 @@ const Contato = () => {
                   </div>
 
                   {/* Tipo de Serviço */}
-                  <div className="space-y-1.5">
-                    <Label className="text-sm flex items-center gap-2">
-                      <Wrench className="w-4 h-4 text-primary" />
+                  <div className="space-y-1">
+                    <Label className="text-xs flex items-center gap-1.5">
+                      <Wrench className="w-3.5 h-3.5 text-primary" />
                       Tipo de serviço *
                     </Label>
                     <Select
@@ -335,12 +330,12 @@ const Contato = () => {
                       onValueChange={(value) => setFormData({ ...formData, tipoServico: value })}
                       required
                     >
-                      <SelectTrigger className="h-12 text-base bg-muted/50 border-border/50 focus:border-primary">
+                      <SelectTrigger className="h-10 text-sm bg-muted/50 border-border/50 focus:border-primary">
                         <SelectValue placeholder="Selecione o serviço" />
                       </SelectTrigger>
                       <SelectContent className="bg-card border-border">
                         {serviceTypes.map((type) => (
-                          <SelectItem key={type} value={type} className="text-base">
+                          <SelectItem key={type} value={type} className="text-sm">
                             {type}
                           </SelectItem>
                         ))}
@@ -349,48 +344,45 @@ const Contato = () => {
                   </div>
 
                   {/* Detalhes */}
-                  <div className="space-y-1.5">
-                    <Label htmlFor="detalhes" className="text-sm">Detalhes (opcional)</Label>
+                  <div className="space-y-1">
+                    <Label htmlFor="detalhes" className="text-xs">Detalhes (opcional)</Label>
                     <Textarea
                       id="detalhes"
-                      placeholder="Descreva brevemente o serviço..."
-                      rows={3}
+                      placeholder="Descreva brevemente..."
+                      rows={2}
                       value={formData.detalhes}
                       onChange={(e) => setFormData({ ...formData, detalhes: e.target.value })}
-                      className="text-base resize-none bg-muted/50 border-border/50 focus:border-primary"
+                      className="text-sm resize-none bg-muted/50 border-border/50 focus:border-primary"
                       maxLength={500}
                     />
-                  </div>
-
-                  {/* Dica */}
-                  <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-xl text-xs">
-                    <Camera className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <p className="text-muted-foreground">
-                      Você poderá anexar fotos ou vídeos do terreno na conversa do WhatsApp.
-                    </p>
                   </div>
 
                   {/* Botão de envio */}
                   <Button 
                     type="submit" 
                     variant="cta" 
-                    size="lg" 
-                    className="w-full h-14 text-base group touch-feedback"
+                    size="default" 
+                    className="w-full h-11 text-sm group touch-feedback mt-1"
                     disabled={isSubmitting || !isFormValid}
                   >
                     {isSubmitting ? (
                       <>
-                        <Loader2 className="w-5 h-5 animate-spin" />
+                        <Loader2 className="w-4 h-4 animate-spin" />
                         Enviando...
                       </>
                     ) : (
                       <>
-                        <MessageCircle className="w-5 h-5" />
+                        <MessageCircle className="w-4 h-4" />
                         Enviar e Abrir WhatsApp
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                       </>
                     )}
                   </Button>
+
+                  {/* Dica compacta */}
+                  <p className="text-center text-xs text-muted-foreground">
+                    📷 Você poderá anexar fotos na conversa do WhatsApp
+                  </p>
                 </form>
               </div>
             </div>
