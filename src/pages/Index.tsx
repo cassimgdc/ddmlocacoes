@@ -26,8 +26,8 @@ const Index = () => {
         <link rel="canonical" href="https://dig-and-haul-pro.lovable.app/" />
       </Helmet>
       
-      {/* Hero Section - Carrossel de Serviços como destaque */}
-      <section className="relative pt-20 md:pt-28 pb-6 md:pb-10 overflow-hidden">
+      {/* Headline Section - Agora Primeiro */}
+      <section className="pt-20 md:pt-28 pb-10 md:pb-16 relative">
         {/* Background with gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/30" />
         
@@ -35,33 +35,7 @@ const Index = () => {
         <div className="absolute top-20 right-10 w-72 md:w-96 h-72 md:h-96 bg-primary/5 rounded-full blur-3xl" />
         <div className="absolute bottom-20 left-10 w-48 md:w-64 h-48 md:h-64 bg-accent/5 rounded-full blur-3xl" />
         
-        {/* Badge flutuante */}
-        <div className="container-ddm relative z-10 mb-4 md:mb-6">
-          <div className="flex justify-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 opacity-0 animate-fade-in-up">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-              </span>
-              <span className="text-sm font-medium text-primary">Disponível para locação</span>
-            </div>
-          </div>
-        </div>
-        
-        {/* Carrossel de Serviços */}
-        <div className="relative z-10">
-          <ServicesCarousel 
-            mobileSize="basis-[85%]"
-            tabletSize="md:basis-[70%]"
-            desktopSize="lg:basis-[55%]"
-            className="animate-fade-in-up stagger-1"
-          />
-        </div>
-      </section>
-
-      {/* Headline Section */}
-      <section className="py-10 md:py-16 relative">
-        <div className="container-ddm">
+        <div className="container-ddm relative z-10">
           <div className="max-w-3xl mx-auto text-center space-y-5 md:space-y-6">
             {/* Headline */}
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black leading-tight opacity-0 animate-fade-in-up">
@@ -126,6 +100,32 @@ const Index = () => {
               </span>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Carrossel Section - Agora Segundo */}
+      <section className="py-8 md:py-12 relative overflow-hidden">
+        {/* Badge flutuante */}
+        <div className="container-ddm relative z-10 mb-4 md:mb-6">
+          <div className="flex justify-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 opacity-0 animate-fade-in-up">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+              </span>
+              <span className="text-sm font-medium text-primary">Disponível para locação</span>
+            </div>
+          </div>
+        </div>
+        
+        {/* Carrossel de Serviços */}
+        <div className="relative z-10">
+          <ServicesCarousel 
+            mobileSize="basis-[85%]"
+            tabletSize="md:basis-[70%]"
+            desktopSize="lg:basis-[55%]"
+            className="animate-fade-in-up stagger-1"
+          />
         </div>
       </section>
 
