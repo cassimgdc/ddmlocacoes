@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import Layout from '@/components/layout/Layout';
+import { Link } from 'react-router-dom';
 import {
   MessageCircle,
   ArrowRight,
@@ -9,6 +9,15 @@ import {
   Clock,
   Calendar,
   Play,
+  Shield,
+  User,
+  Zap,
+  Star,
+  Gauge,
+  Weight,
+  Ruler,
+  Box,
+  Fuel,
 } from 'lucide-react';
 
 import case580m from '@/assets/case-580m.png';
@@ -26,11 +35,11 @@ const Equipamento = () => {
     'Serviços rurais (barraginhas, açudes)',
   ];
 
-  const features = [
-    { label: 'Potência', value: '95 HP' },
-    { label: 'Peso operacional', value: '7.500 kg' },
-    { label: 'Prof. escavação', value: 'Até 4,5m' },
-    { label: 'Cap. caçamba', value: '0,19 m³' },
+  const specs = [
+    { icon: Gauge, label: 'Potência', value: '95 HP' },
+    { icon: Weight, label: 'Peso operacional', value: '7.500 kg' },
+    { icon: Ruler, label: 'Prof. escavação', value: 'Até 4,5m' },
+    { icon: Box, label: 'Cap. caçamba', value: '0,19 m³' },
   ];
 
   return (
@@ -42,205 +51,339 @@ const Equipamento = () => {
         <link rel="canonical" href="https://dig-and-haul-pro.lovable.app/equipamento" />
       </Helmet>
       
-      {/* Header */}
-      <section className="pt-20 pb-6 md:pt-36 md:pb-16">
-        <div className="container-ddm">
-          <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center">
-            {/* Imagem - First on mobile */}
-            <div className="order-1 lg:order-1 animate-fade-in">
+      {/* Hero Section - Enhanced with larger image */}
+      <section className="py-16 md:py-24 relative overflow-hidden">
+        {/* Background effects */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/30" />
+        <div className="absolute top-20 right-0 w-[400px] md:w-[500px] h-[400px] md:h-[500px] bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-72 md:w-96 h-72 md:h-96 bg-accent/5 rounded-full blur-3xl" />
+        
+        <div className="container-ddm relative z-10">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            {/* Left - Image (LARGER with floating animation) */}
+            <div className="order-1 flex justify-center opacity-0 animate-fade-in-up">
               <div className="relative">
-                <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 to-accent/10 rounded-3xl blur-2xl" />
-                <img
-                  src={case580m}
-                  alt="Retroescavadeira Case 580M"
-                  className="relative w-full max-w-[200px] sm:max-w-xs md:max-w-lg mx-auto"
-                />
+                {/* Glow effect */}
+                <div className="absolute inset-0 bg-gradient-radial from-primary/20 via-primary/5 to-transparent blur-3xl scale-125" />
+                
+                {/* Image with floating animation */}
+                <div className="relative animate-float">
+                  <img 
+                    src={case580m} 
+                    alt="Retroescavadeira Case 580M" 
+                    className="w-full max-w-[240px] sm:max-w-sm md:max-w-md lg:max-w-lg h-auto hero-image-glow"
+                    loading="eager"
+                  />
+                </div>
               </div>
             </div>
 
-            {/* Info */}
-            <div className="order-2 lg:order-2 animate-fade-in stagger-delay-2">
-              <Badge className="bg-ddm-success/10 text-ddm-success border-ddm-success/20 mb-3">
-                <CheckCircle2 className="w-3 h-3 mr-1" />
-                Disponível
-              </Badge>
+            {/* Right - Content */}
+            <div className="order-2 space-y-5 md:space-y-6">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-ddm-success/10 border border-ddm-success/20 opacity-0 animate-fade-in-up">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-ddm-success opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-ddm-success"></span>
+                </span>
+                <span className="text-sm font-medium text-ddm-success">Disponível agora</span>
+              </div>
 
-              <h1 className="text-2xl md:text-4xl font-black text-foreground mb-3">
-                Retroescavadeira Case 580M
+              {/* Title */}
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black opacity-0 animate-fade-in-up stagger-1">
+                <span className="text-foreground">Retroescavadeira</span>
+                <br />
+                <span className="text-gradient-vivid">Case 580M</span>
               </h1>
 
-              <p className="text-muted-foreground text-sm md:text-lg mb-5">
+              {/* Description */}
+              <p className="text-base md:text-lg text-muted-foreground opacity-0 animate-fade-in-up stagger-2">
                 Máquina versátil e potente, ideal para diversos tipos de serviço. 
                 Sempre revisada e com operador experiente.
               </p>
 
-              <Button variant="cta" size="lg" className="group touch-feedback w-full sm:w-auto" asChild>
-                <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
+              {/* Trust indicators */}
+              <div className="flex flex-wrap gap-4 opacity-0 animate-fade-in-up stagger-3">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Shield className="w-4 h-4 text-primary" />
+                  Manutenção em dia
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <User className="w-4 h-4 text-primary" />
+                  Operador experiente
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Zap className="w-4 h-4 text-primary" />
+                  Pronta entrega
+                </div>
+              </div>
+
+              {/* CTA */}
+              <div className="opacity-0 animate-fade-in-up stagger-4">
+                <Button variant="cta" size="lg" asChild className="group w-full sm:w-auto">
+                  <Link to="/contato">
+                    <MessageCircle className="w-5 h-5 group-hover:animate-wiggle" />
+                    Pedir Orçamento
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Capabilities Section */}
+      <section className="py-12 md:py-20 bg-secondary/30 section-glow">
+        <div className="container-ddm">
+          <div className="text-center mb-8 md:mb-12 opacity-0 animate-fade-in-up">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-3">
+              Capacidades
+            </span>
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
+              O que a <span className="text-gradient-vivid">Case 580M</span> pode fazer
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 max-w-4xl mx-auto">
+            {capabilities.map((capability, index) => (
+              <div 
+                key={capability}
+                className="flex items-center gap-3 p-4 md:p-5 rounded-xl bg-card border border-border/50 opacity-0 animate-fade-in-up card-hover-lift"
+                style={{ animationDelay: `${(index + 1) * 100}ms` }}
+              >
+                <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-ddm-success/10 flex items-center justify-center">
+                  <CheckCircle2 className="w-4 h-4 text-ddm-success" />
+                </div>
+                <span className="text-sm md:text-base font-medium text-foreground">{capability}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Video Section - MUCH LARGER with spotlight effect */}
+      <section className="py-16 md:py-28 relative overflow-hidden">
+        {/* Background effects for spotlight */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/20 to-background" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] md:w-[800px] h-[600px] md:h-[800px] bg-primary/5 rounded-full blur-3xl" />
+        
+        <div className="container-ddm relative z-10">
+          <div className="text-center mb-10 md:mb-14 opacity-0 animate-fade-in-up">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+              <Play className="w-4 h-4" />
+              Veja em ação
+            </span>
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3">
+              Retroescavadeira <span className="text-gradient-vivid">trabalhando</span>
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto text-sm md:text-base">
+              Confira a Case 580M em uma obra real na região
+            </p>
+          </div>
+
+          {/* Video container - MUCH LARGER with spotlight effect */}
+          <div className="max-w-md md:max-w-lg lg:max-w-xl mx-auto opacity-0 animate-reveal-up stagger-2">
+            <div className="video-spotlight">
+              {/* Glow border animation */}
+              <div className="relative rounded-2xl animate-glow-pulse overflow-hidden">
+                {/* Gradient border */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-primary via-accent to-primary rounded-2xl opacity-60 blur-sm" />
+                
+                {/* Video card */}
+                <div className="relative bg-card rounded-xl overflow-hidden">
+                  <MediaCard
+                    type="video"
+                    src="https://www.youtube.com/shorts/cTclcnHgReA"
+                    alt="Case 580M em operação"
+                    autoplay={true}
+                    loop={true}
+                    muted={true}
+                  />
+                </div>
+              </div>
+            </div>
+            
+            {/* Video caption */}
+            <div className="text-center mt-6 opacity-0 animate-fade-in-up stagger-4">
+              <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
+                <Star className="w-4 h-4 text-primary fill-primary" />
+                Vídeo real da nossa retroescavadeira em operação
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Specifications Section */}
+      <section className="py-12 md:py-20 bg-secondary/30 section-glow">
+        <div className="container-ddm">
+          <div className="text-center mb-8 md:mb-12 opacity-0 animate-fade-in-up">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-3">
+              Ficha Técnica
+            </span>
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
+              Especificações <span className="text-gradient-vivid">Técnicas</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 max-w-4xl mx-auto">
+            {specs.map((spec, index) => (
+              <div 
+                key={spec.label}
+                className="p-5 md:p-6 rounded-2xl bg-card border border-border/50 text-center opacity-0 animate-fade-in-up card-hover-lift gradient-border"
+                style={{ animationDelay: `${(index + 1) * 100}ms` }}
+              >
+                <div className="mx-auto w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-accent/10 flex items-center justify-center mb-3 md:mb-4">
+                  <spec.icon className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                </div>
+                <p className="text-xs text-muted-foreground mb-1">{spec.label}</p>
+                <p className="text-base md:text-xl font-bold text-foreground">{spec.value}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section - Enhanced */}
+      <section className="py-12 md:py-20">
+        <div className="container-ddm">
+          <div className="text-center mb-8 md:mb-12 opacity-0 animate-fade-in-up">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-3">
+              Contratação
+            </span>
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
+              Formas de <span className="text-gradient-vivid">Contratação</span>
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto">
+            {/* Hourly */}
+            <div className="p-5 md:p-7 rounded-2xl bg-card border border-border/50 opacity-0 animate-fade-in-up stagger-1 card-hover-lift gradient-border">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <Clock className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-lg md:text-xl font-bold text-foreground">Serviço por Hora</h3>
+                  <p className="text-sm text-muted-foreground">Ideal para serviços pontuais</p>
+                </div>
+              </div>
+
+              <div className="mb-5">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl md:text-4xl font-black text-gradient-vivid">R$ 200</span>
+                  <span className="text-muted-foreground">/hora</span>
+                </div>
+              </div>
+
+              <ul className="space-y-2.5 mb-5">
+                {[
+                  { icon: User, text: 'Operador experiente incluso' },
+                  { icon: Fuel, text: 'Combustível incluso' },
+                  { icon: Clock, text: 'Mínimo de 2 horas' },
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3 text-sm text-muted-foreground">
+                    <item.icon className="w-4 h-4 text-ddm-success" />
+                    {item.text}
+                  </li>
+                ))}
+              </ul>
+
+              <Button variant="outline" className="w-full" asChild>
+                <Link to="/contato">
+                  Solicitar Orçamento
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Link>
+              </Button>
+            </div>
+
+            {/* Daily - Featured */}
+            <div className="relative p-5 md:p-7 rounded-2xl bg-card border-2 border-primary/50 opacity-0 animate-fade-in-up stagger-2 card-hover-lift animate-glow-pulse">
+              {/* Popular badge */}
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                <span className="px-4 py-1 rounded-full bg-primary text-primary-foreground text-sm font-semibold">
+                  Mais Popular
+                </span>
+              </div>
+
+              <div className="flex items-center gap-3 mb-5 pt-2">
+                <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center">
+                  <Calendar className="w-6 h-6 text-primary-foreground" />
+                </div>
+                <div>
+                  <h3 className="text-lg md:text-xl font-bold text-foreground">Serviço por Diária</h3>
+                  <p className="text-sm text-muted-foreground">Melhor custo-benefício</p>
+                </div>
+              </div>
+
+              <div className="mb-5">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl md:text-4xl font-black text-gradient-vivid">Sob Consulta</span>
+                </div>
+                <p className="text-sm text-muted-foreground mt-1">Valor varia conforme distância</p>
+              </div>
+
+              <ul className="space-y-2.5 mb-5">
+                {[
+                  { icon: User, text: 'Operador experiente incluso' },
+                  { icon: Fuel, text: 'Combustível incluso' },
+                  { icon: Clock, text: '8 horas de trabalho' },
+                  { icon: CheckCircle2, text: 'Melhor custo por hora' },
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3 text-sm text-muted-foreground">
+                    <item.icon className="w-4 h-4 text-ddm-success" />
+                    {item.text}
+                  </li>
+                ))}
+              </ul>
+
+              <Button variant="cta" className="w-full group" asChild>
+                <Link to="/contato">
+                  <MessageCircle className="w-4 h-4 group-hover:animate-wiggle" />
                   Pedir Orçamento
-                  <ArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+
+          {/* Disclaimer */}
+          <p className="text-center text-xs text-muted-foreground mt-6 opacity-0 animate-fade-in-up stagger-4">
+            * Valores sujeitos a alteração conforme distância, tipo de serviço e condições do terreno.
+          </p>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-16 md:py-24 relative overflow-hidden mb-20 md:mb-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[500px] h-[400px] md:h-[500px] border border-primary/10 rounded-full" />
+        
+        <div className="container-ddm relative z-10">
+          <div className="max-w-2xl mx-auto text-center space-y-6 md:space-y-8">
+            <div className="opacity-0 animate-fade-in-up">
+              <Zap className="w-10 h-10 md:w-12 md:h-12 mx-auto text-primary mb-4" />
+            </div>
+            
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground opacity-0 animate-fade-in-up stagger-1">
+              Precisa de uma <span className="text-gradient-vivid">retroescavadeira?</span>
+            </h2>
+            
+            <p className="text-muted-foreground opacity-0 animate-fade-in-up stagger-2">
+              Solicite um orçamento pelo WhatsApp. Respondemos rapidamente.
+            </p>
+            
+            <div className="opacity-0 animate-fade-in-up stagger-3">
+              <Button variant="whatsapp" size="xl" asChild className="group w-full sm:w-auto">
+                <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
+                  <MessageCircle className="w-5 h-5 group-hover:animate-wiggle" />
+                  Chamar no WhatsApp
+                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                 </a>
               </Button>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* O que ela faz */}
-      <section className="py-8 md:py-16 bg-muted/30">
-        <div className="container-ddm">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-lg md:text-3xl font-bold text-foreground mb-5 md:mb-8 text-center animate-fade-in-up">
-              O que ela faz
-            </h2>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-4">
-              {capabilities.map((item, index) => (
-                <div 
-                  key={item} 
-                  className={`flex items-center gap-3 p-3 md:p-4 card-premium animate-fade-in-up stagger-delay-${Math.min(index + 1, 6)} touch-feedback`}
-                >
-                  <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-ddm-success flex-shrink-0" />
-                  <span className="text-foreground text-sm md:text-base">{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Vídeo em Ação */}
-      <section className="py-8 md:py-16">
-        <div className="container-ddm">
-          <div className="max-w-2xl mx-auto text-center animate-fade-in-up">
-            <h2 className="text-xl md:text-3xl font-bold text-foreground mb-2 md:mb-4 flex items-center justify-center gap-2">
-              <Play className="w-5 h-5 md:w-6 md:h-6 text-primary" />
-              Veja em ação
-            </h2>
-            <p className="text-muted-foreground text-xs md:text-base mb-5 md:mb-8">
-              Confira a Case 580M em uma obra real na região.
-            </p>
-
-            <div className="max-w-[240px] sm:max-w-[280px] mx-auto animate-fade-in stagger-delay-2">
-              <MediaCard
-                type="video"
-                src="https://www.youtube.com/shorts/cTclcnHgReA"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Especificações */}
-      <section className="py-8 md:py-16">
-        <div className="container-ddm">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-lg md:text-3xl font-bold text-foreground mb-5 md:mb-8 text-center animate-fade-in-up">
-              Especificações
-            </h2>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 md:gap-4">
-              {features.map((item, index) => (
-                <div 
-                  key={item.label} 
-                  className={`p-3 md:p-4 card-premium text-center animate-fade-in-up stagger-delay-${index + 1} touch-feedback`}
-                >
-                  <p className="text-muted-foreground text-[10px] md:text-sm mb-0.5 md:mb-1">{item.label}</p>
-                  <p className="text-base md:text-xl font-bold text-foreground">{item.value}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Preços */}
-      <section className="py-8 md:py-16 bg-muted/30">
-        <div className="container-ddm">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-lg md:text-3xl font-bold text-foreground mb-5 md:mb-8 text-center animate-fade-in-up">
-              Contratação
-            </h2>
-
-            <div className="grid gap-3 md:grid-cols-2 md:gap-6">
-              {/* Por Hora */}
-              <div className="card-premium p-4 md:p-6 animate-fade-in-up stagger-delay-1 touch-feedback">
-                <div className="flex items-center gap-3 mb-3 md:mb-4">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-foreground text-sm md:text-base">Por Hora</h3>
-                    <p className="text-xl md:text-2xl font-black text-primary">R$ 200</p>
-                  </div>
-                </div>
-                <ul className="space-y-1.5 md:space-y-2 text-xs md:text-sm text-muted-foreground">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 md:w-4 md:h-4 text-ddm-success flex-shrink-0" />
-                    Mínimo de 2 horas
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 md:w-4 md:h-4 text-ddm-success flex-shrink-0" />
-                    Operador incluso
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 md:w-4 md:h-4 text-ddm-success flex-shrink-0" />
-                    Combustível incluso
-                  </li>
-                </ul>
-              </div>
-
-              {/* Por Diária */}
-              <div className="card-premium p-4 md:p-6 border-primary/30 animate-fade-in-up stagger-delay-2 touch-feedback">
-                <div className="flex items-center gap-3 mb-3 md:mb-4">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Calendar className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-foreground text-sm md:text-base">Por Diária</h3>
-                    <p className="text-xl md:text-2xl font-black text-primary">Sob Consulta</p>
-                  </div>
-                </div>
-                <ul className="space-y-1.5 md:space-y-2 text-xs md:text-sm text-muted-foreground">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 md:w-4 md:h-4 text-ddm-success flex-shrink-0" />
-                    8 horas de trabalho
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 md:w-4 md:h-4 text-ddm-success flex-shrink-0" />
-                    Melhor custo-benefício
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 md:w-4 md:h-4 text-ddm-success flex-shrink-0" />
-                    Desconto para múltiplas diárias
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <p className="text-center text-muted-foreground text-[10px] md:text-xs mt-4 md:mt-6 animate-fade-in stagger-delay-3">
-              Valores podem variar conforme tipo de serviço, terreno e deslocamento.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-10 md:py-16 mb-20 md:mb-0">
-        <div className="container-ddm text-center animate-fade-in-up">
-          <h2 className="text-lg md:text-3xl font-bold text-foreground mb-2 md:mb-3">
-            Interessado?
-          </h2>
-          <p className="text-muted-foreground text-xs md:text-base mb-5 md:mb-6 max-w-md mx-auto">
-            Solicite um orçamento pelo WhatsApp. Respondemos rapidamente.
-          </p>
-          <Button variant="whatsapp" size="lg" className="group touch-feedback w-full sm:w-auto" asChild>
-            <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
-              <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
-              Chamar no WhatsApp
-              <ArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
-          </Button>
         </div>
       </section>
     </Layout>
