@@ -10,9 +10,10 @@ import {
   CarouselNext,
   type CarouselApi,
 } from '@/components/ui/carousel';
-import { MessageCircle, ArrowRight } from 'lucide-react';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { MessageCircle, ArrowRight, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import Autoplay from 'embla-carousel-autoplay';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 
 // Imagens dos serviços
 import aberturaValas from '@/assets/servicos/abertura-valas.png';
@@ -29,6 +30,8 @@ const Servicos = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [progress, setProgress] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   const plugin = useRef(
     Autoplay({ delay: AUTOPLAY_DELAY, stopOnInteraction: true })
@@ -117,6 +120,33 @@ const Servicos = () => {
     setIsPaused(false);
   };
 
+  const goToSlide = useCallback((index: number) => {
+    if (api) {
+      api.scrollTo(index);
+    }
+  }, [api]);
+
+  const openLightbox = (index: number) => {
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+    plugin.current.stop();
+    setIsPaused(true);
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+    plugin.current.reset();
+    setIsPaused(false);
+  };
+
+  const lightboxPrev = () => {
+    setLightboxIndex(prev => (prev === 0 ? servicos.length - 1 : prev - 1));
+  };
+
+  const lightboxNext = () => {
+    setLightboxIndex(prev => (prev === servicos.length - 1 ? 0 : prev + 1));
+  };
+
   // Circunferência do círculo (2 * PI * r)
   const circumference = 2 * Math.PI * 15.5;
 
@@ -144,7 +174,7 @@ const Servicos = () => {
       </section>
 
       {/* Carrossel de Serviços */}
-      <section className="pb-8 md:pb-16">
+      <section className="pb-4 md:pb-8">
         <div className="container-ddm">
           <Carousel
             opts={{
@@ -163,7 +193,10 @@ const Servicos = () => {
                   key={servico.titulo} 
                   className={`pl-2 md:pl-4 basis-[85%] md:basis-[70%] lg:basis-[60%] stagger-delay-${Math.min(index + 1, 6)}`}
                 >
-                  <div className="relative aspect-[3/4] md:aspect-[4/3] rounded-2xl overflow-hidden group cursor-grab active:cursor-grabbing shadow-xl">
+                  <div 
+                    className="relative aspect-[3/4] md:aspect-[4/3] rounded-2xl overflow-hidden group cursor-pointer shadow-xl"
+                    onClick={() => openLightbox(index)}
+                  >
                     {/* Imagem do serviço */}
                     <img 
                       src={servico.imagem} 
@@ -207,6 +240,13 @@ const Servicos = () => {
                       </span>
                     </div>
                     
+                    {/* Ícone de expandir */}
+                    <div className="absolute top-3 left-3 md:top-4 md:left-4 w-8 h-8 md:w-10 md:h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <svg className="w-4 h-4 md:w-5 md:h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                      </svg>
+                    </div>
+                    
                     {/* Conteúdo textual */}
                     <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 space-y-2 md:space-y-3">
                       <h2 className="text-lg md:text-2xl font-bold text-white drop-shadow-lg">
@@ -247,6 +287,36 @@ const Servicos = () => {
         </div>
       </section>
 
+      {/* Thumbnails de navegação */}
+      <section className="pb-8 md:pb-16">
+        <div className="container-ddm">
+          <div className="flex justify-center gap-2 md:gap-3 flex-wrap animate-fade-in">
+            {servicos.map((servico, index) => (
+              <button
+                key={servico.titulo}
+                onClick={() => goToSlide(index)}
+                className={`
+                  relative w-14 h-14 md:w-20 md:h-20 rounded-lg overflow-hidden transition-all duration-300
+                  ${currentSlide === index 
+                    ? 'ring-2 ring-primary ring-offset-2 ring-offset-background scale-105 shadow-lg' 
+                    : 'opacity-60 hover:opacity-100 hover:scale-105'
+                  }
+                `}
+              >
+                <img 
+                  src={servico.imagem} 
+                  alt={servico.titulo}
+                  className="w-full h-full object-cover"
+                />
+                {currentSlide === index && (
+                  <div className="absolute inset-0 bg-primary/20" />
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-10 md:py-16 bg-muted/30 mb-20 md:mb-0">
         <div className="container-ddm text-center animate-fade-in-up">
@@ -265,6 +335,61 @@ const Servicos = () => {
           </Button>
         </div>
       </section>
+
+      {/* Lightbox Fullscreen */}
+      <Dialog open={lightboxOpen} onOpenChange={setLightboxOpen}>
+        <DialogContent className="max-w-[95vw] max-h-[95vh] p-0 bg-black/95 border-none">
+          <div className="relative w-full h-full flex items-center justify-center">
+            {/* Botão fechar */}
+            <button 
+              onClick={closeLightbox}
+              className="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+            >
+              <X className="w-6 h-6 text-white" />
+            </button>
+
+            {/* Navegação anterior */}
+            <button 
+              onClick={lightboxPrev}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+            >
+              <ChevronLeft className="w-8 h-8 text-white" />
+            </button>
+
+            {/* Imagem */}
+            <div className="relative max-w-4xl w-full mx-4 md:mx-16">
+              <img 
+                src={servicos[lightboxIndex].imagem} 
+                alt={servicos[lightboxIndex].titulo}
+                className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
+              />
+              
+              {/* Info do serviço */}
+              <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 bg-gradient-to-t from-black/80 to-transparent rounded-b-lg">
+                <h3 className="text-lg md:text-2xl font-bold text-white mb-1">
+                  {servicos[lightboxIndex].titulo}
+                </h3>
+                <p className="text-white/80 text-sm md:text-base">
+                  {servicos[lightboxIndex].descricao}
+                </p>
+              </div>
+            </div>
+
+            {/* Navegação próximo */}
+            <button 
+              onClick={lightboxNext}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-50 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+            >
+              <ChevronRight className="w-8 h-8 text-white" />
+            </button>
+
+            {/* Contador */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/60 text-sm">
+              {lightboxIndex + 1} / {servicos.length}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </Layout>
   );
 };
