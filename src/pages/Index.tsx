@@ -237,7 +237,7 @@ const Index = () => {
 
             <div className="grid md:grid-cols-2 gap-4 md:gap-6">
               {/* Por Hora */}
-              <div className="p-5 md:p-7 rounded-2xl bg-card border border-border/50 opacity-0 animate-fade-in-up stagger-1 card-hover-lift gradient-border">
+              <div className="p-5 md:p-7 rounded-2xl bg-card border border-border/50 animate-fade-in-up stagger-1 card-hover-lift gradient-border">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                     <Clock className="w-6 h-6 text-primary" />
@@ -279,7 +279,7 @@ const Index = () => {
               </div>
 
               {/* Por Diária - Featured */}
-              <div className="relative p-5 md:p-7 rounded-2xl bg-card border-2 border-primary/50 opacity-0 animate-fade-in-up stagger-2 card-hover-lift animate-glow-pulse">
+              <div className="relative p-5 md:p-7 rounded-2xl bg-card border-2 border-primary/50 animate-fade-in-up stagger-2 card-hover-lift animate-glow-pulse">
                 {/* Popular badge */}
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                   <span className="px-4 py-1 rounded-full bg-primary text-primary-foreground text-sm font-semibold">
