@@ -8,10 +8,11 @@ import {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
+  type CarouselApi,
 } from '@/components/ui/carousel';
 import { MessageCircle, ArrowRight } from 'lucide-react';
 import Autoplay from 'embla-carousel-autoplay';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 // Imagens dos serviços
 import aberturaValas from '@/assets/servicos/abertura-valas.png';
@@ -21,19 +22,103 @@ import escavacao from '@/assets/servicos/escavacao.png';
 import servicosRurais from '@/assets/servicos/servicos-rurais.png';
 import carregamento from '@/assets/servicos/carregamento.png';
 
+const AUTOPLAY_DELAY = 5000;
+
 const Servicos = () => {
+  const [api, setApi] = useState<CarouselApi>();
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
   const plugin = useRef(
-    Autoplay({ delay: 5000, stopOnInteraction: true })
+    Autoplay({ delay: AUTOPLAY_DELAY, stopOnInteraction: true })
   );
 
   const servicos = [
-    { titulo: 'Abertura e Limpeza de Valas', imagem: aberturaValas },
-    { titulo: 'Terraplanagem e Nivelamento', imagem: terraplanagem },
-    { titulo: 'Limpeza de Lotes e Terrenos', imagem: limpezaLotes },
-    { titulo: 'Escavação Especializada', imagem: escavacao },
-    { titulo: 'Serviços Rurais', imagem: servicosRurais },
-    { titulo: 'Carregamento e Movimentação', imagem: carregamento },
+    { 
+      titulo: 'Abertura e Limpeza de Valas', 
+      imagem: aberturaValas,
+      descricao: 'Escavação de valas para instalação de tubulações de água, esgoto, drenagem pluvial e redes elétricas.',
+      tags: ['Tubulação de água', 'Rede de esgoto', 'Drenagem', 'Cabeamento']
+    },
+    { 
+      titulo: 'Terraplanagem e Nivelamento', 
+      imagem: terraplanagem,
+      descricao: 'Preparação completa do terreno para construções. Correção de níveis e criação de platôs.',
+      tags: ['Preparação para construção', 'Nivelamento', 'Correção de declives']
+    },
+    { 
+      titulo: 'Limpeza de Lotes e Terrenos', 
+      imagem: limpezaLotes,
+      descricao: 'Remoção de vegetação, entulho e materiais do terreno. Deixamos o lote pronto para obra.',
+      tags: ['Remoção de vegetação', 'Limpeza de entulho', 'Destoca']
+    },
+    { 
+      titulo: 'Escavação Especializada', 
+      imagem: escavacao,
+      descricao: 'Escavações técnicas para fundações, fossas sépticas, cisternas e piscinas.',
+      tags: ['Fossas sépticas', 'Cisternas', 'Fundações', 'Piscinas']
+    },
+    { 
+      titulo: 'Serviços Rurais', 
+      imagem: servicosRurais,
+      descricao: 'Abertura de barraginhas, construção de açudes e curvas de nível para contenção.',
+      tags: ['Barraginhas', 'Açudes', 'Curvas de nível']
+    },
+    { 
+      titulo: 'Carregamento e Movimentação', 
+      imagem: carregamento,
+      descricao: 'Carga e descarga de materiais, movimentação de terra e entulho na obra.',
+      tags: ['Carga em caminhões', 'Movimentação de terra', 'Remoção de entulho']
+    },
   ];
+
+  // Listener para mudança de slide
+  useEffect(() => {
+    if (!api) return;
+    
+    const onSelect = () => {
+      setCurrentSlide(api.selectedScrollSnap());
+      setProgress(0);
+    };
+    
+    api.on('select', onSelect);
+    onSelect();
+    
+    return () => { 
+      api.off('select', onSelect); 
+    };
+  }, [api]);
+
+  // Animação do progresso
+  useEffect(() => {
+    if (isPaused) return;
+    
+    const intervalTime = 50;
+    const increment = (100 / (AUTOPLAY_DELAY / intervalTime));
+    
+    const interval = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 100) return 100;
+        return prev + increment;
+      });
+    }, intervalTime);
+    
+    return () => clearInterval(interval);
+  }, [currentSlide, isPaused]);
+
+  const handleMouseEnter = () => {
+    plugin.current.stop();
+    setIsPaused(true);
+  };
+
+  const handleMouseLeave = () => {
+    plugin.current.reset();
+    setIsPaused(false);
+  };
+
+  // Circunferência do círculo (2 * PI * r)
+  const circumference = 2 * Math.PI * 15.5;
 
   return (
     <Layout>
@@ -67,9 +152,10 @@ const Servicos = () => {
               align: 'center',
             }}
             plugins={[plugin.current]}
+            setApi={setApi}
             className="w-full animate-fade-in-up"
-            onMouseEnter={plugin.current.stop}
-            onMouseLeave={plugin.current.reset}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           >
             <CarouselContent className="-ml-2 md:-ml-4">
               {servicos.map((servico, index) => (
@@ -87,20 +173,58 @@ const Servicos = () => {
                     />
                     
                     {/* Overlay gradiente no bottom */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-90 group-hover:opacity-95 transition-opacity" />
                     
-                    {/* Título do serviço */}
-                    <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6">
+                    {/* Indicador de progresso circular */}
+                    <div className="absolute top-3 right-3 md:top-4 md:right-4 w-10 h-10 md:w-12 md:h-12">
+                      <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                        {/* Círculo de fundo */}
+                        <circle
+                          cx="18"
+                          cy="18"
+                          r="15.5"
+                          fill="rgba(0,0,0,0.5)"
+                          stroke="rgba(255,255,255,0.2)"
+                          strokeWidth="2.5"
+                        />
+                        {/* Círculo de progresso animado - só aparece no slide ativo */}
+                        <circle
+                          cx="18"
+                          cy="18"
+                          r="15.5"
+                          fill="none"
+                          stroke="hsl(var(--primary))"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeDasharray={circumference}
+                          strokeDashoffset={currentSlide === index ? circumference - (circumference * progress / 100) : circumference}
+                          className="transition-[stroke-dashoffset] duration-100 ease-linear"
+                        />
+                      </svg>
+                      {/* Número central */}
+                      <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-sm md:text-base drop-shadow-md">
+                        {index + 1}
+                      </span>
+                    </div>
+                    
+                    {/* Conteúdo textual */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 space-y-2 md:space-y-3">
                       <h2 className="text-lg md:text-2xl font-bold text-white drop-shadow-lg">
                         {servico.titulo}
                       </h2>
-                    </div>
-                    
-                    {/* Badge de número */}
-                    <div className="absolute top-3 right-3 md:top-4 md:right-4 w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/90 backdrop-blur-sm flex items-center justify-center">
-                      <span className="text-primary-foreground font-bold text-sm md:text-base">
-                        {index + 1}
-                      </span>
+                      <p className="text-white/85 text-xs md:text-sm leading-relaxed line-clamp-2">
+                        {servico.descricao}
+                      </p>
+                      <div className="flex flex-wrap gap-1.5 md:gap-2 pt-1">
+                        {servico.tags.map(tag => (
+                          <span 
+                            key={tag} 
+                            className="text-[10px] md:text-xs bg-white/20 backdrop-blur-sm px-2 py-0.5 md:px-2.5 md:py-1 rounded-full text-white/90 border border-white/10"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </CarouselItem>
