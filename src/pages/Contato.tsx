@@ -229,8 +229,8 @@ const Contato = () => {
               <div className="relative card-premium p-6 md:p-8">
                 {/* Mensagem de sucesso */}
                 {isSuccess && (
-                  <div className="mb-6 p-4 bg-ddm-success/10 border border-ddm-success/30 rounded-xl flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-ddm-success flex-shrink-0" />
+                  <div className="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-xl flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0" />
                     <p className="text-sm text-foreground">
                       Formulário enviado! Redirecionando ao WhatsApp...
                     </p>
@@ -398,7 +398,7 @@ const Contato = () => {
             {/* Informações secundárias */}
             <div className="mt-8 grid grid-cols-3 gap-3 text-center animate-fade-in stagger-delay-2">
               <div className="p-3 rounded-xl bg-muted/20">
-                <MessageCircle className="w-5 h-5 text-ddm-whatsapp mx-auto mb-1" />
+                <MessageCircle className="w-5 h-5 text-green-600 dark:text-green-400 mx-auto mb-1" />
                 <p className="text-xs text-muted-foreground">Resposta rápida</p>
               </div>
               <div className="p-3 rounded-xl bg-muted/20">

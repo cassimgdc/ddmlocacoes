@@ -7,7 +7,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-secondary border-t border-border pb-24 md:pb-0">
+    <footer className="bg-card dark:bg-secondary border-t border-border pb-24 md:pb-0">
       <div className="container-ddm py-8 md:py-12">
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8">
           {/* Logo e descrição */}
@@ -54,7 +54,7 @@ const Footer = () => {
                   to="/contato"
                   className="flex items-center gap-2 text-muted-foreground hover:text-primary active:text-primary transition-colors touch-feedback"
                 >
-                  <MessageCircle className="w-4 h-4 text-ddm-whatsapp flex-shrink-0" />
+                  <MessageCircle className="w-4 h-4 text-green-600 dark:text-green-400 flex-shrink-0" />
                   (31) 97106-7272
                 </Link>
               </li>
