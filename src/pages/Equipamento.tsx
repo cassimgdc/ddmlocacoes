@@ -192,7 +192,7 @@ const Equipamento = () => {
                 <div className="absolute -inset-1 bg-gradient-to-r from-primary via-accent to-primary rounded-2xl opacity-60 blur-sm" />
                 
                 {/* Video card - no bg-card wrapper */}
-                <div className="relative rounded-xl overflow-hidden">
+                <div className="relative rounded-xl">
                   <MediaCard
                     type="video"
                     src="https://www.youtube.com/shorts/cTclcnHgReA"
