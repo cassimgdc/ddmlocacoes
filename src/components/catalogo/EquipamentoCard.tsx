@@ -1,14 +1,27 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Equipamento } from '@/data/equipamentos';
+import case580m from '@/assets/case-580m.png';
 
 interface EquipamentoCardProps {
   equipamento: Equipamento;
   onQuote: (equipamento: Equipamento) => void;
   delay?: number;
 }
+
+// Helper to check if equipment has a real image
+const getEquipmentImage = (equipamento: Equipamento): string => {
+  if (equipamento.slug === 'retroescavadeira-case-580m') {
+    return case580m;
+  }
+  return equipamento.imagemPlaceholder;
+};
+
+const isPlaceholderImage = (equipamento: Equipamento): boolean => {
+  return equipamento.slug !== 'retroescavadeira-case-580m';
+};
 
 const EquipamentoCard = ({ equipamento, onQuote, delay = 0 }: EquipamentoCardProps) => {
   const statusConfig = {
@@ -27,6 +40,8 @@ const EquipamentoCard = ({ equipamento, onQuote, delay = 0 }: EquipamentoCardPro
   };
 
   const status = statusConfig[equipamento.status];
+  const hasRealImage = !isPlaceholderImage(equipamento);
+  const imageSrc = getEquipmentImage(equipamento);
 
   return (
     <div
@@ -35,12 +50,23 @@ const EquipamentoCard = ({ equipamento, onQuote, delay = 0 }: EquipamentoCardPro
     >
       {/* Image */}
       <Link to={`/catalogo/${equipamento.slug}`} className="block relative aspect-[4/3] overflow-hidden bg-secondary/50">
-        <img
-          src={equipamento.imagemPlaceholder}
-          alt={equipamento.nome}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          loading="lazy"
-        />
+        {hasRealImage ? (
+          <img
+            src={imageSrc}
+            alt={equipamento.nome}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+        ) : (
+          /* Placeholder - Coming Soon overlay */
+          <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-muted/80 via-secondary/60 to-muted/80 p-6">
+            <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-3">
+              <Clock className="w-8 h-8 text-primary/60" />
+            </div>
+            <p className="text-sm font-semibold text-foreground/80 text-center">Foto em breve</p>
+            <p className="text-xs text-muted-foreground text-center mt-1">Equipamento disponível</p>
+          </div>
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-card/60 via-transparent to-transparent" />
         
         {/* Status badge */}
