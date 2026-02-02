@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
@@ -10,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Send, MessageCircle, Loader2 } from 'lucide-react';
+import { ArrowRight, MessageCircle, Loader2 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { usePhoneFormat } from '@/hooks/usePhoneFormat';
@@ -33,8 +32,6 @@ const FinalCTA = () => {
     nome: '',
     cidade: '',
     tipo: '',
-    periodo: '',
-    mensagem: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -62,8 +59,6 @@ const FinalCTA = () => {
         nome: formData.nome,
         whatsapp: getPhoneForSubmit(),
         cidade: formData.cidade,
-        periodo: formData.periodo || null,
-        mensagem: formData.mensagem || null,
         origem: 'home_cta',
         status: 'novo',
       });
@@ -76,12 +71,7 @@ const FinalCTA = () => {
       if (serviceName) {
         message += `\n\nServiço: ${serviceName}`;
       }
-      if (formData.periodo) {
-        message += `\nPeríodo: ${formData.periodo}`;
-      }
-      if (formData.mensagem) {
-        message += `\n\nObservação: ${formData.mensagem}`;
-      }
+      message += '\n\nGostaria de um orçamento.';
 
       // Open WhatsApp
       window.open(`https://wa.me/5531971067272?text=${encodeURIComponent(message)}`, '_blank');
@@ -96,8 +86,6 @@ const FinalCTA = () => {
         nome: '',
         cidade: '',
         tipo: '',
-        periodo: '',
-        mensagem: '',
       });
       resetPhone();
     } catch (error) {
@@ -113,128 +101,115 @@ const FinalCTA = () => {
   };
 
   return (
-    <section className="py-12 md:py-16 bg-background">
+    <section className="py-16 md:py-20 bg-background">
       <div className="container-ddm">
-        <div className="max-w-3xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-              Solicite seu orçamento
-            </h2>
-            <p className="text-muted-foreground mt-2">
-              Preencha o formulário e receba uma proposta personalizada
-            </p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5 }}
+          className="max-w-3xl mx-auto"
+        >
+          {/* Elegant container with subtle shape */}
+          <div className="relative overflow-hidden rounded-2xl border border-border bg-card">
+            {/* Subtle corner accent */}
+            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-copper/5 to-transparent pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-primary/3 to-transparent pointer-events-none" />
+            
+            <div className="relative z-10 p-6 md:p-10">
+              {/* Header */}
+              <div className="text-center mb-8">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+                  Solicite seu orçamento
+                </h2>
+                <p className="text-muted-foreground mt-2">
+                  Preencha os dados e receba uma proposta personalizada
+                </p>
+              </div>
+
+              {/* Form - Short and objective */}
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="cta-nome" className="text-sm font-medium">Nome *</Label>
+                    <Input
+                      id="cta-nome"
+                      placeholder="Seu nome"
+                      value={formData.nome}
+                      onChange={(e) => handleChange('nome', e.target.value)}
+                      className="mt-1.5 h-11 bg-muted/30 border-border/60"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="cta-whatsapp" className="text-sm font-medium">WhatsApp *</Label>
+                    <Input
+                      id="cta-whatsapp"
+                      placeholder="(31) 99999-9999"
+                      value={phone}
+                      onChange={(e) => handlePhoneChange(e.target.value)}
+                      className="mt-1.5 h-11 bg-muted/30 border-border/60"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="cta-cidade" className="text-sm font-medium">Cidade *</Label>
+                    <Input
+                      id="cta-cidade"
+                      placeholder="Ex: Sete Lagoas"
+                      value={formData.cidade}
+                      onChange={(e) => handleChange('cidade', e.target.value)}
+                      className="mt-1.5 h-11 bg-muted/30 border-border/60"
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-sm font-medium">Tipo de serviço</Label>
+                    <Select value={formData.tipo} onValueChange={(v) => handleChange('tipo', v)}>
+                      <SelectTrigger className="mt-1.5 h-11 bg-muted/30 border-border/60">
+                        <SelectValue placeholder="Selecione..." />
+                      </SelectTrigger>
+                      <SelectContent className="bg-card border-border">
+                        {serviceTypes.map((type) => (
+                          <SelectItem key={type.value} value={type.value}>
+                            {type.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* CTAs */}
+                <div className="flex flex-col sm:flex-row gap-3 pt-3">
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="flex-1 h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-medium"
+                  >
+                    {isSubmitting ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <>
+                        Solicitar orçamento
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </>
+                    )}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="h-12 px-6 border-success/30 text-success hover:bg-success/5 hover:border-success/50 font-medium"
+                    onClick={() => window.open('https://wa.me/5531971067272', '_blank')}
+                  >
+                    <MessageCircle className="w-4 h-4 mr-2" />
+                    WhatsApp
+                  </Button>
+                </div>
+              </form>
+            </div>
           </div>
-
-          {/* Form */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5 }}
-            className="bg-card rounded-xl border border-border p-6 md:p-8 shadow-soft"
-          >
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="nome" className="text-sm font-medium">Nome *</Label>
-                  <Input
-                    id="nome"
-                    placeholder="Seu nome"
-                    value={formData.nome}
-                    onChange={(e) => handleChange('nome', e.target.value)}
-                    className="mt-1.5 h-11 bg-muted/50"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="whatsapp" className="text-sm font-medium">WhatsApp *</Label>
-                  <Input
-                    id="whatsapp"
-                    placeholder="(31) 99999-9999"
-                    value={phone}
-                    onChange={(e) => handlePhoneChange(e.target.value)}
-                    className="mt-1.5 h-11 bg-muted/50"
-                  />
-                </div>
-              </div>
-
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="cidade" className="text-sm font-medium">Cidade *</Label>
-                  <Input
-                    id="cidade"
-                    placeholder="Ex: Sete Lagoas"
-                    value={formData.cidade}
-                    onChange={(e) => handleChange('cidade', e.target.value)}
-                    className="mt-1.5 h-11 bg-muted/50"
-                  />
-                </div>
-                <div>
-                  <Label className="text-sm font-medium">Tipo de serviço</Label>
-                  <Select value={formData.tipo} onValueChange={(v) => handleChange('tipo', v)}>
-                    <SelectTrigger className="mt-1.5 h-11 bg-muted/50">
-                      <SelectValue placeholder="Selecione..." />
-                    </SelectTrigger>
-                    <SelectContent className="bg-card border-border">
-                      {serviceTypes.map((type) => (
-                        <SelectItem key={type.value} value={type.value}>
-                          {type.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div>
-                <Label htmlFor="periodo" className="text-sm font-medium">Período desejado</Label>
-                <Input
-                  id="periodo"
-                  placeholder="Ex: 2 dias, 1 semana"
-                  value={formData.periodo}
-                  onChange={(e) => handleChange('periodo', e.target.value)}
-                  className="mt-1.5 h-11 bg-muted/50"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="mensagem" className="text-sm font-medium">Observações</Label>
-                <Textarea
-                  id="mensagem"
-                  placeholder="Detalhes adicionais sobre o serviço..."
-                  value={formData.mensagem}
-                  onChange={(e) => handleChange('mensagem', e.target.value)}
-                  rows={3}
-                  className="mt-1.5 bg-muted/50 resize-none"
-                />
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-3 pt-2">
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="flex-1 h-11 bg-copper hover:bg-copper/90 text-white font-medium"
-                >
-                  {isSubmitting ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                  ) : (
-                    <Send className="w-4 h-4 mr-2" />
-                  )}
-                  Enviar orçamento
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="h-11 border-success/30 text-success hover:bg-success/10"
-                  onClick={() => window.open('https://wa.me/5531971067272', '_blank')}
-                >
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  WhatsApp direto
-                </Button>
-              </div>
-            </form>
-          </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
