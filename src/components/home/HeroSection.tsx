@@ -89,6 +89,14 @@ const HeroSection = () => {
           {/* Primary overlay - Using dark graphite for both themes */}
           <div className="absolute inset-0 bg-gradient-to-br from-[hsl(222,47%,11%)]/95 via-[hsl(222,47%,11%)]/90 to-[hsl(222,47%,11%)]/70" />
           
+          {/* Vignette overlay - Dark radial gradient on edges for focus */}
+          <div 
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: 'radial-gradient(ellipse 80% 60% at 35% 40%, transparent 0%, hsl(222 47% 11% / 0.4) 100%)',
+            }}
+          />
+          
           {/* DDM Technical Pattern - Brand signature overlay */}
           <DDMPattern variant="minimal" className="text-white" />
         </div>
@@ -106,13 +114,13 @@ const HeroSection = () => {
             transition={{ duration: 0.5 }}
             className="lg:col-span-7 space-y-8"
           >
-            {/* Headline - Shorter with smart breaks */}
-            <div className="space-y-4">
-              <h1 className="text-3xl sm:text-4xl lg:text-[3.25rem] font-bold text-white leading-[1.1] tracking-tight">
+            {/* Headline - Shorter with smart breaks + backdrop blur for readability */}
+            <div className="space-y-4 backdrop-blur-[2px] bg-black/5 rounded-lg p-4 -m-4 lg:p-0 lg:m-0 lg:bg-transparent lg:backdrop-blur-none">
+              <h1 className="text-3xl sm:text-4xl lg:text-[3.25rem] font-bold text-white leading-[1.1] tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">
                 Locação de equipamentos{' '}<br className="hidden sm:block" />
-                <span className="text-[hsl(28,80%,52%)]">para sua obra.</span>
+                <span className="text-[hsl(28,80%,52%)] drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]">para sua obra.</span>
               </h1>
-              <p className="text-base lg:text-lg text-white/70 max-w-lg leading-relaxed">
+              <p className="text-base lg:text-lg text-white/80 max-w-lg leading-relaxed drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)]">
                 Retroescavadeiras e máquinas pesadas com operador incluso. 
                 Atendemos Sete Lagoas e região.
               </p>
