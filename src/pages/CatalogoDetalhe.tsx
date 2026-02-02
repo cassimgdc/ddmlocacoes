@@ -1,224 +1,332 @@
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useMemo } from 'react';
+import { useParams, Navigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/layout/Layout';
-import InternalHero from '@/components/layout/InternalHero';
-import { Button } from '@/components/ui/button';
+import ProductGallery from '@/components/catalogo/ProductGallery';
+import ProductQuoteForm from '@/components/catalogo/ProductQuoteForm';
+import RelatedEquipmentCard from '@/components/catalogo/RelatedEquipmentCard';
+import { Badge } from '@/components/ui/badge';
 import {
-  Tractor,
-  ArrowRight,
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import {
+  ChevronRight,
   CheckCircle2,
-  MessageCircle,
-  Ruler,
-  Weight,
-  Gauge,
-  Wrench,
-  Fuel,
-  User,
-  Clock,
-  Shield,
-  Play,
+  AlertCircle,
+  Info,
+  Search,
+  CalendarCheck,
+  Truck,
+  Home,
 } from 'lucide-react';
+import { getEquipamentoBySlug, equipamentos } from '@/data/equipamentos';
 import case580m from '@/assets/case-580m.png';
 
-// Dados dos equipamentos (pode ser movido para um arquivo separado)
-const equipamentosData: Record<string, {
-  nome: string;
-  categoria: string;
-  imagem: string;
-  descricao: string;
-  descricaoCompleta: string;
-  especificacoes: { label: string; valor: string; icon: typeof Ruler }[];
-  servicos: string[];
+// Extended equipment data for detail page
+const equipamentoExtendedData: Record<string, {
+  imagens: string[];
+  descricaoLonga: string;
   inclusos: string[];
-  precoHora: string;
-  videoId?: string;
+  observacoes: { titulo: string; conteudo: string }[];
 }> = {
   'retroescavadeira-case-580m': {
-    nome: 'Retroescavadeira Case 580M',
-    categoria: 'Retroescavadeira',
-    imagem: case580m,
-    descricao: 'Máquina versátil para escavação, terraplanagem e carregamento.',
-    descricaoCompleta: 'A Case 580M é uma retroescavadeira robusta e versátil, ideal para obras residenciais, comerciais e serviços rurais. Com grande capacidade de escavação e carregamento, resolve a maioria dos trabalhos de terraplanagem, abertura de valas e limpeza de terrenos.',
-    especificacoes: [
-      { label: 'Profundidade escavação', valor: 'Até 4,37m', icon: Ruler },
-      { label: 'Capacidade caçamba', valor: '0,26 m³', icon: Weight },
-      { label: 'Potência motor', valor: '95 HP', icon: Gauge },
-      { label: 'Manutenção', valor: 'Em dia', icon: Wrench },
-    ],
-    servicos: [
-      'Abertura de valas para tubulação',
-      'Terraplanagem de terrenos',
-      'Limpeza de lotes e entulhos',
-      'Escavação para fundações',
-      'Carregamento de materiais',
-      'Serviços rurais diversos',
-    ],
+    imagens: [case580m],
+    descricaoLonga: `A Retroescavadeira Case 580M é uma máquina robusta e versátil, reconhecida pela sua confiabilidade e desempenho em obras de pequeno e médio porte.
+
+Com capacidade de escavação de até 4,37 metros de profundidade e potência de 95 HP, ela é ideal para:
+- Terraplanagem de terrenos residenciais e comerciais
+- Abertura de valas para tubulação de água, esgoto e energia
+- Limpeza de lotes e remoção de entulhos
+- Escavação para fundações e piscinas
+- Carregamento e movimentação de materiais
+- Serviços rurais e agrícolas
+
+Nossa máquina passa por manutenção preventiva rigorosa, garantindo disponibilidade e segurança durante todo o período de locação.`,
     inclusos: [
-      'Operador experiente',
+      'Operador experiente e habilitado',
       'Combustível durante o trabalho',
-      'Deslocamento (consulte área)',
+      'Deslocamento dentro da área de cobertura',
       'Seguro da máquina',
+      'Manutenção preventiva em dia',
+      'Suporte técnico durante a locação',
     ],
-    precoHora: 'R$ 200',
-    videoId: 'dQw4w9WgXcQ', // Placeholder
+    observacoes: [
+      {
+        titulo: 'Área de Atendimento',
+        conteudo: 'Atendemos Sete Lagoas e região, incluindo Prudente de Morais, Capim Branco, Funilândia, Jequitibá, Paraopeba, Caetanópolis e Baldim. Para outras localidades, consulte disponibilidade e valor de deslocamento.',
+      },
+      {
+        titulo: 'Condições do Terreno',
+        conteudo: 'O terreno deve permitir acesso seguro da máquina. Terrenos muito íngremes, alagados ou com obstáculos podem limitar a operação. Consulte-nos para avaliar a viabilidade.',
+      },
+      {
+        titulo: 'Tempo Mínimo',
+        conteudo: 'O tempo mínimo de locação é de 2 horas. Para serviços maiores, oferecemos diárias com melhor custo-benefício.',
+      },
+      {
+        titulo: 'Cancelamento',
+        conteudo: 'Cancelamentos com menos de 24 horas de antecedência podem incorrer em taxa de deslocamento. Reagendamentos são gratuitos mediante disponibilidade.',
+      },
+    ],
   },
+};
+
+// Default extended data for equipment without specific data
+const defaultExtendedData = {
+  imagens: ['/placeholder.svg'],
+  descricaoLonga: '',
+  inclusos: [
+    'Operador experiente',
+    'Combustível incluso',
+    'Suporte técnico',
+  ],
+  observacoes: [
+    {
+      titulo: 'Disponibilidade',
+      conteudo: 'Este equipamento está sob consulta. Entre em contato para verificar disponibilidade e condições.',
+    },
+  ],
 };
 
 const CatalogoDetalhe = () => {
   const { slug } = useParams<{ slug: string }>();
-  const equipamento = slug ? equipamentosData[slug] : null;
+  const equipamento = slug ? getEquipamentoBySlug(slug) : null;
+
+  // Get extended data
+  const extendedData = slug && equipamentoExtendedData[slug]
+    ? equipamentoExtendedData[slug]
+    : defaultExtendedData;
+
+  // Get related equipment (same category, excluding current)
+  const relatedEquipamentos = useMemo(() => {
+    if (!equipamento) return [];
+    return equipamentos
+      .filter((e) => e.categoria === equipamento.categoria && e.id !== equipamento.id)
+      .slice(0, 6);
+  }, [equipamento]);
+
+  // Get image for equipment
+  const getEquipImage = (slug: string) => {
+    if (slug === 'retroescavadeira-case-580m') return case580m;
+    return '/placeholder.svg';
+  };
 
   if (!equipamento) {
     return <Navigate to="/catalogo" replace />;
   }
 
+  const statusConfig = {
+    disponivel: {
+      label: 'Disponível',
+      className: 'bg-ddm-success/10 text-ddm-success border-ddm-success/20',
+    },
+    'sob-consulta': {
+      label: 'Sob consulta',
+      className: 'bg-accent/10 text-accent border-accent/20',
+    },
+    indisponivel: {
+      label: 'Indisponível',
+      className: 'bg-muted text-muted-foreground border-border',
+    },
+  };
+
+  const status = statusConfig[equipamento.status];
+
+  // Use extended description or fallback to base
+  const fullDescription = extendedData.descricaoLonga || equipamento.descricaoLonga;
+
   return (
     <Layout>
       <Helmet>
         <title>{equipamento.nome} | DDM Locações - Sete Lagoas</title>
-        <meta name="description" content={`${equipamento.descricao} Aluguel com operador incluso em Sete Lagoas e região. ${equipamento.precoHora}/hora.`} />
+        <meta
+          name="description"
+          content={`${equipamento.descricaoCurta} Aluguel com operador incluso em Sete Lagoas e região.${equipamento.preco ? ` ${equipamento.preco}.` : ''}`}
+        />
         <link rel="canonical" href={`https://ddmlocacoes.lovable.app/catalogo/${slug}`} />
-        <meta property="og:title" content={`${equipamento.nome} | DDM Locações`} />
-        <meta property="og:description" content={equipamento.descricao} />
       </Helmet>
 
-      <InternalHero
-        badge={equipamento.categoria}
-        badgeIcon={Tractor}
-        title={equipamento.nome}
-        subtitle={equipamento.descricao}
-        breadcrumbs={[
-          { label: 'Catálogo', href: '/catalogo' },
-          { label: equipamento.nome },
-        ]}
-        size="sm"
-      />
-
-      {/* Conteúdo Principal */}
-      <section className="py-10 md:py-16">
+      {/* Breadcrumb + Header */}
+      <section className="pt-28 md:pt-32 pb-6 bg-gradient-to-b from-secondary/30 to-transparent">
         <div className="container-ddm">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-            {/* Imagem */}
-            <div className="relative">
-              <div className="rounded-2xl bg-gradient-to-br from-secondary/50 to-muted/30 p-8 md:p-12 border border-border/50">
-                <div className="absolute inset-0 bg-gradient-radial from-primary/10 via-transparent to-transparent opacity-50" />
-                <img
-                  src={equipamento.imagem}
-                  alt={equipamento.nome}
-                  className="relative w-full h-auto max-h-[400px] object-contain animate-float"
+          {/* Breadcrumb */}
+          <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-4" aria-label="Breadcrumb">
+            <Link to="/" className="hover:text-foreground transition-colors flex items-center gap-1">
+              <Home className="w-4 h-4" />
+              Início
+            </Link>
+            <ChevronRight className="w-4 h-4" />
+            <Link to="/catalogo" className="hover:text-foreground transition-colors">
+              Catálogo
+            </Link>
+            <ChevronRight className="w-4 h-4" />
+            <span className="text-foreground font-medium truncate max-w-[200px]">
+              {equipamento.nome}
+            </span>
+          </nav>
+
+          {/* Title + Badge */}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-foreground">
+              {equipamento.nome}
+            </h1>
+            <Badge variant="outline" className={`${status.className} w-fit`}>
+              {status.label}
+            </Badge>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Content: 2 columns */}
+      <section className="py-8 md:py-12">
+        <div className="container-ddm">
+          <div className="grid lg:grid-cols-3 gap-8 lg:gap-10">
+            {/* Left Column: Gallery + Details */}
+            <div className="lg:col-span-2 space-y-8">
+              {/* Gallery */}
+              <ProductGallery
+                images={extendedData.imagens}
+                alt={equipamento.nome}
+              />
+
+              {/* Description */}
+              <div>
+                <h2 className="text-lg font-display font-bold text-foreground mb-3">
+                  Sobre o Equipamento
+                </h2>
+                <div className="prose prose-sm max-w-none text-muted-foreground">
+                  {fullDescription.split('\n').map((paragraph, index) => (
+                    <p key={index} className="mb-3 last:mb-0 whitespace-pre-line">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </div>
+
+              {/* Specifications */}
+              <div>
+                <h2 className="text-lg font-display font-bold text-foreground mb-4">
+                  Especificações
+                </h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {equipamento.specs.map((spec) => (
+                    <div
+                      key={spec.label}
+                      className="p-4 rounded-xl bg-muted/30 border border-border/30"
+                    >
+                      <p className="text-xs text-muted-foreground mb-1">{spec.label}</p>
+                      <p className="font-bold text-foreground">{spec.value}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Included items */}
+              <div>
+                <h2 className="text-lg font-display font-bold text-foreground mb-4">
+                  Incluso no Aluguel
+                </h2>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  {extendedData.inclusos.map((item) => (
+                    <div key={item} className="flex items-center gap-3 p-3 rounded-lg bg-ddm-success/5 border border-ddm-success/10">
+                      <CheckCircle2 className="w-5 h-5 text-ddm-success flex-shrink-0" />
+                      <span className="text-sm text-foreground">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Observations / FAQ Accordion */}
+              <div>
+                <h2 className="text-lg font-display font-bold text-foreground mb-4">
+                  Informações Importantes
+                </h2>
+                <Accordion type="single" collapsible className="space-y-2">
+                  {extendedData.observacoes.map((obs, index) => (
+                    <AccordionItem
+                      key={index}
+                      value={`item-${index}`}
+                      className="border border-border/50 rounded-lg px-4 bg-card"
+                    >
+                      <AccordionTrigger className="hover:no-underline py-4">
+                        <div className="flex items-center gap-3">
+                          <Info className="w-4 h-4 text-primary" />
+                          <span className="font-medium text-foreground text-left">
+                            {obs.titulo}
+                          </span>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent className="pb-4 text-muted-foreground">
+                        {obs.conteudo}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
+            </div>
+
+            {/* Right Column: Sticky Quote Form */}
+            <div className="lg:col-span-1">
+              <div className="lg:sticky lg:top-28">
+                <ProductQuoteForm
+                  equipamentoNome={equipamento.nome}
+                  preco={equipamento.preco}
                 />
               </div>
-
-              {/* Badge preço */}
-              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 md:left-auto md:-right-4 md:translate-x-0 md:bottom-8">
-                <div className="px-5 py-3 rounded-xl bg-card border border-border shadow-lg">
-                  <p className="text-xs text-muted-foreground text-center">A partir de</p>
-                  <p className="text-2xl font-bold text-gradient-vivid text-center">
-                    {equipamento.precoHora}
-                    <span className="text-sm font-normal text-muted-foreground">/hora</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Detalhes */}
-            <div className="space-y-6">
-              {/* Descrição */}
-              <div>
-                <h2 className="text-lg font-display font-bold text-foreground mb-2">Sobre o equipamento</h2>
-                <p className="text-muted-foreground">{equipamento.descricaoCompleta}</p>
-              </div>
-
-              {/* Especificações */}
-              <div>
-                <h3 className="text-base font-display font-bold text-foreground mb-3">Especificações</h3>
-                <div className="grid grid-cols-2 gap-3">
-                  {equipamento.especificacoes.map((spec) => (
-                    <div key={spec.label} className="p-3 rounded-xl bg-muted/30 border border-border/30">
-                      <div className="flex items-center gap-2 mb-1">
-                        <spec.icon className="w-4 h-4 text-primary" />
-                        <span className="text-xs text-muted-foreground">{spec.label}</span>
-                      </div>
-                      <p className="font-semibold text-foreground">{spec.valor}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Inclusos */}
-              <div>
-                <h3 className="text-base font-display font-bold text-foreground mb-3">Incluso no aluguel</h3>
-                <div className="grid grid-cols-2 gap-2">
-                  {equipamento.inclusos.map((item) => (
-                    <div key={item} className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-ddm-success flex-shrink-0" />
-                      <span className="text-sm text-muted-foreground">{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* CTA */}
-              <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                <Button variant="cta" size="lg" asChild className="group flex-1">
-                  <Link to="/contato">
-                    <MessageCircle className="w-5 h-5" />
-                    Solicitar Orçamento
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </Button>
-                <Button variant="outline" size="lg" asChild>
-                  <a href="https://wa.me/5531971067272" target="_blank" rel="noopener noreferrer">
-                    WhatsApp Direto
-                  </a>
-                </Button>
-              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Serviços que realiza */}
-      <section className="py-12 md:py-16 bg-secondary/30">
-        <div className="container-ddm">
-          <div className="text-center mb-8">
-            <h2 className="text-xl md:text-2xl font-display font-bold text-foreground">
-              Serviços que <span className="text-gradient-vivid">realiza</span>
+      {/* Related Equipment */}
+      {relatedEquipamentos.length > 0 && (
+        <section className="py-12 md:py-16 bg-secondary/30">
+          <div className="container-ddm">
+            <h2 className="text-xl md:text-2xl font-display font-bold text-foreground mb-6">
+              Equipamentos <span className="text-gradient-vivid">Relacionados</span>
             </h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+              {relatedEquipamentos.map((equip) => (
+                <RelatedEquipmentCard
+                  key={equip.id}
+                  equipamento={equip}
+                  image={getEquipImage(equip.slug)}
+                />
+              ))}
+            </div>
           </div>
+        </section>
+      )}
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 max-w-3xl mx-auto">
-            {equipamento.servicos.map((servico) => (
-              <div key={servico} className="p-4 rounded-xl bg-card border border-border/50 text-center">
-                <Wrench className="w-5 h-5 text-primary mx-auto mb-2" />
-                <p className="text-sm text-muted-foreground">{servico}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Por que escolher */}
+      {/* Mini How it Works */}
       <section className="py-12 md:py-16">
         <div className="container-ddm">
           <div className="text-center mb-8">
             <h2 className="text-xl md:text-2xl font-display font-bold text-foreground">
-              Por que alugar <span className="text-gradient-vivid">conosco</span>
+              Como <span className="text-gradient-vivid">Funciona</span>
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+          <div className="grid grid-cols-3 gap-4 md:gap-8 max-w-3xl mx-auto">
             {[
-              { icon: User, label: 'Operador experiente' },
-              { icon: Fuel, label: 'Combustível incluso' },
-              { icon: Shield, label: 'Máquina segurada' },
-              { icon: Clock, label: 'Atendimento rápido' },
+              { icon: Search, step: 1, title: 'Escolha', desc: 'Selecione o equipamento' },
+              { icon: CalendarCheck, step: 2, title: 'Agende', desc: 'Defina data e período' },
+              { icon: Truck, step: 3, title: 'Receba', desc: 'Entregamos no local' },
             ].map((item) => (
-              <div key={item.label} className="p-5 rounded-xl bg-card border border-border/50 text-center card-hover-lift">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-3">
-                  <item.icon className="w-6 h-6 text-primary" />
+              <div key={item.step} className="text-center">
+                <div className="relative inline-block mb-3">
+                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-cta mx-auto">
+                    <item.icon className="w-6 h-6 md:w-7 md:h-7 text-primary-foreground" />
+                  </div>
+                  <span className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-card border-2 border-primary flex items-center justify-center text-xs font-bold text-primary">
+                    {item.step}
+                  </span>
                 </div>
-                <p className="text-sm font-medium text-foreground">{item.label}</p>
+                <h3 className="font-bold text-foreground text-sm md:text-base mb-1">{item.title}</h3>
+                <p className="text-muted-foreground text-xs md:text-sm">{item.desc}</p>
               </div>
             ))}
           </div>
