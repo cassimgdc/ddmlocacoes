@@ -16,7 +16,7 @@ const Footer = () => {
               <img 
                 src={logoImg} 
                 alt="DDM Locações" 
-                className="h-10 md:h-12 w-auto mb-4"
+                className="h-16 md:h-20 w-auto mb-4"
               />
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed mb-3">
