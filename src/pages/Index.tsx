@@ -100,57 +100,14 @@ const Index = () => {
     },
   ];
 
-  // Featured products
-  const featuredProducts = [
-    {
-      image: case580m,
-      title: 'Retroescavadeira Case 580M',
-      description: 'Ideal para terraplanagem, abertura de valas e serviços pesados',
-      price: 'R$ 200/hora',
-      href: '/catalogo/retroescavadeira-case-580m',
-      featured: true,
-    },
-    {
-      image: case580m,
-      title: 'Mini Escavadeira',
-      description: 'Perfeita para espaços reduzidos e trabalhos de precisão',
-      price: 'Sob consulta',
-      href: '/catalogo',
-      featured: false,
-    },
-    {
-      image: case580m,
-      title: 'Rolo Compactador',
-      description: 'Compactação de solo para fundações e pavimentação',
-      price: 'Sob consulta',
-      href: '/catalogo',
-      featured: false,
-    },
-    {
-      image: case580m,
-      title: 'Caminhão Basculante',
-      description: 'Transporte de terra, entulho e materiais',
-      price: 'Sob consulta',
-      href: '/catalogo',
-      featured: false,
-    },
-    {
-      image: case580m,
-      title: 'Pá Carregadeira',
-      description: 'Carregamento e movimentação de grandes volumes',
-      price: 'Sob consulta',
-      href: '/catalogo',
-      featured: false,
-    },
-    {
-      image: case580m,
-      title: 'Motoniveladora',
-      description: 'Nivelamento de terrenos e estradas',
-      price: 'Sob consulta',
-      href: '/catalogo',
-      featured: false,
-    },
-  ];
+  // Featured product - only Case 580M for now
+  const featuredProduct = {
+    image: case580m,
+    title: 'Retroescavadeira Case 580M',
+    description: 'Máquina versátil ideal para terraplanagem, abertura de valas, limpeza de lotes e serviços rurais. Operador experiente e combustível inclusos.',
+    price: 'R$ 200/hora',
+    href: '/catalogo/retroescavadeira-case-580m',
+  };
 
   // Differentials
   const differentials = [
@@ -385,40 +342,67 @@ const Index = () => {
         </div>
       </section>
 
-      {/* ===== SECTION 4: FEATURED PRODUCTS ===== */}
+      {/* ===== SECTION 4: FEATURED EQUIPMENT ===== */}
       <section className="py-16 md:py-24">
         <div className="container-ddm">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 md:mb-14">
-            <div className="text-center md:text-left opacity-0 animate-fade-in-up">
-              <span className="badge-industrial mb-4">
-                <Star className="w-4 h-4" />
-                Catálogo
-              </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground">
-                Destaques do <span className="text-gradient-vivid">Catálogo</span>
-              </h2>
-            </div>
-            <Button variant="outline" asChild className="group opacity-0 animate-fade-in-up stagger-1 w-fit mx-auto md:mx-0">
-              <Link to="/catalogo">
-                Ver catálogo completo
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Button>
+          <div className="text-center mb-10 md:mb-14 opacity-0 animate-fade-in-up">
+            <span className="badge-industrial mb-4">
+              <Star className="w-4 h-4" />
+              Equipamento
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground">
+              Nosso <span className="text-gradient-vivid">Equipamento</span>
+            </h2>
+            <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
+              Em breve, novos equipamentos serão adicionados ao catálogo
+            </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-            {featuredProducts.map((product, index) => (
-              <ProductCard
-                key={product.title}
-                image={product.image}
-                title={product.title}
-                description={product.description}
-                price={product.price}
-                href={product.href}
-                featured={product.featured}
-                delay={(index + 1) * 100}
-              />
-            ))}
+          <div className="max-w-2xl mx-auto">
+            {/* Main featured equipment card */}
+            <Link 
+              to={featuredProduct.href}
+              className="group block card-premium overflow-hidden border-primary/30 opacity-0 animate-fade-in-up stagger-1"
+            >
+              {/* Featured badge */}
+              <div className="absolute top-4 left-4 z-10">
+                <span className="px-4 py-1.5 rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground text-sm font-bold shadow-cta">
+                  Disponível
+                </span>
+              </div>
+              
+              {/* Image */}
+              <div className="relative aspect-[16/10] overflow-hidden bg-secondary/50 flex items-center justify-center p-8">
+                <img 
+                  src={featuredProduct.image} 
+                  alt={featuredProduct.title}
+                  className="w-full max-w-md h-auto object-contain transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-card/80 via-transparent to-transparent" />
+              </div>
+              
+              {/* Content */}
+              <div className="p-6 md:p-8">
+                <h3 className="text-xl md:text-2xl font-display font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+                  {featuredProduct.title}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed mb-5">
+                  {featuredProduct.description}
+                </p>
+                
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div>
+                    <p className="text-sm text-muted-foreground">A partir de</p>
+                    <p className="text-2xl font-bold text-gradient-vivid">{featuredProduct.price}</p>
+                  </div>
+                  <Button variant="cta" size="lg" className="group/btn w-full sm:w-auto">
+                    Ver Detalhes
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+                  </Button>
+                </div>
+              </div>
+            </Link>
           </div>
         </div>
       </section>
