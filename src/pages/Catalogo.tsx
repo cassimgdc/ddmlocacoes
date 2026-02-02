@@ -159,7 +159,7 @@ const Catalogo = () => {
         badgeIcon={Tractor}
         title="Nossos"
         titleHighlight="Equipamentos"
-        subtitle="Encontre o equipamento ideal para seu projeto. Todos os aluguéis incluem operador e combustível."
+        subtitle="Encontre o equipamento ideal para seu projeto."
         breadcrumbs={[{ label: 'Catálogo' }]}
       />
 
