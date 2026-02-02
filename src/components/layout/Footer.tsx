@@ -139,7 +139,7 @@ const Footer = () => {
               © {currentYear} DDM Locações. Todos os direitos reservados.
             </p>
             <div className="flex items-center gap-4 text-xs text-muted-foreground">
-              <Link to="/politica-de-privacidade" className="hover:text-primary transition-colors">
+              <Link to="/privacidade" className="hover:text-primary transition-colors">
                 Privacidade
               </Link>
               <Link to="/termos" className="hover:text-primary transition-colors">

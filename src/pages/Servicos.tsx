@@ -81,9 +81,12 @@ const Servicos = () => {
       <Helmet>
         <title>Serviços de Retroescavadeira | DDM Locações - Sete Lagoas</title>
         <meta name="description" content="Serviços completos de retroescavadeira: abertura de valas, terraplanagem, limpeza de lotes, escavação e muito mais. Operador experiente incluso. Sete Lagoas e região." />
-        <link rel="canonical" href="https://ddmlocacoes.lovable.app/servicos" />
+        <link rel="canonical" href="https://ddmlocacoes.com.br/servicos" />
         <meta property="og:title" content="Serviços de Retroescavadeira | DDM Locações" />
         <meta property="og:description" content="Terraplanagem, valas, limpeza de lotes e mais. Operador incluso." />
+        <meta property="og:url" content="https://ddmlocacoes.com.br/servicos" />
+        <meta property="og:image" content="https://ddmlocacoes.com.br/og-image.png" />
+        <meta property="og:type" content="website" />
       </Helmet>
 
       <InternalHero
@@ -109,8 +112,12 @@ const Servicos = () => {
                 <div className="relative h-44 overflow-hidden">
                   <img
                     src={servico.imagem}
-                    alt={servico.titulo}
+                    alt={`Serviço de ${servico.titulo} - DDM Locações`}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
+                    width={400}
+                    height={176}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                   <div className="absolute bottom-4 left-4">

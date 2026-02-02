@@ -9,7 +9,11 @@ const Privacidade = () => {
       <Helmet>
         <title>Política de Privacidade | DDM Locações</title>
         <meta name="description" content="Política de privacidade da DDM Locações. Saiba como tratamos seus dados pessoais e protegemos sua privacidade." />
-        <link rel="canonical" href="https://ddmlocacoes.lovable.app/politica-de-privacidade" />
+        <link rel="canonical" href="https://ddmlocacoes.com.br/privacidade" />
+        <meta property="og:title" content="Política de Privacidade | DDM Locações" />
+        <meta property="og:description" content="Saiba como tratamos seus dados pessoais." />
+        <meta property="og:url" content="https://ddmlocacoes.com.br/privacidade" />
+        <meta property="og:type" content="website" />
       </Helmet>
 
       <InternalHero

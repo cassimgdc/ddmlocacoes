@@ -146,7 +146,12 @@ const Catalogo = () => {
           name="description"
           content="Confira nosso catálogo de equipamentos para locação: retroescavadeiras, escavadeiras, rolos compactadores e mais. Aluguel em Sete Lagoas e região."
         />
-        <link rel="canonical" href="https://ddmlocacoes.lovable.app/catalogo" />
+        <link rel="canonical" href="https://ddmlocacoes.com.br/catalogo" />
+        <meta property="og:title" content="Catálogo de Equipamentos | DDM Locações" />
+        <meta property="og:description" content="Retroescavadeiras, escavadeiras e mais para locação em Sete Lagoas." />
+        <meta property="og:url" content="https://ddmlocacoes.com.br/catalogo" />
+        <meta property="og:image" content="https://ddmlocacoes.com.br/og-image.png" />
+        <meta property="og:type" content="website" />
       </Helmet>
 
       <InternalHero

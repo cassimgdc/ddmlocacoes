@@ -9,7 +9,11 @@ const Termos = () => {
       <Helmet>
         <title>Termos de Uso | DDM Locações</title>
         <meta name="description" content="Termos de uso do site DDM Locações. Condições gerais para utilização de nossos serviços de locação de retroescavadeira." />
-        <link rel="canonical" href="https://ddmlocacoes.lovable.app/termos" />
+        <link rel="canonical" href="https://ddmlocacoes.com.br/termos" />
+        <meta property="og:title" content="Termos de Uso | DDM Locações" />
+        <meta property="og:description" content="Condições gerais para locação de retroescavadeira." />
+        <meta property="og:url" content="https://ddmlocacoes.com.br/termos" />
+        <meta property="og:type" content="website" />
       </Helmet>
 
       <InternalHero

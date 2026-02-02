@@ -21,7 +21,7 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const siteUrl = "https://ddmlocacoes.lovable.app";
+const siteUrl = "https://ddmlocacoes.com.br";
 const ogImageUrl = `${siteUrl}/og-image.png`;
 
 const App = () => (
@@ -139,6 +139,7 @@ const App = () => (
               <Route path="/sobre" element={<Sobre />} />
               <Route path="/contato" element={<Contato />} />
               <Route path="/duvidas" element={<Duvidas />} />
+              <Route path="/privacidade" element={<Privacidade />} />
               <Route path="/politica-de-privacidade" element={<Privacidade />} />
               <Route path="/termos" element={<Termos />} />
               {/* Redirects para rotas antigas */}
