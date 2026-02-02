@@ -113,7 +113,7 @@ const FinalCTA = () => {
           {/* Elegant container with subtle shape */}
           <div className="relative overflow-hidden rounded-2xl border border-border bg-card">
             {/* Subtle corner accent */}
-            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-copper/5 to-transparent pointer-events-none" />
+            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-accent/5 to-transparent pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-primary/3 to-transparent pointer-events-none" />
             
             <div className="relative z-10 p-6 md:p-10">

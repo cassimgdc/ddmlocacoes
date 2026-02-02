@@ -520,12 +520,12 @@ const Contato = () => {
                   <div key={item.title} className="p-3 rounded-lg bg-card border border-border">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
-                        <item.icon className="w-4 h-4 text-copper" />
+                        <item.icon className="w-4 h-4 text-accent" />
                       </div>
                       <div>
                         <p className="text-xs text-muted-foreground">{item.title}</p>
                         {item.href ? (
-                          <a href={item.href} className="text-sm font-medium text-foreground hover:text-copper transition-colors">
+                          <a href={item.href} className="text-sm font-medium text-foreground hover:text-accent transition-colors">
                             {item.value}
                           </a>
                         ) : (
@@ -538,7 +538,7 @@ const Contato = () => {
               </div>
 
               {/* Quick tip */}
-              <div className="p-4 rounded-lg bg-copper/5 border border-copper/20">
+              <div className="p-4 rounded-lg bg-accent/5 border border-accent/20">
                 <p className="text-sm font-medium text-foreground mb-1">Dica rápida</p>
                 <p className="text-xs text-muted-foreground">
                   Para um orçamento mais preciso, envie fotos ou vídeos do local do serviço pelo WhatsApp.
