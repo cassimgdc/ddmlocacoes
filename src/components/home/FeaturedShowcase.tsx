@@ -3,6 +3,7 @@ import { ArrowRight, Clock, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { equipamentos } from '@/data/equipamentos';
 import case580m from '@/assets/case-580m.png';
+import { motion } from 'framer-motion';
 
 // Get image for equipment
 const getEquipImage = (slug: string) => {
@@ -46,9 +47,13 @@ const FeaturedShowcase = () => {
 
         {/* Showcase Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-          {featured.map((equip) => (
-            <div
+          {featured.map((equip, index) => (
+            <motion.div
               key={equip.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
               className="group bg-card rounded-xl border border-border overflow-hidden hover:border-copper/30 hover:shadow-elevated transition-all duration-300"
             >
               {/* Image */}
@@ -120,7 +125,7 @@ const FeaturedShowcase = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 

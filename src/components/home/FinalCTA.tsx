@@ -14,6 +14,7 @@ import { Send, MessageCircle, Loader2 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { usePhoneFormat } from '@/hooks/usePhoneFormat';
+import { motion } from 'framer-motion';
 
 const serviceTypes = [
   { value: 'retroescavadeira', label: 'Retroescavadeira' },
@@ -126,7 +127,13 @@ const FinalCTA = () => {
           </div>
 
           {/* Form */}
-          <div className="bg-card rounded-xl border border-border p-6 md:p-8 shadow-soft">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5 }}
+            className="bg-card rounded-xl border border-border p-6 md:p-8 shadow-soft"
+          >
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
@@ -226,7 +233,7 @@ const FinalCTA = () => {
                 </Button>
               </div>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
