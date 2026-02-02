@@ -43,7 +43,7 @@ const FeaturedEquipmentList = () => {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold text-foreground">Equipamentos em Destaque</h2>
-        <Link to="/catalogo" className="text-sm text-copper hover:underline flex items-center gap-1">
+        <Link to="/catalogo" className="text-sm text-accent hover:underline flex items-center gap-1">
           Ver catálogo
           <ArrowRight className="w-3.5 h-3.5" />
         </Link>
@@ -92,7 +92,7 @@ const FeaturedEquipmentList = () => {
               {/* Content */}
               <div className="flex flex-col flex-1 p-4">
                 <Link to={`/catalogo/${equip.slug}`}>
-                  <h3 className="font-semibold text-foreground group-hover:text-copper transition-colors line-clamp-1 mb-1">
+                  <h3 className="font-semibold text-foreground group-hover:text-accent transition-colors line-clamp-1 mb-1">
                     {equip.nome}
                   </h3>
                 </Link>

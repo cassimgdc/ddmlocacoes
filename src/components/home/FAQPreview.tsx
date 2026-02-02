@@ -35,7 +35,7 @@ const FAQPreview = () => {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold text-foreground">Dúvidas Frequentes</h2>
-        <Link to="/duvidas" className="text-sm text-copper hover:underline flex items-center gap-1">
+        <Link to="/duvidas" className="text-sm text-accent hover:underline flex items-center gap-1">
           Ver todas
           <ArrowRight className="w-3.5 h-3.5" />
         </Link>
@@ -48,7 +48,7 @@ const FAQPreview = () => {
             value={`faq-${index}`}
             className="rounded-lg bg-card border border-border px-4"
           >
-            <AccordionTrigger className="text-left text-sm font-medium text-foreground hover:text-copper py-3">
+            <AccordionTrigger className="text-left text-sm font-medium text-foreground hover:text-accent py-3">
               {faq.question}
             </AccordionTrigger>
             <AccordionContent className="text-muted-foreground text-sm pb-3">

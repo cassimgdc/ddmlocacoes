@@ -318,7 +318,7 @@ const Contato = () => {
                     {/* Nome */}
                     <div className="space-y-1">
                       <Label htmlFor="nome" className="text-sm flex items-center gap-1.5">
-                        <User className="w-3.5 h-3.5 text-copper" />
+                        <User className="w-3.5 h-3.5 text-accent" />
                         Seu nome *
                       </Label>
                       <InputWithCheck
@@ -337,7 +337,7 @@ const Contato = () => {
                     {/* Empresa */}
                     <div className="space-y-1">
                       <Label htmlFor="empresa" className="text-sm flex items-center gap-1.5">
-                        <Building2 className="w-3.5 h-3.5 text-copper" />
+                        <Building2 className="w-3.5 h-3.5 text-accent" />
                         Empresa (opcional)
                       </Label>
                       <Input
@@ -355,7 +355,7 @@ const Contato = () => {
                     {/* WhatsApp */}
                     <div className="space-y-1">
                       <Label htmlFor="telefone" className="text-sm flex items-center gap-1.5">
-                        <Phone className="w-3.5 h-3.5 text-copper" />
+                        <Phone className="w-3.5 h-3.5 text-accent" />
                         WhatsApp *
                       </Label>
                       <div className="flex gap-2">
@@ -393,7 +393,7 @@ const Contato = () => {
                     {/* Email */}
                     <div className="space-y-1">
                       <Label htmlFor="email" className="text-sm flex items-center gap-1.5">
-                        <Mail className="w-3.5 h-3.5 text-copper" />
+                        <Mail className="w-3.5 h-3.5 text-accent" />
                         Email (opcional)
                       </Label>
                       <Input
@@ -412,7 +412,7 @@ const Contato = () => {
                     {/* Cidade */}
                     <div className="space-y-1">
                       <Label htmlFor="cidade" className="text-sm flex items-center gap-1.5">
-                        <MapPin className="w-3.5 h-3.5 text-copper" />
+                        <MapPin className="w-3.5 h-3.5 text-accent" />
                         Cidade *
                       </Label>
                       <InputWithCheck
@@ -431,7 +431,7 @@ const Contato = () => {
                     {/* Período */}
                     <div className="space-y-1">
                       <Label htmlFor="periodo" className="text-sm flex items-center gap-1.5">
-                        <Calendar className="w-3.5 h-3.5 text-copper" />
+                        <Calendar className="w-3.5 h-3.5 text-accent" />
                         Período (opcional)
                       </Label>
                       <Input
@@ -448,7 +448,7 @@ const Contato = () => {
                   {/* Tipo de serviço */}
                   <div className="space-y-1">
                     <Label htmlFor="itensInteresse" className="text-sm flex items-center gap-1.5">
-                      <FileText className="w-3.5 h-3.5 text-copper" />
+                      <FileText className="w-3.5 h-3.5 text-accent" />
                       Tipo de serviço *
                     </Label>
                     <Select

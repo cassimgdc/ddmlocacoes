@@ -94,15 +94,15 @@ const Sobre = () => {
             </p>
 
             {/* Stats row */}
-            <div className="flex items-center justify-center gap-8 md:gap-12 mt-10 pt-8 border-t border-border/60">
+            <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 md:gap-12 mt-10 pt-8 border-t border-border/60">
               {[
-                { valor: '500+', label: 'Locações realizadas' },
-                { valor: '10+', label: 'Anos de experiência' },
-                { valor: '8+', label: 'Cidades atendidas' },
+                { valor: '500+', label: 'Locações' },
+                { valor: '10+', label: 'Anos' },
+                { valor: '8+', label: 'Cidades' },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
-                  <p className="text-2xl md:text-3xl font-bold text-foreground">{stat.valor}</p>
-                  <p className="text-xs md:text-sm text-muted-foreground mt-1">{stat.label}</p>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">{stat.valor}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
                 </div>
               ))}
             </div>

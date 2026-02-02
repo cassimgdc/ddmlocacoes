@@ -17,8 +17,8 @@ const AreaCoverageCard = () => {
       {/* Area */}
       <div className="p-4 rounded-lg bg-card border border-border">
         <div className="flex items-center gap-2 mb-3">
-          <div className="w-8 h-8 rounded-lg bg-copper/10 flex items-center justify-center">
-            <MapPin className="w-4 h-4 text-copper" />
+          <div className="w-8 h-8 rounded-lg bg-accent/10 flex items-center justify-center">
+            <MapPin className="w-4 h-4 text-accent" />
           </div>
           <h3 className="font-medium text-foreground">Área de Atendimento</h3>
         </div>

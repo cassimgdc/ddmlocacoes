@@ -144,11 +144,11 @@ const HeroSection = () => {
             </div>
 
             {/* CTAs - Primary action first */}
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               <Button 
                 asChild 
-                size="lg" 
-                className="h-12 px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-medium"
+                size="default" 
+                className="h-11 px-5 bg-primary hover:bg-primary/90 text-primary-foreground font-medium"
               >
                 <Link to="/catalogo">
                   Ver catálogo
@@ -158,8 +158,8 @@ const HeroSection = () => {
               <Button 
                 asChild 
                 variant="outline" 
-                size="lg"
-                className="h-12 px-6 border-white/25 text-white hover:bg-white/10 hover:border-white/40 font-medium"
+                size="default"
+                className="h-11 px-5 border-white/25 text-white hover:bg-white/10 hover:border-white/40 font-medium"
               >
                 <Link to="/contato">
                   Pedir orçamento
@@ -167,13 +167,14 @@ const HeroSection = () => {
               </Button>
             </div>
 
-            <div className="flex items-center gap-8 pt-6 border-t border-white/10">
+            {/* Stats - Hidden on mobile, visible on sm+ */}
+            <div className="hidden sm:flex items-center gap-6 lg:gap-8 pt-6 border-t border-white/10">
               {stats.map((stat, index) => (
                 <div key={index} className="flex items-center gap-2">
                   <stat.icon className="w-4 h-4 text-[hsl(28,80%,52%)]/80" />
                   <div>
-                    <span className="text-xl font-bold text-white">{stat.value}</span>
-                    <span className="text-xs text-white/50 ml-1.5">{stat.label}</span>
+                    <span className="text-lg lg:text-xl font-bold text-white">{stat.value}</span>
+                    <span className="text-xs text-white/50 ml-1.5 hidden md:inline">{stat.label}</span>
                   </div>
                 </div>
               ))}

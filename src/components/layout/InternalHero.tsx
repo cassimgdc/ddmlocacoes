@@ -74,7 +74,7 @@ const InternalHero = ({
           {/* Badge */}
           {badge && (
             <div className="badge-subtle mb-3">
-              {BadgeIcon && <BadgeIcon className="w-3.5 h-3.5 text-copper" />}
+              {BadgeIcon && <BadgeIcon className="w-3.5 h-3.5 text-accent" />}
               <span>{badge}</span>
             </div>
           )}
@@ -85,7 +85,7 @@ const InternalHero = ({
             {titleHighlight && (
               <>
                 {' '}
-                <span className="text-copper">{titleHighlight}</span>
+                <span className="text-accent">{titleHighlight}</span>
               </>
             )}
           </h1>

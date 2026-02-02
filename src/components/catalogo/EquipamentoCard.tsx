@@ -83,7 +83,7 @@ const EquipamentoCard = ({ equipamento, onQuote, delay = 0 }: EquipamentoCardPro
       <div className="flex flex-col flex-1 p-4">
         {/* Title */}
         <Link to={`/catalogo/${equipamento.slug}`}>
-          <h3 className="font-semibold text-foreground group-hover:text-copper transition-colors line-clamp-1 mb-1">
+          <h3 className="font-semibold text-foreground group-hover:text-accent transition-colors line-clamp-1 mb-1">
             {equipamento.nome}
           </h3>
         </Link>
@@ -113,7 +113,7 @@ const EquipamentoCard = ({ equipamento, onQuote, delay = 0 }: EquipamentoCardPro
           <div className="flex items-center gap-2 shrink-0">
             <Link 
               to={`/catalogo/${equipamento.slug}`}
-              className="text-xs text-muted-foreground hover:text-copper transition-colors flex items-center gap-1"
+              className="text-xs text-muted-foreground hover:text-accent transition-colors flex items-center gap-1"
             >
               Detalhes
               <ArrowRight className="w-3 h-3" />

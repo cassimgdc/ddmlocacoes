@@ -236,7 +236,7 @@ const CatalogoDetalhe = () => {
                     >
                       <AccordionTrigger className="hover:no-underline py-3 text-sm">
                         <div className="flex items-center gap-2">
-                          <Info className="w-3.5 h-3.5 text-copper" />
+                          <Info className="w-3.5 h-3.5 text-accent" />
                           <span className="font-medium text-foreground text-left">
                             {obs.titulo}
                           </span>
@@ -272,7 +272,7 @@ const CatalogoDetalhe = () => {
               <h2 className="text-base font-semibold text-foreground">
                 Equipamentos Relacionados
               </h2>
-              <Link to="/catalogo" className="text-sm text-copper hover:underline flex items-center gap-1">
+              <Link to="/catalogo" className="text-sm text-accent hover:underline flex items-center gap-1">
                 Ver todos
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
