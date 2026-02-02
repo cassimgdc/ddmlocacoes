@@ -312,29 +312,6 @@ const Contato = () => {
         </div>
       </section>
 
-      {/* Cards de contato */}
-      <section className="py-6 md:py-10">
-        <div className="container-ddm">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-4xl mx-auto">
-            {contactCards.map((card, index) => (
-              <a
-                key={card.title}
-                href={card.href}
-                target={card.href.startsWith('http') ? '_blank' : undefined}
-                rel={card.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="group p-4 rounded-xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-lg transition-all duration-300 text-center opacity-0 animate-fade-in-up"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <div className={`w-10 h-10 rounded-xl bg-muted/50 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform`}>
-                  <card.icon className={`w-5 h-5 ${card.color}`} />
-                </div>
-                <p className="text-xs text-muted-foreground mb-1">{card.title}</p>
-                <p className="text-sm font-medium text-foreground truncate">{card.value}</p>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Formulário Principal */}
       <section className="pb-12 md:pb-20">
@@ -579,8 +556,28 @@ const Contato = () => {
               </div>
             </div>
 
+            {/* Cards de contato */}
+            <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+              {contactCards.map((card, index) => (
+                <a
+                  key={card.title}
+                  href={card.href}
+                  target={card.href.startsWith('http') ? '_blank' : undefined}
+                  rel={card.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  className="group p-4 rounded-xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-lg transition-all duration-300 text-center opacity-0 animate-fade-in-up"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <div className={`w-10 h-10 rounded-xl bg-muted/50 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform`}>
+                    <card.icon className={`w-5 h-5 ${card.color}`} />
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-1">{card.title}</p>
+                  <p className="text-sm font-medium text-foreground truncate">{card.value}</p>
+                </a>
+              ))}
+            </div>
+
             {/* Área de Atendimento */}
-            <div className="mt-10 p-6 rounded-2xl bg-muted/30 border border-border/50 opacity-0 animate-fade-in-up stagger-3">
+            <div className="mt-8 p-6 rounded-2xl bg-muted/30 border border-border/50 opacity-0 animate-fade-in-up stagger-3">
               <div className="flex items-center gap-3 mb-4">
                 <div className="p-2.5 rounded-xl bg-primary/10">
                   <MapPin className="w-5 h-5 text-primary" />
