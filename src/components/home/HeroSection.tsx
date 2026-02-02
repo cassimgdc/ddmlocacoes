@@ -118,7 +118,7 @@ const HeroSection = () => {
             {/* Headline - Shorter with smart breaks */}
             <div className="space-y-4">
               <h1 className="text-3xl sm:text-4xl lg:text-[3.25rem] font-bold text-white leading-[1.1] tracking-tight">
-                Locação de equipamentos<br className="hidden sm:block" />
+                Locação de equipamentos{' '}<br className="hidden sm:block" />
                 <span className="text-[hsl(28,80%,52%)]">para sua obra.</span>
               </h1>
               <p className="text-base lg:text-lg text-white/70 max-w-lg leading-relaxed">
