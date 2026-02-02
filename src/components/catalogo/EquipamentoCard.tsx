@@ -1,7 +1,6 @@
 import { ArrowRight, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Equipamento } from '@/data/equipamentos';
 import case580m from '@/assets/case-580m.png';
 
@@ -25,102 +24,89 @@ const EquipamentoCard = ({ equipamento, onQuote, delay = 0 }: EquipamentoCardPro
 
   return (
     <div
-      className="group rounded-xl bg-card border border-border overflow-hidden hover:border-copper/30 transition-all"
+      className="group rounded-lg bg-card border border-border overflow-hidden hover:border-copper/30 transition-all"
       style={{ animationDelay: `${delay}ms` }}
     >
       {/* Image */}
-      <Link to={`/catalogo/${equipamento.slug}`} className="block relative aspect-[4/3] overflow-hidden bg-secondary/50">
+      <Link to={`/catalogo/${equipamento.slug}`} className="block relative aspect-[4/3] overflow-hidden bg-muted">
         {isAvailable ? (
           <>
             <img
               src={imageSrc}
               alt={equipamento.nome}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-card/60 via-transparent to-transparent" />
             
-            {/* Available badge */}
-            <div className="absolute top-3 left-3">
-              <span className="badge-available">
-                <span className="w-1.5 h-1.5 rounded-full bg-success" />
-                Disponível
-              </span>
-            </div>
+            {/* Status badge */}
+            <span className="absolute top-2 left-2 text-xs px-2 py-0.5 rounded bg-success/90 text-white font-medium">
+              Disponível
+            </span>
 
             {/* Featured badge */}
             {equipamento.destaque && (
-              <div className="absolute top-3 right-3">
-                <span className="badge-copper">Destaque</span>
-              </div>
+              <span className="absolute top-2 right-2 text-xs px-2 py-0.5 rounded bg-copper/90 text-white font-medium">
+                Destaque
+              </span>
             )}
           </>
         ) : (
           /* Coming Soon overlay for unavailable equipment */
-          <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-muted via-secondary/80 to-muted p-6 relative">
-            <div className="w-16 h-16 rounded-2xl bg-accent/20 flex items-center justify-center mb-3">
-              <Clock className="w-8 h-8 text-accent" />
-            </div>
-            <p className="text-base font-bold text-foreground text-center">Em Breve</p>
-            <p className="text-xs text-muted-foreground text-center mt-1 max-w-[140px]">
-              Este equipamento estará disponível em breve
-            </p>
-            
-            {/* Coming soon badge */}
-            <div className="absolute top-3 left-3">
-              <span className="badge-consult">Em breve</span>
-            </div>
+          <div className="w-full h-full flex flex-col items-center justify-center bg-muted p-4">
+            <Clock className="w-10 h-10 text-muted-foreground/50 mb-2" />
+            <p className="text-sm font-medium text-muted-foreground">Em Breve</p>
           </div>
         )}
       </Link>
 
       {/* Content */}
-      <div className="p-4 md:p-5 space-y-3">
+      <div className="p-3 space-y-2">
         {/* Title */}
         <Link to={`/catalogo/${equipamento.slug}`}>
-          <h3 className="font-medium text-foreground group-hover:text-copper transition-colors line-clamp-1">
+          <h3 className="font-medium text-foreground text-sm group-hover:text-copper transition-colors line-clamp-1">
             {equipamento.nome}
           </h3>
         </Link>
 
         {/* Description */}
-        <p className="text-muted-foreground text-sm leading-relaxed line-clamp-2">
+        <p className="text-muted-foreground text-xs leading-relaxed line-clamp-2">
           {equipamento.descricaoCurta}
         </p>
 
-        {/* Specs chips */}
-        <div className="flex flex-wrap gap-2">
-          {equipamento.specs.slice(0, 3).map((spec) => (
-            <span
-              key={spec.label}
-              className="inline-flex items-center px-2.5 py-1 rounded-md bg-muted/50 text-xs text-muted-foreground"
-            >
-              <span className="font-medium text-foreground mr-1">{spec.value}</span>
-              {spec.label}
-            </span>
-          ))}
-        </div>
+        {/* Specs as metadata line (not chips) */}
+        <p className="text-xs text-muted-foreground">
+          {equipamento.specs.map(s => s.value).join(' • ')}
+        </p>
 
         {/* Price & CTA */}
         <div className="flex items-center justify-between pt-2 border-t border-border/50">
           <div>
             {equipamento.preco ? (
-              <>
-                <p className="text-xs text-muted-foreground">A partir de</p>
-                <p className="font-semibold text-copper">{equipamento.preco}</p>
-              </>
+              <span className="text-sm font-medium text-copper">{equipamento.preco}</span>
             ) : (
-              <p className="text-sm text-muted-foreground">Sob consulta</p>
+              <span className="text-xs text-muted-foreground">Sob consulta</span>
             )}
           </div>
-          <Button
-            variant="default"
-            size="sm"
-            onClick={() => onQuote(equipamento)}
-          >
-            Orçar
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Button>
+          <div className="flex gap-1.5">
+            <Button
+              variant="ghost"
+              size="sm"
+              asChild
+              className="h-7 text-xs px-2"
+            >
+              <Link to={`/catalogo/${equipamento.slug}`}>
+                Detalhes
+              </Link>
+            </Button>
+            <Button
+              variant="default"
+              size="sm"
+              onClick={() => onQuote(equipamento)}
+              className="h-7 text-xs px-2"
+            >
+              Orçar
+            </Button>
+          </div>
         </div>
       </div>
     </div>

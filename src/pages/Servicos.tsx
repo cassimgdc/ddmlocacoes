@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/layout/Layout';
-import InternalHero from '@/components/layout/InternalHero';
+import PageHeaderCompact from '@/components/layout/PageHeaderCompact';
 import { Button } from '@/components/ui/button';
 import {
-  Wrench,
   ArrowRight,
   MessageCircle,
   Shovel,
@@ -84,26 +83,26 @@ const Servicos = () => {
         <link rel="canonical" href="https://ddmlocacoes.com.br/servicos" />
       </Helmet>
 
-      <InternalHero
-        badge="Serviços"
-        badgeIcon={Wrench}
-        title="O que fazemos por"
-        titleHighlight="você"
-        subtitle="Serviços completos de retroescavadeira para sua obra. Operador experiente e combustível inclusos em todos os trabalhos."
+      <PageHeaderCompact
+        title="Nossos Serviços"
+        subtitle="Serviços completos de retroescavadeira com operador experiente e combustível inclusos"
         breadcrumbs={[{ label: 'Serviços' }]}
       />
 
-      {/* Grid de Serviços */}
-      <section className="section-padding">
+      {/* Services List - Editorial Style */}
+      <section className="py-6 md:py-10">
         <div className="container-ddm">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {servicos.map((servico) => (
+          <div className="space-y-4">
+            {servicos.map((servico, index) => (
               <div
                 key={servico.id}
-                className="rounded-xl bg-card border border-border overflow-hidden"
+                id={servico.id}
+                className={`grid md:grid-cols-2 gap-4 md:gap-6 p-4 rounded-lg bg-card border border-border ${
+                  index % 2 === 1 ? 'md:flex-row-reverse' : ''
+                }`}
               >
-                {/* Imagem */}
-                <div className="relative h-40 overflow-hidden">
+                {/* Image */}
+                <div className={`relative h-48 md:h-auto rounded-lg overflow-hidden ${index % 2 === 1 ? 'md:order-2' : ''}`}>
                   <img
                     src={servico.imagem}
                     alt={`Serviço de ${servico.titulo} - DDM Locações`}
@@ -111,15 +110,15 @@ const Servicos = () => {
                     loading="lazy"
                   />
                   <div className="absolute bottom-3 left-3">
-                    <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
                       <servico.icon className="w-4 h-4 text-primary-foreground" />
                     </div>
                   </div>
                 </div>
 
-                {/* Conteúdo */}
-                <div className="p-4">
-                  <h3 className="text-base font-medium text-foreground mb-1">
+                {/* Content */}
+                <div className={`flex flex-col justify-center ${index % 2 === 1 ? 'md:order-1' : ''}`}>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">
                     {servico.titulo}
                   </h3>
                   <p className="text-sm text-muted-foreground mb-3">
@@ -127,42 +126,22 @@ const Servicos = () => {
                   </p>
 
                   {/* Aplicações */}
-                  <div className="space-y-1">
-                    {servico.aplicacoes.slice(0, 3).map((app) => (
+                  <div className="space-y-1.5 mb-4">
+                    {servico.aplicacoes.map((app) => (
                       <div key={app} className="flex items-center gap-2">
-                        <CheckCircle2 className="w-3 h-3 text-success flex-shrink-0" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-success flex-shrink-0" />
                         <span className="text-xs text-muted-foreground">{app}</span>
                       </div>
                     ))}
                   </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Como funciona */}
-      <section className="section-padding bg-muted/50 border-y border-border">
-        <div className="container-ddm">
-          <div className="text-center mb-8">
-            <h2 className="text-xl md:text-2xl font-semibold text-foreground">
-              Como funciona
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto">
-            {[
-              { step: '1', title: 'Solicite orçamento', desc: 'Entre em contato pelo WhatsApp ou formulário. Resposta rápida!' },
-              { step: '2', title: 'Agende o serviço', desc: 'Combinamos data, horário e local. Flexibilidade para atender você.' },
-              { step: '3', title: 'Trabalho feito', desc: 'Chegamos com máquina e operador. Você só acompanha o resultado.' },
-            ].map((item) => (
-              <div key={item.step} className="text-center p-5 rounded-xl bg-card border border-border">
-                <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground font-semibold flex items-center justify-center mx-auto mb-3">
-                  {item.step}
+                  <Button variant="outline" size="sm" asChild className="w-fit">
+                    <Link to="/contato">
+                      Solicitar orçamento
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </Button>
                 </div>
-                <h3 className="font-medium text-foreground mb-1 text-sm">{item.title}</h3>
-                <p className="text-xs text-muted-foreground">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -170,24 +149,23 @@ const Servicos = () => {
       </section>
 
       {/* CTA Final */}
-      <section className="section-padding">
+      <section className="py-6 md:py-10 bg-muted/30 border-t border-border">
         <div className="container-ddm">
-          <div className="max-w-xl mx-auto text-center">
-            <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-3">
+          <div className="max-w-lg mx-auto text-center">
+            <h2 className="text-lg font-semibold text-foreground mb-2">
               Pronto para começar sua obra?
             </h2>
-            <p className="text-muted-foreground text-sm mb-6">
+            <p className="text-sm text-muted-foreground mb-4">
               Solicite um orçamento gratuito agora mesmo. Respondemos em poucos minutos.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Button variant="default" size="lg" asChild>
+            <div className="flex flex-col sm:flex-row gap-2 justify-center">
+              <Button variant="default" size="default" asChild>
                 <Link to="/contato">
                   <MessageCircle className="w-4 h-4" />
                   Pedir Orçamento
-                  <ArrowRight className="w-4 h-4" />
                 </Link>
               </Button>
-              <Button variant="outline" size="lg" asChild>
+              <Button variant="outline" size="default" asChild>
                 <Link to="/catalogo">
                   Ver Equipamentos
                 </Link>

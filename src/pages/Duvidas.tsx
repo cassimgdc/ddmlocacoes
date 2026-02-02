@@ -1,8 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/layout/Layout';
-import InternalHero from '@/components/layout/InternalHero';
+import PageHeaderCompact from '@/components/layout/PageHeaderCompact';
 import { Button } from '@/components/ui/button';
-import { MessageCircle, ArrowRight, HelpCircle } from 'lucide-react';
+import { MessageCircle, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import {
   Accordion,
@@ -39,6 +39,22 @@ const Duvidas = () => {
       question: 'Qual a forma mais rápida de pedir orçamento?',
       answer: 'WhatsApp. Envie: local + serviço + fotos/vídeo. A resposta é rápida.',
     },
+    {
+      question: 'Qual o tempo mínimo de locação?',
+      answer: 'O tempo mínimo é de 2 horas. Para serviços maiores, oferecemos diárias com melhor custo-benefício.',
+    },
+    {
+      question: 'O operador e combustível estão inclusos?',
+      answer: 'Sim! Todos os aluguéis incluem operador experiente e combustível durante o trabalho.',
+    },
+    {
+      question: 'Posso cancelar ou reagendar?',
+      answer: 'Sim! Cancelamentos com mais de 24h de antecedência são gratuitos. Reagendamentos também são gratuitos, sujeitos à disponibilidade.',
+    },
+    {
+      question: 'Quais formas de pagamento são aceitas?',
+      answer: 'Aceitamos PIX, transferência bancária e dinheiro. O pagamento pode ser combinado antes ou após a conclusão do serviço.',
+    },
   ];
 
   // Schema.org FAQPage structured data
@@ -67,74 +83,46 @@ const Duvidas = () => {
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       </Helmet>
 
-      <InternalHero
-        badge="FAQ"
-        badgeIcon={HelpCircle}
-        title="Dúvidas"
-        titleHighlight="Frequentes"
-        subtitle="Respostas rápidas para as perguntas mais comuns sobre nossos serviços de locação."
+      <PageHeaderCompact
+        title="Dúvidas Frequentes"
+        subtitle="Respostas rápidas para as perguntas mais comuns sobre nossos serviços"
         breadcrumbs={[{ label: 'Dúvidas' }]}
       />
 
       {/* FAQ Accordion */}
-      <section className="section-padding">
+      <section className="py-6 md:py-10">
         <div className="container-ddm">
-          <div className="max-w-3xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-4">
-              {/* Coluna 1 */}
-              <div className="space-y-3">
-                <Accordion type="single" collapsible className="space-y-2">
-                  {faqs.slice(0, 3).map((faq, index) => (
-                    <AccordionItem
-                      key={index}
-                      value={`item-${index}`}
-                      className="rounded-xl bg-card border border-border px-4"
-                    >
-                      <AccordionTrigger className="text-left text-sm font-medium text-foreground hover:text-copper py-3">
-                        {faq.question}
-                      </AccordionTrigger>
-                      <AccordionContent className="text-muted-foreground text-sm pb-3">
-                        {faq.answer}
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </div>
-
-              {/* Coluna 2 */}
-              <div className="space-y-3">
-                <Accordion type="single" collapsible className="space-y-2">
-                  {faqs.slice(3, 6).map((faq, index) => (
-                    <AccordionItem
-                      key={index + 3}
-                      value={`item-${index + 3}`}
-                      className="rounded-xl bg-card border border-border px-4"
-                    >
-                      <AccordionTrigger className="text-left text-sm font-medium text-foreground hover:text-copper py-3">
-                        {faq.question}
-                      </AccordionTrigger>
-                      <AccordionContent className="text-muted-foreground text-sm pb-3">
-                        {faq.answer}
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </div>
-            </div>
+          <div className="max-w-2xl mx-auto">
+            <Accordion type="single" collapsible className="space-y-2">
+              {faqs.map((faq, index) => (
+                <AccordionItem
+                  key={index}
+                  value={`item-${index}`}
+                  className="rounded-lg bg-card border border-border px-4"
+                >
+                  <AccordionTrigger className="text-left text-sm font-medium text-foreground hover:text-copper py-3">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground text-sm pb-3">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="section-padding bg-muted/50 border-t border-border">
+      <section className="py-6 md:py-10 bg-muted/30 border-t border-border">
         <div className="container-ddm text-center">
-          <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-2">
+          <h2 className="text-lg font-semibold text-foreground mb-2">
             Ainda tem dúvidas?
           </h2>
-          <p className="text-muted-foreground text-sm mb-6 max-w-md mx-auto">
+          <p className="text-sm text-muted-foreground mb-4 max-w-md mx-auto">
             Fale diretamente conosco pelo WhatsApp. Respondemos rápido!
           </p>
-          <Button variant="default" size="lg" asChild>
+          <Button variant="default" size="default" asChild>
             <Link to="/contato">
               <MessageCircle className="w-4 h-4" />
               Pedir Orçamento
