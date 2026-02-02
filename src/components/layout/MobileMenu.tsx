@@ -50,26 +50,26 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
         onClick={onClose}
       />
 
-      {/* Drawer */}
+      {/* Drawer - Compact */}
       <div
-        className={`lg:hidden fixed inset-y-0 right-0 z-50 w-[85%] max-w-[320px] bg-background/98 backdrop-blur-xl border-l border-border/50 shadow-2xl transition-transform duration-300 ease-out ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`lg:hidden fixed top-0 right-0 z-50 w-[280px] bg-background/98 backdrop-blur-xl border-l border-b border-border/50 shadow-2xl rounded-bl-2xl transition-all duration-300 ease-out ${
+          isOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
         }`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between h-16 px-5 border-b border-border/30">
-          <span className="text-lg font-display font-bold text-foreground">Menu</span>
+        <div className="flex items-center justify-between h-14 px-4 border-b border-border/30">
+          <span className="text-base font-display font-bold text-foreground">Menu</span>
           <button
             onClick={onClose}
-            className="w-10 h-10 flex items-center justify-center rounded-lg bg-muted/80 text-foreground hover:bg-primary hover:text-primary-foreground active:scale-95 transition-all"
+            className="w-9 h-9 flex items-center justify-center rounded-lg bg-muted/80 text-foreground hover:bg-primary hover:text-primary-foreground active:scale-95 transition-all"
             aria-label="Fechar menu"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Navigation */}
-        <nav className="flex flex-col p-5 gap-2">
+        {/* Navigation - Compact */}
+        <nav className="flex flex-col p-3 gap-1.5">
           {navLinks.map((link, index) => {
             const Icon = link.icon;
             const isActive = isActiveLink(link.href);
@@ -82,23 +82,23 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
                   onClose();
                   window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
                 }}
-                className={`flex items-center gap-4 px-4 py-4 rounded-xl transition-all duration-200 active:scale-[0.98] ${
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 active:scale-[0.98] ${
                   isActive
                     ? 'bg-primary/15 border border-primary/30'
-                    : 'bg-card/50 border border-border/30 hover:bg-card'
+                    : 'hover:bg-muted/50'
                 }`}
                 style={{
-                  transitionDelay: isOpen ? `${index * 40}ms` : '0ms',
+                  transitionDelay: isOpen ? `${index * 30}ms` : '0ms',
                 }}
               >
-                <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                <div className={`w-8 h-8 rounded-md flex items-center justify-center ${
                   isActive
                     ? 'bg-primary text-primary-foreground'
                     : 'bg-muted text-primary'
                 }`}>
-                  <Icon className="w-5 h-5" />
+                  <Icon className="w-4 h-4" />
                 </div>
-                <span className={`font-semibold text-base ${
+                <span className={`font-medium text-sm ${
                   isActive ? 'text-primary' : 'text-foreground'
                 }`}>
                   {link.label}
@@ -108,16 +108,16 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
           })}
         </nav>
 
-        {/* CTA Orçamento - Fixed at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 p-5 border-t border-border/50 bg-background safe-area-bottom">
-          <Button variant="cta" size="lg" className="w-full h-14 text-base" asChild>
+        {/* CTA Orçamento - Highlighted */}
+        <div className="p-3 pt-0">
+          <Button variant="cta" size="default" className="w-full h-12 text-sm font-bold shadow-lg shadow-primary/30" asChild>
             <Link to="/contato" onClick={() => {
               onClose();
               window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
             }}>
-              <MessageCircle className="w-5 h-5" />
+              <MessageCircle className="w-4 h-4" />
               Pedir Orçamento
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </Button>
         </div>
