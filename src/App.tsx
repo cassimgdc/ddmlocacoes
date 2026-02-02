@@ -25,7 +25,7 @@ const siteUrl = "https://ddmlocacoes.com.br";
 const ogImageUrl = `${siteUrl}/og-image.png`;
 
 const App = () => (
-  <ThemeProvider attribute="class" defaultTheme="dark" storageKey="ddm-theme" enableSystem={false}>
+  <ThemeProvider attribute="class" defaultTheme="light" storageKey="ddm-theme" enableSystem={false}>
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
