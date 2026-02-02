@@ -5,6 +5,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { CheckCircle2, Clock, CreditCard, Users, Truck } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const processItems = [
   {
@@ -42,7 +43,13 @@ const HowItWorksEditorial = () => {
       <div className="container-ddm">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
           {/* Left - Brief explanation */}
-          <div className="space-y-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5 }}
+            className="space-y-6"
+          >
             <div>
               <h2 className="text-2xl md:text-3xl font-bold text-foreground">Como funciona</h2>
               <p className="text-muted-foreground mt-2 text-lg">
@@ -76,10 +83,15 @@ const HowItWorksEditorial = () => {
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right - FAQ Accordion */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+          >
             <h3 className="text-lg font-semibold text-foreground mb-4">Dúvidas frequentes</h3>
             <Accordion type="single" collapsible className="space-y-2">
               {processItems.map((item, index) => (
@@ -100,7 +112,7 @@ const HowItWorksEditorial = () => {
                 </AccordionItem>
               ))}
             </Accordion>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

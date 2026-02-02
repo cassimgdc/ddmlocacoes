@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Shovel, Mountain, Trees, Truck, Construction, Tractor, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const categories = [
   {
@@ -67,13 +68,19 @@ const CategoriesBento = () => {
         {/* Bento Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
           {categories.map((category, index) => (
-            <Link
+            <motion.div
               key={category.title}
-              to={category.href}
-              className={`group relative overflow-hidden rounded-xl border border-border bg-card p-5 md:p-6 transition-all duration-300 hover:border-copper/40 hover:shadow-elevated ${
-                category.featured ? 'md:row-span-1' : ''
-              }`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.4, delay: index * 0.08 }}
             >
+              <Link
+                to={category.href}
+                className={`group relative block overflow-hidden rounded-xl border border-border bg-card p-5 md:p-6 transition-all duration-300 hover:border-copper/40 hover:shadow-elevated ${
+                  category.featured ? 'md:row-span-1' : ''
+                }`}
+              >
               {/* Background subtle gradient on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-copper/0 to-copper/0 group-hover:from-copper/5 group-hover:to-transparent transition-all duration-300" />
               
@@ -99,7 +106,8 @@ const CategoriesBento = () => {
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
-            </Link>
+              </Link>
+            </motion.div>
           ))}
         </div>
 

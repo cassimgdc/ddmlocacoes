@@ -20,6 +20,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { MessageCircle, ArrowRight, Truck, Wrench, ShieldCheck, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import heroBg from '@/assets/hero-bg.jpg';
+import { motion } from 'framer-motion';
 
 const serviceTypes = [
   { value: 'retroescavadeira', label: 'Retroescavadeira' },
@@ -90,7 +91,12 @@ const HeroSection = () => {
       <div className="container-ddm relative z-10 py-16 lg:py-20">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left Content - 7 columns */}
-          <div className="lg:col-span-7 space-y-6">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-7 space-y-6"
+          >
             {/* Headline */}
             <div className="space-y-4">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
@@ -144,10 +150,15 @@ const HeroSection = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Right - Compact Quote Card - 5 columns */}
-          <div className="lg:col-span-5">
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="lg:col-span-5"
+          >
             <div className="bg-card rounded-xl border border-border p-5 md:p-6 shadow-elevated">
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-10 h-10 rounded-lg bg-success/10 flex items-center justify-center">
@@ -267,7 +278,7 @@ const HeroSection = () => {
                 </Dialog>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -1,4 +1,5 @@
 import { MapPin, ShieldCheck, Wrench, FileText, Headphones } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const cities = [
   'Sete Lagoas',
@@ -42,7 +43,13 @@ const TrustSection = () => {
       <div className="container-ddm">
         <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
           {/* Card 1 - Area Coverage */}
-          <div className="bg-card rounded-xl border border-border p-6 md:p-8">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5 }}
+            className="bg-card rounded-xl border border-border p-6 md:p-8"
+          >
             <div className="flex items-center gap-3 mb-5">
               <div className="w-10 h-10 rounded-lg bg-copper/10 flex items-center justify-center">
                 <MapPin className="w-5 h-5 text-copper" />
@@ -67,10 +74,16 @@ const TrustSection = () => {
             <p className="text-sm text-muted-foreground mt-4">
               Atendemos toda a região metropolitana. Outras cidades sob consulta.
             </p>
-          </div>
+          </motion.div>
 
           {/* Card 2 - DDM Commitment */}
-          <div className="bg-card rounded-xl border border-border p-6 md:p-8">
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="bg-card rounded-xl border border-border p-6 md:p-8"
+          >
             <div className="flex items-center gap-3 mb-5">
               <div className="w-10 h-10 rounded-lg bg-copper/10 flex items-center justify-center">
                 <ShieldCheck className="w-5 h-5 text-copper" />
@@ -92,7 +105,7 @@ const TrustSection = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
