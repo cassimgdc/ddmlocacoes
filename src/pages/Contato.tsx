@@ -281,7 +281,12 @@ const Contato = () => {
       <Helmet>
         <title>Solicitar Orçamento | DDM Locações - Retroescavadeira Sete Lagoas</title>
         <meta name="description" content="Solicite orçamento para aluguel de retroescavadeira em Sete Lagoas. Atendimento rápido pelo WhatsApp. Resposta em minutos." />
-        <link rel="canonical" href="https://ddmlocacoes.lovable.app/contato" />
+        <link rel="canonical" href="https://ddmlocacoes.com.br/contato" />
+        <meta property="og:title" content="Solicitar Orçamento | DDM Locações" />
+        <meta property="og:description" content="Orçamento rápido para retroescavadeira em Sete Lagoas." />
+        <meta property="og:url" content="https://ddmlocacoes.com.br/contato" />
+        <meta property="og:image" content="https://ddmlocacoes.com.br/og-image.png" />
+        <meta property="og:type" content="website" />
       </Helmet>
 
       {/* Hero interno com breadcrumb */}

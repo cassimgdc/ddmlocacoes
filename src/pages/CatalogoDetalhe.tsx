@@ -146,7 +146,12 @@ const CatalogoDetalhe = () => {
           name="description"
           content={`${equipamento.descricaoCurta} Aluguel com operador incluso em Sete Lagoas e região.${equipamento.preco ? ` ${equipamento.preco}.` : ''}`}
         />
-        <link rel="canonical" href={`https://ddmlocacoes.lovable.app/catalogo/${slug}`} />
+        <link rel="canonical" href={`https://ddmlocacoes.com.br/catalogo/${slug}`} />
+        <meta property="og:title" content={`${equipamento.nome} | DDM Locações`} />
+        <meta property="og:description" content={`${equipamento.descricaoCurta} Aluguel em Sete Lagoas.`} />
+        <meta property="og:url" content={`https://ddmlocacoes.com.br/catalogo/${slug}`} />
+        <meta property="og:image" content="https://ddmlocacoes.com.br/og-image.png" />
+        <meta property="og:type" content="website" />
       </Helmet>
 
       {/* Breadcrumb + Header */}

@@ -151,7 +151,7 @@ const Index = () => {
         <title>DDM Locações - Aluguel de Equipamentos em Sete Lagoas | Retroescavadeira e Máquinas</title>
         <meta name="description" content="Aluguel de retroescavadeira, escavadeiras e equipamentos para construção em Sete Lagoas e região. Entrega rápida, preços competitivos. Solicite seu orçamento!" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-        <link rel="canonical" href="https://ddmlocacoes.lovable.app/" />
+        <link rel="canonical" href="https://ddmlocacoes.com.br/" />
       </Helmet>
       
       {/* ===== SECTION 1: HERO ===== */}
@@ -221,7 +221,7 @@ const Index = () => {
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Button>
                 <Button variant="whatsapp" size="lg" asChild className="group w-full sm:w-auto">
-                  <a href="https://wa.me/5531999999999" target="_blank" rel="noopener noreferrer">
+                  <a href="https://wa.me/5531971067272" target="_blank" rel="noopener noreferrer">
                     <Phone className="w-4 h-4" />
                     Falar no WhatsApp
                   </a>

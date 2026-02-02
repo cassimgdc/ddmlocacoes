@@ -55,9 +55,12 @@ const Sobre = () => {
       <Helmet>
         <title>Sobre a DDM Locações | Aluguel de Retroescavadeira - Sete Lagoas</title>
         <meta name="description" content="Conheça a DDM Locações: locação de retroescavadeira com operador em Sete Lagoas e região. Anos de experiência, equipamento de qualidade e atendimento diferenciado." />
-        <link rel="canonical" href="https://ddmlocacoes.lovable.app/sobre" />
+        <link rel="canonical" href="https://ddmlocacoes.com.br/sobre" />
         <meta property="og:title" content="Sobre a DDM Locações" />
         <meta property="og:description" content="Locação de retroescavadeira com qualidade em Sete Lagoas." />
+        <meta property="og:url" content="https://ddmlocacoes.com.br/sobre" />
+        <meta property="og:image" content="https://ddmlocacoes.com.br/og-image.png" />
+        <meta property="og:type" content="website" />
       </Helmet>
 
       <InternalHero
