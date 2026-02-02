@@ -87,7 +87,7 @@ const HeroSection = () => {
             className="w-full h-full object-cover"
           />
           {/* Primary overlay - Using dark graphite for both themes */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[hsl(222,47%,11%)]/95 via-[hsl(222,47%,11%)]/90 to-[hsl(222,47%,11%)]/70" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[hsl(222,47%,11%)]/85 via-[hsl(222,47%,11%)]/80 to-[hsl(222,47%,11%)]/60" />
           
           {/* Vignette overlay - Dark radial gradient on edges for focus */}
           <div 
