@@ -130,7 +130,7 @@ const FeaturedShowcase = () => {
                       <span className="text-sm text-muted-foreground ml-1">/dia</span>
                     </div>
                   ) : (
-                    <span className="text-muted-foreground">Sob consulta</span>
+                    <span className="text-muted-foreground">Em breve</span>
                   )}
                   
                   <div className="flex items-center gap-2">

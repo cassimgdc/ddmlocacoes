@@ -30,7 +30,7 @@ const FeaturedEquipmentList = () => {
       className: 'bg-success/10 text-success border-success/20',
     },
     'sob-consulta': {
-      label: 'Sob consulta',
+      label: 'Em breve',
       className: 'bg-muted text-muted-foreground border-border',
     },
     indisponivel: {
@@ -110,7 +110,7 @@ const FeaturedEquipmentList = () => {
                       <p className="text-sm font-semibold text-foreground">{equip.preco}</p>
                     </div>
                   ) : (
-                    <span className="text-xs text-muted-foreground">Valores sob consulta</span>
+                    <span className="text-xs text-muted-foreground">Em breve</span>
                   )}
                   <Button variant="ghost" size="sm" asChild className="h-7 text-xs">
                     <Link to={`/catalogo/${equip.slug}`}>

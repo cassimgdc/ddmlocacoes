@@ -33,7 +33,7 @@ const EquipamentoCard = ({ equipamento, onQuote, delay = 0 }: EquipamentoCardPro
       className: 'bg-success/10 text-success border-success/20',
     },
     'sob-consulta': {
-      label: 'Sob consulta',
+      label: 'Em breve',
       className: 'bg-muted text-muted-foreground border-border',
     },
     indisponivel: {
@@ -113,7 +113,7 @@ const EquipamentoCard = ({ equipamento, onQuote, delay = 0 }: EquipamentoCardPro
                 <p className="text-sm font-semibold text-foreground">{equipamento.preco}</p>
               </div>
             ) : (
-              <span className="text-xs text-muted-foreground">Valores sob consulta</span>
+              <span className="text-xs text-muted-foreground">Em breve</span>
             )}
           </div>
           <div className="flex items-center gap-2 shrink-0">
