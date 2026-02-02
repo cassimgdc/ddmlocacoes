@@ -130,7 +130,7 @@ const QuickContactForm = () => {
       <div className="flex flex-col sm:flex-row gap-3 pt-2">
         <Button 
           type="submit" 
-          variant="cta" 
+          variant="default" 
           size="lg" 
           className="flex-1"
           disabled={isSubmitting}

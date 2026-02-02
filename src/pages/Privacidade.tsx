@@ -22,7 +22,6 @@ const Privacidade = () => {
         title="Política de"
         titleHighlight="Privacidade"
         breadcrumbs={[{ label: 'Política de Privacidade' }]}
-        size="sm"
       />
 
       <section className="py-12 md:py-16">

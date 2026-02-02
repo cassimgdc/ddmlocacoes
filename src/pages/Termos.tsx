@@ -22,7 +22,6 @@ const Termos = () => {
         title="Termos de"
         titleHighlight="Uso"
         breadcrumbs={[{ label: 'Termos de Uso' }]}
-        size="sm"
       />
 
       <section className="py-12 md:py-16">

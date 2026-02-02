@@ -25,7 +25,7 @@ const EquipamentoCard = ({ equipamento, onQuote, delay = 0 }: EquipamentoCardPro
 
   return (
     <div
-      className="group card-premium overflow-hidden opacity-0 animate-fade-in-up"
+      className="group rounded-xl bg-card border border-border overflow-hidden hover:border-copper/30 transition-all"
       style={{ animationDelay: `${delay}ms` }}
     >
       {/* Image */}
@@ -42,17 +42,16 @@ const EquipamentoCard = ({ equipamento, onQuote, delay = 0 }: EquipamentoCardPro
             
             {/* Available badge */}
             <div className="absolute top-3 left-3">
-              <Badge variant="outline" className="bg-ddm-success/10 text-ddm-success border-ddm-success/20 font-medium">
+              <span className="badge-available">
+                <span className="w-1.5 h-1.5 rounded-full bg-success" />
                 Disponível
-              </Badge>
+              </span>
             </div>
 
             {/* Featured badge */}
             {equipamento.destaque && (
               <div className="absolute top-3 right-3">
-                <Badge className="bg-primary text-primary-foreground font-bold">
-                  Destaque
-                </Badge>
+                <span className="badge-copper">Destaque</span>
               </div>
             )}
           </>
@@ -69,9 +68,7 @@ const EquipamentoCard = ({ equipamento, onQuote, delay = 0 }: EquipamentoCardPro
             
             {/* Coming soon badge */}
             <div className="absolute top-3 left-3">
-              <Badge variant="outline" className="bg-accent/10 text-accent border-accent/20 font-medium">
-                Em breve
-              </Badge>
+              <span className="badge-consult">Em breve</span>
             </div>
           </div>
         )}
@@ -81,7 +78,7 @@ const EquipamentoCard = ({ equipamento, onQuote, delay = 0 }: EquipamentoCardPro
       <div className="p-4 md:p-5 space-y-3">
         {/* Title */}
         <Link to={`/catalogo/${equipamento.slug}`}>
-          <h3 className="font-display font-bold text-foreground group-hover:text-primary transition-colors line-clamp-1">
+          <h3 className="font-medium text-foreground group-hover:text-copper transition-colors line-clamp-1">
             {equipamento.nome}
           </h3>
         </Link>
@@ -110,20 +107,19 @@ const EquipamentoCard = ({ equipamento, onQuote, delay = 0 }: EquipamentoCardPro
             {equipamento.preco ? (
               <>
                 <p className="text-xs text-muted-foreground">A partir de</p>
-                <p className="font-bold text-primary">{equipamento.preco}</p>
+                <p className="font-semibold text-copper">{equipamento.preco}</p>
               </>
             ) : (
               <p className="text-sm text-muted-foreground">Sob consulta</p>
             )}
           </div>
           <Button
-            variant="cta"
+            variant="default"
             size="sm"
             onClick={() => onQuote(equipamento)}
-            className="group/btn"
           >
             Orçar
-            <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
+            <ArrowRight className="w-3.5 h-3.5" />
           </Button>
         </div>
       </div>

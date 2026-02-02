@@ -15,7 +15,7 @@ interface BreadcrumbItem {
   href?: string;
 }
 
-interface InternalHeroProps {
+interface PageHeaderProps {
   badge?: string;
   badgeIcon?: LucideIcon;
   title: string;
@@ -24,7 +24,6 @@ interface InternalHeroProps {
   breadcrumbs?: BreadcrumbItem[];
   children?: ReactNode;
   className?: string;
-  size?: 'sm' | 'md' | 'lg';
 }
 
 const InternalHero = ({
@@ -36,31 +35,19 @@ const InternalHero = ({
   breadcrumbs = [],
   children,
   className = '',
-  size = 'md',
-}: InternalHeroProps) => {
-  const sizeClasses = {
-    sm: 'pt-24 pb-6 md:pt-28 md:pb-8',
-    md: 'pt-24 pb-8 md:pt-32 md:pb-12',
-    lg: 'pt-28 pb-12 md:pt-36 md:pb-16',
-  };
-
+}: PageHeaderProps) => {
   return (
-    <section className={`relative ${sizeClasses[size]} ${className}`}>
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/30" />
-      <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-[100px]" />
-      <div className="absolute bottom-0 right-10 w-64 h-64 bg-accent/5 rounded-full blur-[80px]" />
-      
-      <div className="container-ddm relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
+    <section className={`pt-20 pb-6 md:pt-24 md:pb-8 bg-card border-b border-border ${className}`}>
+      <div className="container-ddm">
+        <div className="max-w-2xl">
           {/* Breadcrumbs */}
           {breadcrumbs.length > 0 && (
-            <Breadcrumb className="justify-center mb-4 animate-fade-in">
-              <BreadcrumbList>
+            <Breadcrumb className="mb-3">
+              <BreadcrumbList className="text-xs">
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
-                    <Link to="/" className="flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors">
-                      <Home className="w-3.5 h-3.5" />
+                    <Link to="/" className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors">
+                      <Home className="w-3 h-3" />
                       <span className="sr-only md:not-sr-only">Início</span>
                     </Link>
                   </BreadcrumbLink>
@@ -71,12 +58,12 @@ const InternalHero = ({
                     <BreadcrumbSeparator />
                     {item.href ? (
                       <BreadcrumbLink asChild>
-                        <Link to={item.href} className="text-muted-foreground hover:text-primary transition-colors">
+                        <Link to={item.href} className="text-muted-foreground hover:text-foreground transition-colors">
                           {item.label}
                         </Link>
                       </BreadcrumbLink>
                     ) : (
-                      <BreadcrumbPage>{item.label}</BreadcrumbPage>
+                      <BreadcrumbPage className="text-foreground">{item.label}</BreadcrumbPage>
                     )}
                   </BreadcrumbItem>
                 ))}
@@ -86,33 +73,33 @@ const InternalHero = ({
           
           {/* Badge */}
           {badge && (
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-4 animate-fade-in">
-              {BadgeIcon && <BadgeIcon className="w-4 h-4 text-primary" />}
-              <span className="text-sm font-semibold text-primary">{badge}</span>
+            <div className="badge-subtle mb-3">
+              {BadgeIcon && <BadgeIcon className="w-3.5 h-3.5 text-copper" />}
+              <span>{badge}</span>
             </div>
           )}
           
           {/* Title */}
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-black text-foreground mb-3 animate-fade-in-up">
+          <h1 className="text-2xl md:text-3xl font-semibold text-foreground mb-2">
             {title}
             {titleHighlight && (
               <>
                 {' '}
-                <span className="text-gradient-vivid">{titleHighlight}</span>
+                <span className="text-copper">{titleHighlight}</span>
               </>
             )}
           </h1>
           
           {/* Subtitle */}
           {subtitle && (
-            <p className="text-muted-foreground text-sm md:text-base max-w-xl mx-auto animate-fade-in-up stagger-1">
+            <p className="text-muted-foreground text-sm md:text-base">
               {subtitle}
             </p>
           )}
           
           {/* Optional children */}
           {children && (
-            <div className="mt-6 animate-fade-in-up stagger-2">
+            <div className="mt-4">
               {children}
             </div>
           )}
