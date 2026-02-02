@@ -51,8 +51,8 @@ const TrustSection = () => {
             className="bg-card rounded-2xl border border-border p-6 md:p-8"
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-11 h-11 rounded-xl bg-copper/10 flex items-center justify-center">
-                <MapPin className="w-5 h-5 text-copper" />
+              <div className="w-11 h-11 rounded-xl bg-accent/15 flex items-center justify-center">
+                <MapPin className="w-5 h-5 text-accent" />
               </div>
               <div>
                 <h3 className="font-bold text-foreground text-lg">Área de Atendimento</h3>
@@ -62,9 +62,9 @@ const TrustSection = () => {
 
             <div className="flex flex-wrap gap-2">
               {cities.map((city) => (
-                <span 
-                  key={city} 
-                  className="px-3 py-1.5 text-sm rounded-lg bg-muted/80 text-foreground border border-border/60 hover:border-copper/30 transition-colors"
+                  <span 
+                    key={city} 
+                    className="px-3 py-1.5 text-sm rounded-lg bg-muted text-foreground border border-border hover:border-accent/30 transition-colors"
                 >
                   {city}
                 </span>
@@ -98,7 +98,7 @@ const TrustSection = () => {
               {commitments.map((item) => (
                 <div key={item.title} className="space-y-1.5">
                   <div className="flex items-center gap-2">
-                    <item.icon className="w-4 h-4 text-copper" />
+                    <item.icon className="w-4 h-4 text-accent" />
                     <span className="text-sm font-semibold text-foreground">{item.title}</span>
                   </div>
                   <p className="text-xs text-muted-foreground pl-6 leading-relaxed">{item.description}</p>

@@ -130,8 +130,8 @@ const CategoriesBento = () => {
                 
                 <div className="relative z-10 flex flex-col h-full">
                   {/* Icon */}
-                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-muted/80 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-105 transition-all duration-300">
-                    <category.icon className="w-6 h-6 md:w-7 md:h-7 text-copper group-hover:text-white transition-colors" />
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-muted flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-105 transition-all duration-300">
+                    <category.icon className="w-6 h-6 md:w-7 md:h-7 text-accent group-hover:text-primary-foreground transition-colors" />
                   </div>
 
                   {/* Content */}
@@ -145,7 +145,7 @@ const CategoriesBento = () => {
                   </div>
 
                   {/* CTA Arrow */}
-                  <div className="flex items-center gap-1 text-sm font-medium text-copper mt-4 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-0 group-hover:translate-x-1">
+                  <div className="flex items-center gap-1 text-sm font-medium text-accent mt-4 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-0 group-hover:translate-x-1">
                     Explorar
                     <ArrowRight className="w-4 h-4" />
                   </div>

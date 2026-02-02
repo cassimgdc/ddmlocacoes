@@ -107,7 +107,7 @@ const HowItWorksEditorial = () => {
                 >
                   <AccordionTrigger className="text-left font-medium text-foreground hover:text-primary py-4 gap-3 [&[data-state=open]>div>svg]:text-primary">
                     <div className="flex items-center gap-3">
-                      <item.icon className="w-5 h-5 text-copper flex-shrink-0 transition-colors" />
+                      <item.icon className="w-5 h-5 text-accent flex-shrink-0 transition-colors" />
                       <span>{item.question}</span>
                     </div>
                   </AccordionTrigger>
