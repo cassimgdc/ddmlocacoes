@@ -21,6 +21,7 @@ import { MessageCircle, ArrowRight, Truck, Wrench, ShieldCheck, Clock, MapPin, C
 import { Link } from 'react-router-dom';
 import heroBg from '@/assets/hero-bg.jpg';
 import { motion } from 'framer-motion';
+import DDMPattern from '@/components/brand/DDMPattern';
 
 const serviceTypes = [
   { value: 'retroescavadeira', label: 'Retroescavadeira' },
@@ -88,18 +89,8 @@ const HeroSection = () => {
           {/* Primary overlay - Using dark graphite for both themes */}
           <div className="absolute inset-0 bg-gradient-to-br from-[hsl(222,47%,11%)]/95 via-[hsl(222,47%,11%)]/90 to-[hsl(222,47%,11%)]/70" />
           
-          {/* Subtle technical pattern overlay */}
-          <div 
-            className="absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage: `
-                linear-gradient(45deg, transparent 45%, currentColor 45%, currentColor 55%, transparent 55%),
-                linear-gradient(-45deg, transparent 45%, currentColor 45%, currentColor 55%, transparent 55%)
-              `,
-              backgroundSize: '30px 30px',
-              color: 'white',
-            }}
-          />
+          {/* DDM Technical Pattern - Brand signature overlay */}
+          <DDMPattern variant="minimal" className="text-white" />
         </div>
         
         {/* Bottom fade to page background */}
@@ -181,17 +172,17 @@ const HeroSection = () => {
             </div>
           </motion.div>
 
-          {/* Right - Enterprise Quote Card - 5 columns */}
+          {/* Right - Enterprise Quote Card with DDM chamfer - 5 columns */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.15 }}
             className="lg:col-span-5"
           >
-            <div className="bg-card rounded-2xl border border-border/80 p-6 shadow-lg">
+            <div className="ddm-chamfer-tr bg-card border border-border/80 p-6 shadow-lg">
               {/* Card Header */}
               <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border/60">
-                <div className="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center">
+                <div className="w-10 h-10 ddm-chamfer-tr-sm bg-primary/5 flex items-center justify-center">
                   <Clock className="w-5 h-5 text-primary" />
                 </div>
                 <div>

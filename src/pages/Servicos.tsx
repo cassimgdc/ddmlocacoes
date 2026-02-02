@@ -14,6 +14,8 @@ import {
   Tractor,
   CheckCircle2,
 } from 'lucide-react';
+import SteelDivider from '@/components/brand/SteelDivider';
+import DDMPattern from '@/components/brand/DDMPattern';
 
 // Imagens dos serviços
 import aberturaValas from '@/assets/servicos/abertura-valas.png';
@@ -89,7 +91,7 @@ const Servicos = () => {
         breadcrumbs={[{ label: 'Serviços' }]}
       />
 
-      {/* Services List - Editorial Style */}
+      {/* Services List - Editorial Style with DDM chamfer */}
       <section className="py-6 md:py-10">
         <div className="container-ddm">
           <div className="space-y-4">
@@ -97,12 +99,12 @@ const Servicos = () => {
               <div
                 key={servico.id}
                 id={servico.id}
-                className={`grid md:grid-cols-2 gap-4 md:gap-6 p-4 rounded-lg bg-card border border-border ${
+                className={`card-ddm grid md:grid-cols-2 gap-4 md:gap-6 p-4 ${
                   index % 2 === 1 ? 'md:flex-row-reverse' : ''
                 }`}
               >
-                {/* Image */}
-                <div className={`relative h-48 md:h-auto rounded-lg overflow-hidden ${index % 2 === 1 ? 'md:order-2' : ''}`}>
+                {/* Image with DDM pattern overlay */}
+                <div className={`relative h-48 md:h-auto ddm-chamfer-tr overflow-hidden ${index % 2 === 1 ? 'md:order-2' : ''}`}>
                   <img
                     src={servico.imagem}
                     alt={`Serviço de ${servico.titulo} - DDM Locações`}
@@ -110,7 +112,7 @@ const Servicos = () => {
                     loading="lazy"
                   />
                   <div className="absolute bottom-3 left-3">
-                    <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+                    <div className="w-8 h-8 ddm-chamfer-tr-sm bg-primary flex items-center justify-center">
                       <servico.icon className="w-4 h-4 text-primary-foreground" />
                     </div>
                   </div>
@@ -135,7 +137,7 @@ const Servicos = () => {
                     ))}
                   </div>
 
-                  <Button variant="outline" size="sm" asChild className="w-fit">
+                  <Button variant="outline" size="sm" asChild className="w-fit ddm-chamfer-tr-sm">
                     <Link to="/contato">
                       Solicitar orçamento
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -148,9 +150,13 @@ const Servicos = () => {
         </div>
       </section>
 
-      {/* CTA Final */}
-      <section className="py-6 md:py-10 bg-muted/30 border-t border-border">
-        <div className="container-ddm">
+      {/* CTA Final with brand signature */}
+      <section className="relative py-6 md:py-10 bg-muted/30 border-t border-border overflow-hidden">
+        <DDMPattern variant="minimal" />
+        
+        <div className="container-ddm relative z-10">
+          <SteelDivider icon="cog" variant="centered" className="mb-6" />
+          
           <div className="max-w-lg mx-auto text-center">
             <h2 className="text-lg font-semibold text-foreground mb-2">
               Pronto para começar sua obra?
@@ -159,7 +165,7 @@ const Servicos = () => {
               Solicite um orçamento gratuito agora mesmo. Respondemos em poucos minutos.
             </p>
             <div className="flex flex-col sm:flex-row gap-2 justify-center">
-              <Button variant="default" size="default" asChild>
+              <Button variant="default" size="default" asChild className="ddm-chamfer-tr-sm">
                 <Link to="/contato">
                   <MessageCircle className="w-4 h-4" />
                   Pedir Orçamento

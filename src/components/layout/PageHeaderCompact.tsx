@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ChevronRight, Home } from 'lucide-react';
+import SteelDivider from '@/components/brand/SteelDivider';
+import DDMPattern from '@/components/brand/DDMPattern';
 
 interface BreadcrumbItem {
   label: string;
@@ -18,8 +20,14 @@ const PageHeaderCompact = ({
   breadcrumbs = [],
 }: PageHeaderCompactProps) => {
   return (
-    <div className="pt-20 md:pt-24 pb-4 md:pb-6 border-b border-border bg-background">
-      <div className="container-ddm">
+    <div className="relative pt-20 md:pt-24 pb-4 md:pb-6 border-b border-border bg-background overflow-hidden">
+      {/* DDM Technical Pattern - subtle brand signature */}
+      <DDMPattern variant="minimal" />
+      
+      {/* Accent bar */}
+      <div className="absolute top-0 left-0 w-24 h-0.5 bg-accent" />
+      
+      <div className="container-ddm relative z-10">
         {/* Breadcrumbs */}
         {breadcrumbs.length > 0 && (
           <nav className="flex items-center gap-1.5 text-sm text-muted-foreground mb-2" aria-label="Breadcrumb">
@@ -53,6 +61,9 @@ const PageHeaderCompact = ({
             {subtitle}
           </p>
         )}
+        
+        {/* Steel Divider - Brand signature */}
+        <SteelDivider icon="none" variant="accent" className="mt-3" />
       </div>
     </div>
   );

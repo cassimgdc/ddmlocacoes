@@ -14,6 +14,8 @@ import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { usePhoneFormat } from '@/hooks/usePhoneFormat';
 import { motion } from 'framer-motion';
+import SteelDivider from '@/components/brand/SteelDivider';
+import DDMPattern from '@/components/brand/DDMPattern';
 
 const serviceTypes = [
   { value: 'retroescavadeira', label: 'Retroescavadeira' },
@@ -103,6 +105,9 @@ const FinalCTA = () => {
   return (
     <section className="py-16 md:py-20 bg-background">
       <div className="container-ddm">
+        {/* Steel Divider - Brand signature */}
+        <SteelDivider icon="cog" className="mb-8" />
+        
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -110,11 +115,14 @@ const FinalCTA = () => {
           transition={{ duration: 0.5 }}
           className="max-w-3xl mx-auto"
         >
-          {/* Elegant container with subtle shape */}
-          <div className="relative overflow-hidden rounded-2xl border border-border bg-card">
+          {/* Container with DDM chamfer and pattern */}
+          <div className="relative overflow-hidden ddm-chamfer-tr bg-card border border-border">
+            {/* DDM Technical Pattern */}
+            <DDMPattern variant="minimal" />
+            
             {/* Subtle corner accent */}
-            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-accent/5 to-transparent pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-primary/3 to-transparent pointer-events-none" />
+            <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-accent/8 to-transparent pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-primary/5 to-transparent pointer-events-none" />
             
             <div className="relative z-10 p-6 md:p-10">
               {/* Header */}
@@ -185,7 +193,7 @@ const FinalCTA = () => {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="flex-1 h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-medium"
+                    className="flex-1 h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-medium ddm-chamfer-tr-sm"
                   >
                     {isSubmitting ? (
                       <Loader2 className="w-4 h-4 animate-spin" />

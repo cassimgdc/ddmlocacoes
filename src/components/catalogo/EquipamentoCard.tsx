@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Equipamento } from '@/data/equipamentos';
-import EquipmentPlaceholder from './EquipmentPlaceholder';
+import DDMPlaceholder from '@/components/brand/DDMPlaceholder';
 import case580m from '@/assets/case-580m.png';
 
 interface EquipamentoCardProps {
@@ -46,7 +46,7 @@ const EquipamentoCard = ({ equipamento, onQuote, delay = 0 }: EquipamentoCardPro
 
   return (
     <div
-      className="group flex flex-col h-full rounded-lg bg-card border border-border overflow-hidden hover:border-accent/30 hover:shadow-soft transition-all"
+      className="card-ddm group flex flex-col h-full"
       style={{ animationDelay: `${delay}ms` }}
     >
       {/* Image */}
@@ -59,15 +59,21 @@ const EquipamentoCard = ({ equipamento, onQuote, delay = 0 }: EquipamentoCardPro
             loading="lazy"
           />
         ) : (
-          <EquipmentPlaceholder />
+          <DDMPlaceholder 
+            aspectRatio="video" 
+            showConsultBadge={equipamento.status !== 'disponivel'}
+            className="aspect-[4/3]"
+          />
         )}
         
         {/* Status badge */}
-        <div className="absolute top-2 left-2">
-          <Badge variant="outline" className={`${status.className} text-xs backdrop-blur-sm`}>
-            {status.label}
-          </Badge>
-        </div>
+        {imageSrc && (
+          <div className="absolute top-2 left-2">
+            <Badge variant="outline" className={`${status.className} text-xs backdrop-blur-sm`}>
+              {status.label}
+            </Badge>
+          </div>
+        )}
 
         {/* Featured badge */}
         {equipamento.destaque && (

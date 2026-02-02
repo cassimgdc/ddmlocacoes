@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Equipamento } from '@/data/equipamentos';
-import EquipmentPlaceholder from './EquipmentPlaceholder';
+import DDMPlaceholder from '@/components/brand/DDMPlaceholder';
 
 interface RelatedEquipmentCardProps {
   equipamento: Equipamento;
@@ -31,7 +31,7 @@ const RelatedEquipmentCard = ({ equipamento, image }: RelatedEquipmentCardProps)
   return (
     <Link
       to={`/catalogo/${equipamento.slug}`}
-      className="group flex flex-col h-full rounded-lg bg-card border border-border overflow-hidden hover:border-accent/30 hover:shadow-soft transition-all"
+      className="card-ddm group flex flex-col h-full"
     >
       {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden">
@@ -43,15 +43,21 @@ const RelatedEquipmentCard = ({ equipamento, image }: RelatedEquipmentCardProps)
             loading="lazy"
           />
         ) : (
-          <EquipmentPlaceholder />
+          <DDMPlaceholder 
+            aspectRatio="video" 
+            showConsultBadge={equipamento.status !== 'disponivel'}
+            className="aspect-[4/3]"
+          />
         )}
         
-        {/* Status badge */}
-        <div className="absolute top-2 left-2">
-          <Badge variant="outline" className={`${status.className} text-xs backdrop-blur-sm`}>
-            {status.label}
-          </Badge>
-        </div>
+        {/* Status badge - only show if has image */}
+        {hasImage && (
+          <div className="absolute top-2 left-2">
+            <Badge variant="outline" className={`${status.className} text-xs backdrop-blur-sm`}>
+              {status.label}
+            </Badge>
+          </div>
+        )}
       </div>
 
       {/* Content */}

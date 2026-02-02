@@ -9,6 +9,8 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { Home, LucideIcon } from 'lucide-react';
+import SteelDivider from '@/components/brand/SteelDivider';
+import DDMPattern from '@/components/brand/DDMPattern';
 
 interface BreadcrumbItem {
   label: string;
@@ -37,8 +39,14 @@ const InternalHero = ({
   className = '',
 }: PageHeaderProps) => {
   return (
-    <section className={`pt-20 pb-6 md:pt-24 md:pb-8 bg-card border-b border-border ${className}`}>
-      <div className="container-ddm">
+    <section className={`relative pt-20 pb-6 md:pt-24 md:pb-8 bg-card border-b border-border overflow-hidden ${className}`}>
+      {/* DDM Technical Pattern - subtle brand signature */}
+      <DDMPattern variant="minimal" />
+      
+      {/* Accent bar */}
+      <div className="absolute top-0 left-0 w-32 h-0.5 bg-accent" />
+      
+      <div className="container-ddm relative z-10">
         <div className="max-w-2xl">
           {/* Breadcrumbs */}
           {breadcrumbs.length > 0 && (
@@ -96,6 +104,9 @@ const InternalHero = ({
               {subtitle}
             </p>
           )}
+          
+          {/* Steel Divider - Brand signature */}
+          <SteelDivider icon="none" variant="accent" className="mt-4" />
           
           {/* Optional children */}
           {children && (

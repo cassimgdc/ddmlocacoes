@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { Shovel, Mountain, Trees, Truck, Construction, Tractor, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import SteelDivider from '@/components/brand/SteelDivider';
+import DDMPattern from '@/components/brand/DDMPattern';
 
 const categories = [
   {
@@ -8,84 +10,46 @@ const categories = [
     title: 'Escavação',
     description: 'Retroescavadeiras para obras de qualquer porte',
     href: '/catalogo?categoria=escavacao',
-    pattern: 'diagonal',
   },
   {
     icon: Mountain,
     title: 'Terraplanagem',
     description: 'Pás carregadeiras e motoniveladoras',
     href: '/catalogo?categoria=terraplanagem',
-    pattern: 'dots',
   },
   {
     icon: Construction,
     title: 'Compactação',
     description: 'Rolos compactadores e placas vibratórias',
     href: '/catalogo?categoria=compactacao',
-    pattern: 'lines',
   },
   {
     icon: Truck,
     title: 'Transporte',
     description: 'Caminhões basculantes e pipas',
     href: '/catalogo?categoria=transporte',
-    pattern: 'diagonal',
   },
   {
     icon: Trees,
     title: 'Limpeza de Lotes',
     description: 'Remoção de entulhos e preparo do terreno',
     href: '/servicos#limpeza-lotes',
-    pattern: 'dots',
   },
   {
     icon: Tractor,
     title: 'Serviços Rurais',
     description: 'Açudes, estradas rurais e curvas de nível',
     href: '/servicos#servicos-rurais',
-    pattern: 'lines',
   },
 ];
-
-const getPatternStyle = (pattern: string) => {
-  switch (pattern) {
-    case 'diagonal':
-      return {
-        backgroundImage: `repeating-linear-gradient(
-          45deg,
-          transparent,
-          transparent 10px,
-          currentColor 10px,
-          currentColor 11px
-        )`,
-        opacity: 0.03,
-      };
-    case 'dots':
-      return {
-        backgroundImage: `radial-gradient(circle, currentColor 1px, transparent 1px)`,
-        backgroundSize: '16px 16px',
-        opacity: 0.04,
-      };
-    case 'lines':
-      return {
-        backgroundImage: `repeating-linear-gradient(
-          90deg,
-          transparent,
-          transparent 20px,
-          currentColor 20px,
-          currentColor 21px
-        )`,
-        opacity: 0.03,
-      };
-    default:
-      return {};
-  }
-};
 
 const CategoriesBento = () => {
   return (
     <section className="py-16 md:py-20 bg-background">
       <div className="container-ddm">
+        {/* Steel Divider - Brand signature */}
+        <SteelDivider icon="shovel" className="mb-8" />
+        
         {/* Header */}
         <div className="flex items-end justify-between mb-10">
           <div>
@@ -105,7 +69,7 @@ const CategoriesBento = () => {
           </Link>
         </div>
 
-        {/* Bento Grid - 6 large cards */}
+        {/* Bento Grid - 6 cards with DDM chamfer */}
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
           {categories.map((category, index) => (
             <motion.div
@@ -117,20 +81,17 @@ const CategoriesBento = () => {
             >
               <Link
                 to={category.href}
-                className="group relative flex flex-col h-full min-h-[180px] md:min-h-[200px] overflow-hidden rounded-2xl border border-border bg-card p-5 md:p-6 transition-all duration-300 hover:border-primary/20 hover:shadow-lg hover:-translate-y-1"
+                className="card-ddm group relative flex flex-col h-full min-h-[180px] md:min-h-[200px] p-5 md:p-6"
               >
                 {/* Subtle pattern overlay */}
-                <div 
-                  className="absolute inset-0 text-foreground pointer-events-none"
-                  style={getPatternStyle(category.pattern)}
-                />
+                <DDMPattern variant="minimal" />
                 
-                {/* Accent corner */}
+                {/* Accent corner glow */}
                 <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 
                 <div className="relative z-10 flex flex-col h-full">
-                  {/* Icon */}
-                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-muted flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-105 transition-all duration-300">
+                  {/* Icon with chamfer shape */}
+                  <div className="w-12 h-12 md:w-14 md:h-14 ddm-chamfer-tr-sm bg-muted flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-105 transition-all duration-300">
                     <category.icon className="w-6 h-6 md:w-7 md:h-7 text-accent group-hover:text-primary-foreground transition-colors" />
                   </div>
 
