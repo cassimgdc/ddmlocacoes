@@ -11,7 +11,7 @@ interface EquipamentoCardProps {
   delay?: number;
 }
 
-// Helper to check if equipment has a real image
+// Helper to get equipment image
 const getEquipmentImage = (equipamento: Equipamento): string => {
   if (equipamento.slug === 'retroescavadeira-case-580m') {
     return case580m;
@@ -19,28 +19,8 @@ const getEquipmentImage = (equipamento: Equipamento): string => {
   return equipamento.imagemPlaceholder;
 };
 
-const isPlaceholderImage = (equipamento: Equipamento): boolean => {
-  return equipamento.slug !== 'retroescavadeira-case-580m';
-};
-
 const EquipamentoCard = ({ equipamento, onQuote, delay = 0 }: EquipamentoCardProps) => {
-  const statusConfig = {
-    disponivel: {
-      label: 'Disponível',
-      className: 'bg-ddm-success/10 text-ddm-success border-ddm-success/20',
-    },
-    'sob-consulta': {
-      label: 'Sob consulta',
-      className: 'bg-accent/10 text-accent border-accent/20',
-    },
-    indisponivel: {
-      label: 'Indisponível',
-      className: 'bg-muted text-muted-foreground border-border',
-    },
-  };
-
-  const status = statusConfig[equipamento.status];
-  const hasRealImage = !isPlaceholderImage(equipamento);
+  const isAvailable = equipamento.status === 'disponivel';
   const imageSrc = getEquipmentImage(equipamento);
 
   return (
@@ -50,38 +30,49 @@ const EquipamentoCard = ({ equipamento, onQuote, delay = 0 }: EquipamentoCardPro
     >
       {/* Image */}
       <Link to={`/catalogo/${equipamento.slug}`} className="block relative aspect-[4/3] overflow-hidden bg-secondary/50">
-        {hasRealImage ? (
-          <img
-            src={imageSrc}
-            alt={equipamento.nome}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
-          />
-        ) : (
-          /* Placeholder - Coming Soon overlay */
-          <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-muted/80 via-secondary/60 to-muted/80 p-6">
-            <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-3">
-              <Clock className="w-8 h-8 text-primary/60" />
+        {isAvailable ? (
+          <>
+            <img
+              src={imageSrc}
+              alt={equipamento.nome}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-card/60 via-transparent to-transparent" />
+            
+            {/* Available badge */}
+            <div className="absolute top-3 left-3">
+              <Badge variant="outline" className="bg-ddm-success/10 text-ddm-success border-ddm-success/20 font-medium">
+                Disponível
+              </Badge>
             </div>
-            <p className="text-sm font-semibold text-foreground/80 text-center">Foto em breve</p>
-            <p className="text-xs text-muted-foreground text-center mt-1">Equipamento disponível</p>
-          </div>
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-card/60 via-transparent to-transparent" />
-        
-        {/* Status badge */}
-        <div className="absolute top-3 left-3">
-          <Badge variant="outline" className={`${status.className} font-medium`}>
-            {status.label}
-          </Badge>
-        </div>
 
-        {/* Featured badge */}
-        {equipamento.destaque && (
-          <div className="absolute top-3 right-3">
-            <Badge className="bg-primary text-primary-foreground font-bold">
-              Destaque
-            </Badge>
+            {/* Featured badge */}
+            {equipamento.destaque && (
+              <div className="absolute top-3 right-3">
+                <Badge className="bg-primary text-primary-foreground font-bold">
+                  Destaque
+                </Badge>
+              </div>
+            )}
+          </>
+        ) : (
+          /* Coming Soon overlay for unavailable equipment */
+          <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-muted via-secondary/80 to-muted p-6 relative">
+            <div className="w-16 h-16 rounded-2xl bg-accent/20 flex items-center justify-center mb-3">
+              <Clock className="w-8 h-8 text-accent" />
+            </div>
+            <p className="text-base font-bold text-foreground text-center">Em Breve</p>
+            <p className="text-xs text-muted-foreground text-center mt-1 max-w-[140px]">
+              Este equipamento estará disponível em breve
+            </p>
+            
+            {/* Coming soon badge */}
+            <div className="absolute top-3 left-3">
+              <Badge variant="outline" className="bg-accent/10 text-accent border-accent/20 font-medium">
+                Em breve
+              </Badge>
+            </div>
           </div>
         )}
       </Link>
