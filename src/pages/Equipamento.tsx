@@ -47,7 +47,7 @@ const Equipamento = () => {
       </Helmet>
       
       {/* Hero Compacto */}
-      <section className="pt-14 pb-8 md:pt-20 md:pb-12 relative">
+      <section className="pt-24 pb-8 md:pt-28 md:pb-12 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-background to-secondary/20" />
         
         <div className="container-ddm relative z-10">
