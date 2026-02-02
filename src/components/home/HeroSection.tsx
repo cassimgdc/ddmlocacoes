@@ -85,8 +85,8 @@ const HeroSection = () => {
             alt="Equipamentos DDM Locações" 
             className="w-full h-full object-cover"
           />
-          {/* Primary overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-graphite/95 via-graphite/90 to-graphite/70" />
+          {/* Primary overlay - Using dark graphite for both themes */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[hsl(222,47%,11%)]/95 via-[hsl(222,47%,11%)]/90 to-[hsl(222,47%,11%)]/70" />
           
           {/* Subtle technical pattern overlay */}
           <div 
@@ -119,7 +119,7 @@ const HeroSection = () => {
             <div className="space-y-4">
               <h1 className="text-3xl sm:text-4xl lg:text-[3.25rem] font-bold text-white leading-[1.1] tracking-tight">
                 Locação de equipamentos<br className="hidden sm:block" />
-                <span className="text-copper">para sua obra.</span>
+                <span className="text-[hsl(28,80%,52%)]">para sua obra.</span>
               </h1>
               <p className="text-base lg:text-lg text-white/70 max-w-lg leading-relaxed">
                 Retroescavadeiras e máquinas pesadas com operador incluso. 
@@ -130,15 +130,15 @@ const HeroSection = () => {
             {/* Differentials - Clean metadata line */}
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/80 text-sm">
               <div className="flex items-center gap-1.5">
-                <Truck className="w-3.5 h-3.5 text-copper" />
+                <Truck className="w-3.5 h-3.5 text-[hsl(28,80%,52%)]" />
                 <span>Entrega rápida</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Wrench className="w-3.5 h-3.5 text-copper" />
+                <Wrench className="w-3.5 h-3.5 text-[hsl(28,80%,52%)]" />
                 <span>Operador incluso</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-copper" />
+                <ShieldCheck className="w-3.5 h-3.5 text-[hsl(28,80%,52%)]" />
                 <span>Equipamento revisado</span>
               </div>
             </div>
@@ -167,11 +167,10 @@ const HeroSection = () => {
               </Button>
             </div>
 
-            {/* Social proof - Stats - Discrete aligned row */}
             <div className="flex items-center gap-8 pt-6 border-t border-white/10">
               {stats.map((stat, index) => (
                 <div key={index} className="flex items-center gap-2">
-                  <stat.icon className="w-4 h-4 text-copper/80" />
+                  <stat.icon className="w-4 h-4 text-[hsl(28,80%,52%)]/80" />
                   <div>
                     <span className="text-xl font-bold text-white">{stat.value}</span>
                     <span className="text-xs text-white/50 ml-1.5">{stat.label}</span>
@@ -251,7 +250,7 @@ const HeroSection = () => {
                 {/* Expand modal trigger - Subtle link */}
                 <Dialog open={modalOpen} onOpenChange={setModalOpen}>
                   <DialogTrigger asChild>
-                    <button className="w-full text-center text-xs text-muted-foreground hover:text-copper transition-colors flex items-center justify-center gap-1 pt-1">
+                    <button className="w-full text-center text-xs text-muted-foreground hover:text-accent transition-colors flex items-center justify-center gap-1 pt-1">
                       Adicionar período e detalhes
                       <ArrowRight className="w-3 h-3" />
                     </button>

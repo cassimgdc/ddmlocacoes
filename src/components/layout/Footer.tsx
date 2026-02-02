@@ -73,14 +73,14 @@ const Footer = () => {
                 </a>
               </li>
               <li className="flex items-start gap-2 text-muted-foreground">
-                <MapPin className="w-4 h-4 text-copper mt-0.5" />
+                <MapPin className="w-4 h-4 text-accent mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground">Sete Lagoas - MG</p>
                   <p className="text-xs">E cidades vizinhas</p>
                 </div>
               </li>
               <li className="flex items-start gap-2 text-muted-foreground">
-                <Clock className="w-4 h-4 text-copper mt-0.5" />
+                <Clock className="w-4 h-4 text-accent mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground">Seg - Sáb</p>
                   <p className="text-xs">7h às 18h</p>

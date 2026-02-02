@@ -118,7 +118,7 @@ const FeaturedShowcase = () => {
                 <div className="flex items-center justify-between mt-6 pt-4 border-t border-border/60">
                   {heroItem.preco ? (
                     <div>
-                      <span className="text-2xl font-bold text-copper">{heroItem.preco}</span>
+                      <span className="text-2xl font-bold text-accent">{heroItem.preco}</span>
                       <span className="text-sm text-muted-foreground ml-1">/dia</span>
                     </div>
                   ) : (
@@ -200,7 +200,7 @@ const FeaturedShowcase = () => {
 
                   <div className="flex items-center justify-between mt-3 pt-2 border-t border-border/50">
                     {equip.preco ? (
-                      <span className="text-sm font-semibold text-copper">{equip.preco}</span>
+                      <span className="text-sm font-semibold text-accent">{equip.preco}</span>
                     ) : (
                       <span className="text-xs text-muted-foreground">Consulte</span>
                     )}
