@@ -11,13 +11,13 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showMobileCTA, setShowMobileCTA] = useState(false);
   const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
       
       const heroThreshold = window.innerHeight * 0.5;
-      const isHomePage = location.pathname === '/';
       setShowMobileCTA(!isHomePage || window.scrollY > heroThreshold);
     };
     
@@ -25,7 +25,7 @@ const Header = () => {
     
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [location.pathname]);
+  }, [isHomePage]);
 
   const navLinks = [
     { href: '/', label: 'Início' },
@@ -51,59 +51,56 @@ const Header = () => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? 'bg-card/98 backdrop-blur-md shadow-soft border-b border-border'
-            : 'bg-transparent'
+            ? 'bg-card/95 backdrop-blur-lg border-b border-border/60 shadow-sm'
+            : isHomePage 
+              ? 'bg-transparent' 
+              : 'bg-card/95 backdrop-blur-lg border-b border-border/60'
         }`}
       >
-        {/* Top bar - Contact info */}
-        <div className={`hidden md:block border-b border-border/50 bg-card transition-all duration-200 ${
-          isScrolled ? 'h-0 opacity-0 overflow-hidden' : 'h-auto opacity-100'
+        {/* Top bar - Minimal contact info (only on scroll up or non-home) */}
+        <div className={`hidden md:block transition-all duration-300 overflow-hidden ${
+          isScrolled ? 'max-h-0 opacity-0' : 'max-h-8 opacity-100'
         }`}>
           <div className="container-ddm">
-            <div className="flex items-center justify-between py-2 text-xs">
-              <div className="flex items-center gap-4">
+            <div className="flex items-center justify-between py-1.5 text-[11px]">
+              <div className="flex items-center gap-3 text-muted-foreground">
                 <a 
                   href="tel:+5531971067272" 
-                  className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors"
+                  className="flex items-center gap-1 hover:text-foreground transition-colors"
                 >
-                  <Phone className="w-3 h-3" />
+                  <Phone className="w-2.5 h-2.5" />
                   <span>(31) 97106-7272</span>
                 </a>
-                <span className="text-border">|</span>
-                <span className="text-muted-foreground">
-                  Sete Lagoas e Região
-                </span>
+                <span className="text-border/80">•</span>
+                <span>Sete Lagoas e Região</span>
+                <span className="text-border/80">•</span>
+                <span>Seg - Sáb: 7h às 18h</span>
               </div>
-              <div className="flex items-center gap-3">
-                <span className="text-muted-foreground">
-                  Seg - Sáb: 7h às 18h
-                </span>
-                <ThemeToggle />
-              </div>
+              <ThemeToggle />
             </div>
           </div>
         </div>
 
         {/* Main header */}
         <div className="container-ddm">
-          <div className={`flex items-center justify-between transition-all duration-200 ${
-            isScrolled ? 'h-14 md:h-16' : 'h-14 md:h-18'
+          <div className={`flex items-center justify-between transition-all duration-300 ${
+            isScrolled ? 'h-14' : 'h-14 md:h-16'
           }`}>
             {/* Logo */}
             <Link to="/" className="flex items-center" onClick={handleNavClick}>
               <img 
                 src={logoImg} 
                 alt="DDM Locações" 
-                className={`w-auto transition-all duration-200 ${
-                  isScrolled ? 'h-8 md:h-12' : 'h-10 md:h-16'
+                className={`w-auto transition-all duration-300 ${
+                  isScrolled ? 'h-8 md:h-10' : 'h-9 md:h-12'
                 }`}
               />
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-1">
+            <nav className="hidden lg:flex items-center gap-0.5">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
@@ -111,8 +108,10 @@ const Header = () => {
                   onClick={handleNavClick}
                   className={`px-3 py-2 text-sm font-medium transition-colors rounded-md ${
                     isActiveLink(link.href)
-                      ? 'text-foreground bg-muted'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                      ? 'text-foreground bg-muted/80'
+                      : isHomePage && !isScrolled
+                        ? 'text-white/90 hover:text-white hover:bg-white/10'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'
                   }`}
                 >
                   {link.label}
@@ -120,12 +119,17 @@ const Header = () => {
               ))}
             </nav>
 
-            {/* Desktop CTA */}
-            <div className="hidden lg:flex items-center gap-3">
+            {/* Desktop CTA - Single button */}
+            <div className="hidden lg:flex items-center gap-2">
               {isScrolled && <ThemeToggle />}
-              <Button variant="default" size="default" asChild>
+              <Button 
+                variant="default" 
+                size="sm" 
+                asChild
+                className="h-9 px-4 text-sm font-medium"
+              >
                 <Link to="/contato">
-                  <MessageCircle className="w-4 h-4" />
+                  <MessageCircle className="w-3.5 h-3.5" />
                   Pedir Orçamento
                 </Link>
               </Button>
@@ -147,7 +151,11 @@ const Header = () => {
               
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
-                className="w-10 h-10 flex items-center justify-center rounded-lg bg-muted text-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+                className={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors ${
+                  isHomePage && !isScrolled
+                    ? 'bg-white/10 text-white hover:bg-white/20'
+                    : 'bg-muted text-foreground hover:bg-muted/80'
+                }`}
                 aria-label="Abrir menu"
               >
                 <Menu className="w-5 h-5" />
