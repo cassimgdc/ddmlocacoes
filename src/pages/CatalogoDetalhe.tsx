@@ -6,6 +6,7 @@ import PageHeaderCompact from '@/components/layout/PageHeaderCompact';
 import ProductGallery from '@/components/catalogo/ProductGallery';
 import ProductQuoteForm from '@/components/catalogo/ProductQuoteForm';
 import RelatedEquipmentCard from '@/components/catalogo/RelatedEquipmentCard';
+import VideoShowcase from '@/components/catalogo/VideoShowcase';
 import {
   Accordion,
   AccordionContent,
@@ -22,6 +23,10 @@ const equipamentoExtendedData: Record<string, {
   descricaoLonga: string;
   inclusos: string[];
   observacoes: { titulo: string; conteudo: string }[];
+  video?: {
+    url: string;
+    highlights?: string[];
+  };
 }> = {
   'retroescavadeira-case-580m': {
     imagens: [case580m],
@@ -62,11 +67,24 @@ Nossa máquina passa por manutenção preventiva rigorosa, garantindo disponibil
         conteudo: 'Cancelamentos com menos de 24 horas de antecedência podem incorrer em taxa de deslocamento. Reagendamentos são gratuitos mediante disponibilidade.',
       },
     ],
+    video: {
+      url: 'https://youtube.com/shorts/YOUR_VIDEO_ID',
+      highlights: ['Terraplanagem', 'Abertura de valas', 'Operador experiente', 'Sete Lagoas'],
+    },
   },
 };
 
 // Default extended data for equipment without specific data
-const defaultExtendedData = {
+const defaultExtendedData: {
+  imagens: string[];
+  descricaoLonga: string;
+  inclusos: string[];
+  observacoes: { titulo: string; conteudo: string }[];
+  video?: {
+    url: string;
+    highlights?: string[];
+  };
+} = {
   imagens: ['/placeholder.svg'],
   descricaoLonga: '',
   inclusos: [
@@ -80,6 +98,7 @@ const defaultExtendedData = {
       conteudo: 'Este equipamento está sob consulta. Entre em contato para verificar disponibilidade e condições.',
     },
   ],
+  video: undefined,
 };
 
 const CatalogoDetalhe = () => {
@@ -173,6 +192,16 @@ const CatalogoDetalhe = () => {
                 images={extendedData.imagens}
                 alt={equipamento.nome}
               />
+
+              {/* Video Showcase - Em Ação */}
+              {extendedData.video && (
+                <VideoShowcase
+                  videoUrl={extendedData.video.url}
+                  title={`${equipamento.nome} em Ação`}
+                  subtitle="Veja o equipamento trabalhando em obras reais da região"
+                  highlights={extendedData.video.highlights}
+                />
+              )}
 
               {/* Description */}
               <div>
