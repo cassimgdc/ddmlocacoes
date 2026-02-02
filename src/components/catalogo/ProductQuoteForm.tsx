@@ -1,19 +1,13 @@
 import { useState } from 'react';
-import { Send, MessageCircle, Loader2, Zap } from 'lucide-react';
+import { Send, MessageCircle, Loader2, Zap, CheckCircle, User, Phone, MapPin, Calendar, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { InputWithCheck } from '@/components/ui/input-with-check';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/hooks/use-toast';
-import { z } from 'zod';
-
-const formSchema = z.object({
-  name: z.string().trim().min(2, 'Nome deve ter pelo menos 2 caracteres').max(100, 'Nome muito longo'),
-  whatsapp: z.string().trim().min(10, 'WhatsApp inválido').max(20, 'WhatsApp inválido'),
-  city: z.string().trim().min(2, 'Cidade deve ter pelo menos 2 caracteres').max(100, 'Cidade muito longa'),
-  period: z.string().trim().max(100, 'Período muito longo').optional(),
-  message: z.string().trim().max(500, 'Mensagem muito longa').optional(),
-});
+import { usePhoneFormat } from '@/hooks/usePhoneFormat';
+import { cn } from '@/lib/utils';
 
 interface Lead {
   id: string;
@@ -48,25 +42,57 @@ const ProductQuoteForm = ({ equipamentoNome, preco }: ProductQuoteFormProps) => 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    whatsapp: '',
     city: '',
     period: '',
     message: '',
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const { 
+    ddi, phone, rawPhone, 
+    handlePhoneChange, handleDdiChange, 
+    isValidPhone, getFormattedPhone, resetPhone 
+  } = usePhoneFormat();
+
+  // Validações por campo
+  const isNameValid = formData.name.trim().length >= 2;
+  const isCityValid = formData.city.trim().length >= 2;
+  const isPhoneValid = isValidPhone();
+
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    if (!isNameValid) {
+      newErrors.name = 'Informe seu nome (mínimo 2 caracteres)';
+    }
+    
+    if (!isPhoneValid) {
+      newErrors.whatsapp = 'Telefone inválido (inclua DDD)';
+    }
+    
+    if (!isCityValid) {
+      newErrors.city = 'Informe a cidade';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: '' }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const result = formSchema.safeParse(formData);
-    if (!result.success) {
+    if (!validateForm()) {
       toast({
-        title: 'Erro no formulário',
-        description: result.error.errors[0].message,
+        title: 'Campos obrigatórios',
+        description: 'Preencha os campos marcados corretamente.',
         variant: 'destructive',
       });
       return;
@@ -74,30 +100,35 @@ const ProductQuoteForm = ({ equipamentoNome, preco }: ProductQuoteFormProps) => 
 
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 800));
-
     // Save to localStorage queue
     saveLeadToQueue({
       equipamento: equipamentoNome,
-      ...formData,
+      name: formData.name.trim(),
+      whatsapp: getFormattedPhone(),
+      city: formData.city.trim(),
+      period: formData.period.trim() || undefined,
+      message: formData.message.trim() || undefined,
     });
 
     toast({
-      title: 'Pedido enviado com sucesso!',
+      title: 'Pedido enviado!',
       description: 'Entraremos em contato pelo WhatsApp em breve.',
     });
 
     // Reset form
-    setFormData({ name: '', whatsapp: '', city: '', period: '', message: '' });
-    setIsSubmitting(false);
+    setTimeout(() => {
+      setFormData({ name: '', city: '', period: '', message: '' });
+      resetPhone();
+      setErrors({});
+      setIsSubmitting(false);
+    }, 1500);
   };
 
   const handleWhatsApp = () => {
     const message = encodeURIComponent(
-      `Olá! Gostaria de um orçamento para:\n\n📦 *${equipamentoNome}*\n\n👤 Nome: ${formData.name || '(preencher)'}\n📍 Cidade: ${formData.city || '(preencher)'}\n📅 Período: ${formData.period || 'A definir'}\n${formData.message ? `💬 Obs: ${formData.message}` : ''}`
+      `Olá! Gostaria de um orçamento para:\n\n📦 *${equipamentoNome}*\n\n👤 Nome: ${formData.name.trim() || '(preencher)'}\n📱 WhatsApp: ${getFormattedPhone() || '(preencher)'}\n📍 Cidade: ${formData.city.trim() || '(preencher)'}\n📅 Período: ${formData.period.trim() || 'A definir'}\n${formData.message.trim() ? `💬 Obs: ${formData.message.trim()}` : ''}`
     );
-    window.open(`https://wa.me/5531999999999?text=${message}`, '_blank');
+    window.open(`https://wa.me/5531971067272?text=${message}`, '_blank');
   };
 
   return (
@@ -118,58 +149,105 @@ const ProductQuoteForm = ({ equipamentoNome, preco }: ProductQuoteFormProps) => 
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="pq-name">Nome *</Label>
-          <Input
+        {/* Nome */}
+        <div className="space-y-1.5">
+          <Label htmlFor="pq-name" className="text-foreground text-sm flex items-center gap-2">
+            <User className="w-4 h-4 text-primary" />
+            Nome *
+          </Label>
+          <InputWithCheck
             id="pq-name"
             name="name"
             placeholder="Seu nome completo"
             value={formData.name}
             onChange={handleChange}
-            required
-            aria-required="true"
+            maxLength={100}
+            isValid={isNameValid}
+            hasError={!!errors.name}
           />
+          {errors.name && <p className="text-xs text-red-500">{errors.name}</p>}
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="pq-whatsapp">WhatsApp *</Label>
-          <Input
-            id="pq-whatsapp"
-            name="whatsapp"
-            placeholder="(31) 99999-9999"
-            value={formData.whatsapp}
-            onChange={handleChange}
-            required
-            aria-required="true"
-          />
+        {/* Telefone */}
+        <div className="space-y-1.5">
+          <Label htmlFor="pq-whatsapp" className="text-foreground text-sm flex items-center gap-2">
+            <Phone className="w-4 h-4 text-primary" />
+            WhatsApp *
+          </Label>
+          <div className="flex gap-2">
+            <Input
+              value={ddi}
+              onChange={(e) => handleDdiChange(e.target.value)}
+              className="h-10 w-16 text-center bg-muted/50 border-border/50 font-medium"
+              maxLength={4}
+            />
+            <div className="relative flex-1">
+              <Input
+                id="pq-whatsapp"
+                type="tel"
+                inputMode="numeric"
+                placeholder="(31) 99999-9999"
+                value={phone}
+                onChange={(e) => {
+                  handlePhoneChange(e.target.value);
+                  if (errors.whatsapp) setErrors((prev) => ({ ...prev, whatsapp: '' }));
+                }}
+                className={cn(
+                  "h-10 bg-muted/50 border-border/50 focus:border-primary transition-colors",
+                  errors.whatsapp && "border-red-500 focus:border-red-500",
+                  isPhoneValid && !errors.whatsapp && "border-green-500/50 pr-10"
+                )}
+              />
+              {isPhoneValid && !errors.whatsapp && (
+                <CheckCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-green-500" />
+              )}
+            </div>
+          </div>
+          {errors.whatsapp && <p className="text-xs text-red-500">{errors.whatsapp}</p>}
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="pq-city">Cidade *</Label>
-          <Input
+        {/* Cidade */}
+        <div className="space-y-1.5">
+          <Label htmlFor="pq-city" className="text-foreground text-sm flex items-center gap-2">
+            <MapPin className="w-4 h-4 text-primary" />
+            Cidade *
+          </Label>
+          <InputWithCheck
             id="pq-city"
             name="city"
             placeholder="Sete Lagoas, Prudente de Morais..."
             value={formData.city}
             onChange={handleChange}
-            required
-            aria-required="true"
+            maxLength={100}
+            isValid={isCityValid}
+            hasError={!!errors.city}
           />
+          {errors.city && <p className="text-xs text-red-500">{errors.city}</p>}
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="pq-period">Período de uso</Label>
+        {/* Período */}
+        <div className="space-y-1.5">
+          <Label htmlFor="pq-period" className="text-foreground text-sm flex items-center gap-2">
+            <Calendar className="w-4 h-4 text-primary" />
+            Período de uso
+          </Label>
           <Input
             id="pq-period"
             name="period"
             placeholder="Ex: 3 dias, 1 semana..."
             value={formData.period}
             onChange={handleChange}
+            maxLength={100}
+            className="h-10 bg-muted/50 border-border/50"
           />
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="pq-message">Mensagem (opcional)</Label>
+        {/* Mensagem */}
+        <div className="space-y-1.5">
+          <Label htmlFor="pq-message" className="text-foreground text-sm flex items-center gap-2">
+            <FileText className="w-4 h-4 text-primary" />
+            Mensagem (opcional)
+          </Label>
           <Textarea
             id="pq-message"
             name="message"
@@ -177,7 +255,8 @@ const ProductQuoteForm = ({ equipamentoNome, preco }: ProductQuoteFormProps) => 
             value={formData.message}
             onChange={handleChange}
             rows={3}
-            className="resize-none"
+            maxLength={500}
+            className="resize-none bg-muted/50 border-border/50"
           />
         </div>
 
