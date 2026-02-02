@@ -16,6 +16,7 @@ import { usePhoneFormat } from '@/hooks/usePhoneFormat';
 import { useSpamProtection } from '@/hooks/useSpamProtection';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
 
 const WEBHOOK_URL = 'https://n8n2.easybr.site/webhook/14f30970-8945-456f-9c1e-eba82b566d91';
 
@@ -36,7 +37,7 @@ const QuickQuoteForm = ({ equipmentName }: QuickQuoteFormProps) => {
   const { 
     ddi, phone, rawPhone, 
     handlePhoneChange, handleDdiChange, 
-    isValidPhone, getPhoneForSubmit, getFormattedPhone, resetPhone 
+    isValidPhone, getFormattedPhone, resetPhone 
   } = usePhoneFormat();
 
   const {
@@ -56,20 +57,19 @@ const QuickQuoteForm = ({ equipmentName }: QuickQuoteFormProps) => {
 
   const formatWhatsAppMessage = () => {
     const lines = [
-      '*Olá! Quero orçamento.*',
+      'Olá! Quero um orçamento.',
       '',
-      `*Nome:* ${formData.nome.trim()}`,
-      `*Telefone:* ${getFormattedPhone()}`,
-      `*Local:* ${formData.local.trim()}`,
-      `*Serviço:* ${formData.tipoServico}`,
+      `Meu nome é ${formData.nome.trim()}.`,
+      `Tenho interesse em: ${formData.tipoServico}.`,
+      `Cidade: ${formData.local.trim()}.`,
     ];
 
     if (equipmentName) {
-      lines.push(`*Equipamento:* ${equipmentName}`);
+      lines.push(`Equipamento: ${equipmentName}`);
     }
 
     if (formData.detalhes.trim()) {
-      lines.push(`*Detalhes:* ${formData.detalhes.trim()}`);
+      lines.push(`Detalhes: ${formData.detalhes.trim()}`);
     }
 
     lines.push('', 'Posso enviar fotos/vídeo em seguida.');
@@ -77,12 +77,31 @@ const QuickQuoteForm = ({ equipmentName }: QuickQuoteFormProps) => {
     return encodeURIComponent(lines.join('\n'));
   };
 
+  const saveLeadToDatabase = async () => {
+    try {
+      const { error } = await supabase.from('leads').insert({
+        origem: equipmentName ? 'equipamento' : 'home',
+        nome: formData.nome.trim(),
+        whatsapp: getFormattedPhone(),
+        cidade: formData.local.trim(),
+        item_slug: equipmentName || formData.tipoServico,
+        mensagem: formData.detalhes.trim() || null,
+        status: 'novo',
+      });
+
+      if (error) {
+        console.error('Error saving lead:', error);
+      }
+    } catch (err) {
+      console.error('Error saving lead:', err);
+    }
+  };
+
   const sendToWebhook = async () => {
     try {
       const payload = {
         nome: formData.nome.trim(),
         telefone: getFormattedPhone(),
-        telefone_raw: getPhoneForSubmit(),
         local: formData.local.trim(),
         tipo_servico: formData.tipoServico,
         equipamento: equipmentName || null,
@@ -103,7 +122,7 @@ const QuickQuoteForm = ({ equipmentName }: QuickQuoteFormProps) => {
 
       clearTimeout(timeoutId);
     } catch {
-      // Silently fail - WhatsApp is the primary channel
+      // Silently fail - DB and WhatsApp are primary
     }
   };
 
@@ -173,6 +192,7 @@ const QuickQuoteForm = ({ equipmentName }: QuickQuoteFormProps) => {
     }
 
     registerSubmit(rawPhone);
+    saveLeadToDatabase();
     sendToWebhook();
 
     toast({ 

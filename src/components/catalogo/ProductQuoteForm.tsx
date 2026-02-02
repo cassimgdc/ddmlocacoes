@@ -8,29 +8,35 @@ import { Label } from '@/components/ui/label';
 import { toast } from '@/hooks/use-toast';
 import { usePhoneFormat } from '@/hooks/usePhoneFormat';
 import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
 
-interface Lead {
-  id: string;
+// Save lead to Supabase database
+const saveLeadToDatabase = async (lead: {
   equipamento: string;
   name: string;
   whatsapp: string;
   city: string;
   period?: string;
   message?: string;
-  createdAt: string;
-}
+}) => {
+  try {
+    const { error } = await supabase.from('leads').insert({
+      origem: 'catalogo',
+      nome: lead.name,
+      whatsapp: lead.whatsapp,
+      cidade: lead.city,
+      item_slug: lead.equipamento,
+      periodo: lead.period || null,
+      mensagem: lead.message || null,
+      status: 'novo',
+    });
 
-// Save lead to localStorage queue
-const saveLeadToQueue = (lead: Omit<Lead, 'id' | 'createdAt'>) => {
-  const queue: Lead[] = JSON.parse(localStorage.getItem('leadQueue') || '[]');
-  const newLead: Lead = {
-    ...lead,
-    id: crypto.randomUUID(),
-    createdAt: new Date().toISOString(),
-  };
-  queue.push(newLead);
-  localStorage.setItem('leadQueue', JSON.stringify(queue));
-  return newLead;
+    if (error) {
+      console.error('Error saving lead:', error);
+    }
+  } catch (err) {
+    console.error('Error saving lead:', err);
+  }
 };
 
 interface ProductQuoteFormProps {
@@ -100,8 +106,8 @@ const ProductQuoteForm = ({ equipamentoNome, preco }: ProductQuoteFormProps) => 
 
     setIsSubmitting(true);
 
-    // Save to localStorage queue
-    saveLeadToQueue({
+    // Save to database
+    await saveLeadToDatabase({
       equipamento: equipamentoNome,
       name: formData.name.trim(),
       whatsapp: getFormattedPhone(),
