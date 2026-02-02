@@ -2,61 +2,203 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
-import ServicesCarousel from '@/components/home/ServicesCarousel';
+import CategoryCard from '@/components/home/CategoryCard';
+import StepCard from '@/components/home/StepCard';
+import ProductCard from '@/components/home/ProductCard';
+import TestimonialCard from '@/components/home/TestimonialCard';
+import ClientLogos from '@/components/home/ClientLogos';
+import StatsBanner from '@/components/home/StatsBanner';
+import QuickContactForm from '@/components/home/QuickContactForm';
 import {
   MessageCircle,
   ArrowRight,
-  CheckCircle2,
+  Phone,
   MapPin,
   Clock,
   Shield,
   Star,
-  Phone,
   Zap,
-  Play,
-  User,
-  Fuel,
+  Truck,
   Wrench,
+  FileCheck,
+  HeartHandshake,
+  Award,
+  CheckCircle2,
+  Shovel,
+  HardHat,
+  Building2,
+  Package,
+  Search,
+  CalendarCheck,
+  ThumbsUp,
   TrendingUp,
 } from 'lucide-react';
 import case580m from '@/assets/case-580m.png';
 
 const Index = () => {
-  const stats = [
-    { icon: MapPin, label: 'Sete Lagoas e região', highlight: true },
-    { icon: Clock, label: 'Atendimento rápido' },
-    { icon: Shield, label: 'Operador incluso' },
+  // Stats for banner below hero
+  const heroStats = [
+    { icon: TrendingUp, value: '+500', label: 'Locações realizadas' },
+    { icon: Clock, value: '10+', label: 'Anos de experiência' },
+    { icon: Zap, value: '24h', label: 'Atendimento rápido' },
+    { icon: MapPin, value: '8+', label: 'Cidades atendidas' },
   ];
 
+  // Categories for rental
+  const categories = [
+    { 
+      icon: Shovel, 
+      title: 'Equipamentos', 
+      description: 'Retroescavadeiras, escavadeiras e máquinas pesadas',
+      href: '/catalogo'
+    },
+    { 
+      icon: HardHat, 
+      title: 'Ferramentas', 
+      description: 'Ferramentas profissionais para construção',
+      href: '/catalogo'
+    },
+    { 
+      icon: Building2, 
+      title: 'Estruturas', 
+      description: 'Andaimes, formas e estruturas temporárias',
+      href: '/catalogo'
+    },
+    { 
+      icon: Package, 
+      title: 'Outros', 
+      description: 'Containers, geradores e mais',
+      href: '/catalogo'
+    },
+  ];
+
+  // How it works steps
+  const steps = [
+    { 
+      icon: Search, 
+      step: 1, 
+      title: 'Escolha o Item', 
+      description: 'Navegue pelo catálogo e encontre o equipamento ideal'
+    },
+    { 
+      icon: CalendarCheck, 
+      step: 2, 
+      title: 'Informe o Período', 
+      description: 'Defina por quanto tempo você precisa do equipamento'
+    },
+    { 
+      icon: ThumbsUp, 
+      step: 3, 
+      title: 'Confirmação', 
+      description: 'Receba o orçamento e confirme a locação'
+    },
+    { 
+      icon: Truck, 
+      step: 4, 
+      title: 'Entrega/Retirada', 
+      description: 'Levamos até você ou retire em nosso local'
+    },
+  ];
+
+  // Featured products
+  const featuredProducts = [
+    {
+      image: case580m,
+      title: 'Retroescavadeira Case 580M',
+      description: 'Ideal para terraplanagem, abertura de valas e serviços pesados',
+      price: 'R$ 200/hora',
+      href: '/catalogo/retroescavadeira-case-580m',
+      featured: true,
+    },
+    {
+      image: case580m,
+      title: 'Mini Escavadeira',
+      description: 'Perfeita para espaços reduzidos e trabalhos de precisão',
+      price: 'Sob consulta',
+      href: '/catalogo',
+      featured: false,
+    },
+    {
+      image: case580m,
+      title: 'Rolo Compactador',
+      description: 'Compactação de solo para fundações e pavimentação',
+      price: 'Sob consulta',
+      href: '/catalogo',
+      featured: false,
+    },
+    {
+      image: case580m,
+      title: 'Caminhão Basculante',
+      description: 'Transporte de terra, entulho e materiais',
+      price: 'Sob consulta',
+      href: '/catalogo',
+      featured: false,
+    },
+    {
+      image: case580m,
+      title: 'Pá Carregadeira',
+      description: 'Carregamento e movimentação de grandes volumes',
+      price: 'Sob consulta',
+      href: '/catalogo',
+      featured: false,
+    },
+    {
+      image: case580m,
+      title: 'Motoniveladora',
+      description: 'Nivelamento de terrenos e estradas',
+      price: 'Sob consulta',
+      href: '/catalogo',
+      featured: false,
+    },
+  ];
+
+  // Differentials
   const differentials = [
-    { icon: User, title: 'Operador Experiente', description: 'Profissional qualificado incluso no serviço' },
-    { icon: Fuel, title: 'Combustível Incluso', description: 'Sem custos adicionais durante o trabalho' },
-    { icon: Wrench, title: 'Máquina Revisada', description: 'Manutenção em dia, sem surpresas' },
-    { icon: TrendingUp, title: 'Preço Competitivo', description: 'Melhor custo-benefício da região' },
+    { icon: Wrench, title: 'Manutenção em Dia', description: 'Equipamentos sempre revisados e prontos para uso' },
+    { icon: Phone, title: 'Suporte 24h', description: 'Atendimento rápido para qualquer necessidade' },
+    { icon: FileCheck, title: 'Contrato Flexível', description: 'Locação por hora, dia, semana ou mês' },
+    { icon: Truck, title: 'Entrega e Retirada', description: 'Levamos e buscamos o equipamento no local' },
+    { icon: Award, title: 'Qualidade Garantida', description: 'Equipamentos de marcas líderes do mercado' },
+    { icon: HeartHandshake, title: 'Atendimento Personalizado', description: 'Solução sob medida para seu projeto' },
   ];
 
-  const cities = [
-    'Sete Lagoas',
-    'Prudente de Morais',
-    'Capim Branco',
-    'Funilândia',
-    'Jequitibá',
-    'Paraopeba',
-    'Caetanópolis',
-    'Baldim',
+  // Testimonials
+  const testimonials = [
+    {
+      name: 'Carlos Silva',
+      location: 'Sete Lagoas, MG',
+      text: 'Excelente serviço! A retroescavadeira chegou no horário e o operador foi muito profissional. Recomendo!',
+      rating: 5,
+    },
+    {
+      name: 'Maria Santos',
+      location: 'Prudente de Morais, MG',
+      text: 'Contratei para limpar meu lote e ficou perfeito. Preço justo e atendimento nota 10.',
+      rating: 5,
+    },
+    {
+      name: 'João Oliveira',
+      location: 'Capim Branco, MG',
+      text: 'Já é a terceira vez que alugo com a DDM. Sempre confiável e pontual.',
+      rating: 5,
+    },
   ];
+
+  const scrollToForm = () => {
+    document.getElementById('form-section')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <Layout>
       <Helmet>
-        <title>DDM Locações - Aluguel de Retroescavadeira em Sete Lagoas | Terraplanagem e Escavação</title>
-        <meta name="description" content="Aluguel de retroescavadeira Case 580M com operador experiente em Sete Lagoas e região. Terraplanagem, abertura de valas, limpeza de lotes. A partir de R$ 200/hora. Orçamento rápido pelo WhatsApp." />
+        <title>DDM Locações - Aluguel de Equipamentos em Sete Lagoas | Retroescavadeira e Máquinas</title>
+        <meta name="description" content="Aluguel de retroescavadeira, escavadeiras e equipamentos para construção em Sete Lagoas e região. Entrega rápida, preços competitivos. Solicite seu orçamento!" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <link rel="canonical" href="https://ddmlocacoes.lovable.app/" />
       </Helmet>
       
-      {/* Hero Section - Full Impact */}
-      <section className="relative min-h-[90vh] md:min-h-[85vh] flex items-center pt-28 md:pt-32 pb-16 overflow-hidden">
+      {/* ===== SECTION 1: HERO ===== */}
+      <section className="relative min-h-[90vh] md:min-h-[85vh] flex items-center pt-28 md:pt-32 pb-8 overflow-hidden">
         {/* Background layers */}
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/50" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,hsl(28_100%_50%/0.15),transparent)]" />
@@ -89,47 +231,43 @@ const Index = () => {
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-black leading-[1.1] opacity-0 animate-fade-in-up stagger-1">
                 <span className="text-foreground">Aluguel de</span>
                 <br />
-                <span className="text-gradient-vivid">Retroescavadeira</span>
+                <span className="text-gradient-vivid">Equipamentos</span>
                 <br />
-                <span className="text-foreground text-2xl sm:text-3xl md:text-4xl lg:text-5xl">em Sete Lagoas</span>
+                <span className="text-foreground text-2xl sm:text-3xl md:text-4xl lg:text-5xl">para sua Obra</span>
               </h1>
 
               {/* Description */}
               <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 opacity-0 animate-fade-in-up stagger-2">
-                Serviço completo com <span className="text-foreground font-medium">operador experiente</span>, 
-                máquina revisada e combustível incluso. Atendimento rápido em toda a região.
+                Retroescavadeiras, escavadeiras e máquinas pesadas com <span className="text-foreground font-medium">entrega rápida</span> e 
+                <span className="text-foreground font-medium"> suporte completo</span> em <span className="text-foreground font-semibold">Sete Lagoas e região</span>.
               </p>
 
-              {/* Stats row */}
-              <div className="flex flex-wrap justify-center lg:justify-start gap-3 md:gap-4 opacity-0 animate-fade-in-up stagger-2">
-                {stats.map((stat, index) => (
-                  <div key={index} className={`flex items-center gap-2 px-3 py-2 rounded-lg ${
-                    stat.highlight 
-                      ? 'bg-primary/10 border border-primary/20' 
-                      : 'bg-muted/50'
-                  }`}>
-                    <stat.icon className={`w-4 h-4 ${stat.highlight ? 'text-primary' : 'text-muted-foreground'}`} />
-                    <span className={`text-sm font-medium ${stat.highlight ? 'text-primary' : 'text-muted-foreground'}`}>
-                      {stat.label}
-                    </span>
+              {/* Hero features overlay */}
+              <div className="flex flex-wrap justify-center lg:justify-start gap-3 opacity-0 animate-fade-in-up stagger-2">
+                {[
+                  { icon: Truck, label: 'Entrega rápida' },
+                  { icon: Shield, label: 'Suporte incluso' },
+                  { icon: Wrench, label: 'Manutenção em dia' },
+                ].map((item, index) => (
+                  <div key={index} className="flex items-center gap-2 px-3 py-2 rounded-lg bg-muted/50 border border-border/50">
+                    <item.icon className="w-4 h-4 text-primary" />
+                    <span className="text-sm font-medium text-muted-foreground">{item.label}</span>
                   </div>
                 ))}
               </div>
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start opacity-0 animate-fade-in-up stagger-3">
-                <Button variant="cta" size="lg" asChild className="group w-full sm:w-auto">
-                  <Link to="/contato">
-                    <MessageCircle className="w-5 h-5" />
-                    Pedir Orçamento Grátis
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
+                <Button variant="cta" size="lg" onClick={scrollToForm} className="group w-full sm:w-auto">
+                  <MessageCircle className="w-5 h-5" />
+                  Pedir Orçamento
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Button>
-                <Button variant="outline" size="lg" asChild className="group w-full sm:w-auto">
-                  <Link to="/equipamento">
-                    <Play className="w-4 h-4" />
-                    Ver Equipamento
-                  </Link>
+                <Button variant="whatsapp" size="lg" asChild className="group w-full sm:w-auto">
+                  <a href="https://wa.me/5531999999999" target="_blank" rel="noopener noreferrer">
+                    <Phone className="w-4 h-4" />
+                    Falar no WhatsApp
+                  </a>
                 </Button>
               </div>
 
@@ -184,286 +322,215 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Differentials Section */}
+      {/* Stats Banner below Hero */}
+      <StatsBanner stats={heroStats} />
+
+      {/* ===== SECTION 2: CATEGORIES ===== */}
+      <section className="py-16 md:py-24">
+        <div className="container-ddm">
+          <div className="text-center mb-10 md:mb-14 opacity-0 animate-fade-in-up">
+            <span className="badge-industrial mb-4">
+              <Package className="w-4 h-4" />
+              Categorias
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground">
+              O que você <span className="text-gradient-vivid">procura?</span>
+            </h2>
+            <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
+              Navegue pelas categorias e encontre o equipamento ideal para seu projeto
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+            {categories.map((category, index) => (
+              <CategoryCard
+                key={category.title}
+                icon={category.icon}
+                title={category.title}
+                description={category.description}
+                href={category.href}
+                delay={(index + 1) * 100}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== SECTION 3: HOW IT WORKS ===== */}
       <section className="py-16 md:py-24 bg-secondary/30 section-glow">
         <div className="container-ddm">
           <div className="text-center mb-10 md:mb-14 opacity-0 animate-fade-in-up">
             <span className="badge-industrial mb-4">
-              <Shield className="w-4 h-4" />
-              Por que nos escolher
+              <CheckCircle2 className="w-4 h-4" />
+              Simples e Rápido
             </span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground">
-              Tudo <span className="text-gradient-vivid">incluso</span> no serviço
+              Como <span className="text-gradient-vivid">funciona?</span>
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+            {steps.map((step, index) => (
+              <StepCard
+                key={step.title}
+                icon={step.icon}
+                step={step.step}
+                title={step.title}
+                description={step.description}
+                delay={(index + 1) * 100}
+                isLast={index === steps.length - 1}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== SECTION 4: FEATURED PRODUCTS ===== */}
+      <section className="py-16 md:py-24">
+        <div className="container-ddm">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10 md:mb-14">
+            <div className="text-center md:text-left opacity-0 animate-fade-in-up">
+              <span className="badge-industrial mb-4">
+                <Star className="w-4 h-4" />
+                Catálogo
+              </span>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground">
+                Destaques do <span className="text-gradient-vivid">Catálogo</span>
+              </h2>
+            </div>
+            <Button variant="outline" asChild className="group opacity-0 animate-fade-in-up stagger-1 w-fit mx-auto md:mx-0">
+              <Link to="/catalogo">
+                Ver catálogo completo
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </Button>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+            {featuredProducts.map((product, index) => (
+              <ProductCard
+                key={product.title}
+                image={product.image}
+                title={product.title}
+                description={product.description}
+                price={product.price}
+                href={product.href}
+                featured={product.featured}
+                delay={(index + 1) * 100}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== SECTION 5: DIFFERENTIALS ===== */}
+      <section className="py-16 md:py-24 bg-muted/30 section-glow">
+        <div className="container-ddm">
+          <div className="text-center mb-10 md:mb-14 opacity-0 animate-fade-in-up">
+            <span className="badge-industrial mb-4">
+              <Shield className="w-4 h-4" />
+              Diferenciais
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground">
+              Por que escolher a <span className="text-gradient-vivid">DDM?</span>
+            </h2>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
             {differentials.map((item, index) => (
               <div 
                 key={item.title}
-                className="p-5 md:p-6 rounded-xl bg-card border border-border/50 text-center opacity-0 animate-fade-in-up card-hover-lift"
+                className="group p-5 md:p-6 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 opacity-0 animate-fade-in-up"
                 style={{ animationDelay: `${(index + 1) * 100}ms` }}
               >
-                <div className="mx-auto w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
-                  <item.icon className="w-5 h-5 text-primary" />
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                    <item.icon className="w-6 h-6 text-primary group-hover:text-primary-foreground transition-colors" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-foreground mb-1">{item.title}</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
+                  </div>
                 </div>
-                <h3 className="font-display font-bold text-foreground mb-1.5 text-sm md:text-base">{item.title}</h3>
-                <p className="text-xs md:text-sm text-muted-foreground">{item.description}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Carrossel Section */}
-      <section className="py-16 md:py-24 relative overflow-hidden">
-        <div className="container-ddm relative z-10 mb-8">
-          <div className="text-center opacity-0 animate-fade-in-up">
-            <span className="badge-industrial mb-4">
-              <Wrench className="w-4 h-4" />
-              Serviços
-            </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground">
-              O que a <span className="text-gradient-vivid">retroescavadeira</span> faz
-            </h2>
-          </div>
-        </div>
-        
-        {/* Carrossel de Serviços */}
-        <div className="relative z-10">
-          <ServicesCarousel 
-            mobileSize="basis-[85%]"
-            tabletSize="md:basis-[70%]"
-            desktopSize="lg:basis-[50%]"
-            className="animate-fade-in-up stagger-2"
-          />
-        </div>
-      </section>
-
-      {/* Pricing Section */}
-      <section className="py-16 md:py-24 bg-muted/30 section-glow">
-        <div className="container-ddm">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-10 md:mb-14 opacity-0 animate-fade-in-up">
-              <span className="badge-industrial mb-4">
-                <Clock className="w-4 h-4" />
-                Contratação
-              </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground">
-                Formas de <span className="text-gradient-vivid">Contratação</span>
-              </h2>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-5 md:gap-6">
-              {/* Por Hora */}
-              <div className="p-6 md:p-8 rounded-2xl bg-card border border-border/50 card-hover-lift gradient-border opacity-0 animate-fade-in-up stagger-1">
-                <div className="flex items-center gap-4 mb-5">
-                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <Clock className="w-7 h-7 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-display font-bold text-foreground">Por Hora</h3>
-                    <p className="text-sm text-muted-foreground">Ideal para serviços pontuais</p>
-                  </div>
-                </div>
-
-                <div className="mb-5">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-4xl md:text-5xl font-display font-black text-gradient-vivid">R$ 200</span>
-                    <span className="text-muted-foreground">/hora*</span>
-                  </div>
-                </div>
-
-                <ul className="space-y-3 mb-6">
-                  {[
-                    'Operador experiente incluso',
-                    'Combustível incluso',
-                    'Mínimo de 2 horas',
-                  ].map((item) => (
-                    <li key={item} className="flex items-center gap-3 text-sm text-muted-foreground">
-                      <CheckCircle2 className="w-4 h-4 text-ddm-success flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-
-                <Button variant="outline" className="w-full" size="lg" asChild>
-                  <Link to="/contato">
-                    Solicitar Orçamento
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Link>
-                </Button>
-              </div>
-
-              {/* Por Diária - Featured */}
-              <div className="relative p-6 md:p-8 rounded-2xl bg-card border-2 border-primary/50 card-hover-lift animate-glow-pulse opacity-0 animate-fade-in-up stagger-2">
-                {/* Popular badge */}
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                  <span className="px-5 py-1.5 rounded-full bg-gradient-to-r from-primary to-accent text-primary-foreground text-sm font-bold shadow-cta">
-                    Mais Econômico
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-4 mb-5 pt-3">
-                  <div className="w-14 h-14 rounded-xl bg-primary flex items-center justify-center">
-                    <Zap className="w-7 h-7 text-primary-foreground" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-display font-bold text-foreground">Por Diária</h3>
-                    <p className="text-sm text-muted-foreground">Melhor custo-benefício</p>
-                  </div>
-                </div>
-
-                <div className="mb-5">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-3xl md:text-4xl font-display font-black text-gradient-vivid">Sob Consulta</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-2">Valores variam conforme serviço, deslocamento e terreno</p>
-                </div>
-
-                <ul className="space-y-3 mb-6">
-                  {[
-                    'Operador experiente incluso',
-                    'Combustível incluso',
-                    '8 horas de trabalho',
-                    'Melhor custo por hora',
-                  ].map((item) => (
-                    <li key={item} className="flex items-center gap-3 text-sm text-muted-foreground">
-                      <CheckCircle2 className="w-4 h-4 text-ddm-success flex-shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-
-                <Button variant="cta" className="w-full group" size="lg" asChild>
-                  <Link to="/contato">
-                    <MessageCircle className="w-4 h-4" />
-                    Pedir Orçamento
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-
-            <p className="text-center text-muted-foreground text-sm mt-6 opacity-0 animate-fade-in stagger-3">
-              *Valores podem variar conforme serviço, terreno e deslocamento.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Service Area Section */}
+      {/* ===== SECTION 6: TESTIMONIALS ===== */}
       <section className="py-16 md:py-24">
         <div className="container-ddm">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-10 md:mb-14 opacity-0 animate-fade-in-up">
-              <span className="badge-industrial mb-4">
-                <MapPin className="w-4 h-4" />
-                Cobertura
-              </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground">
-                Área de <span className="text-gradient-vivid">Atendimento</span>
-              </h2>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-6 md:gap-8">
-              {/* Map */}
-              <div className="rounded-2xl overflow-hidden border border-border/50 shadow-lg opacity-0 animate-fade-in-up stagger-1">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d120584.36969178873!2d-44.32807087891628!3d-19.46576840000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa57e99c1e2ac79%3A0x54eb4dcf4c9f4439!2sSete%20Lagoas%2C%20MG!5e0!3m2!1spt-BR!2sbr!4v1705600000000!5m2!1spt-BR!2sbr"
-                  width="100%"
-                  height="320"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Mapa Sete Lagoas"
-                  className="w-full h-[280px] md:h-[320px]"
-                />
-              </div>
-
-              {/* Cities */}
-              <div className="p-6 md:p-8 rounded-2xl bg-card border border-border/50 opacity-0 animate-fade-in-up stagger-2">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                    <MapPin className="w-6 h-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-display font-bold text-foreground text-lg">Cidades Atendidas</h3>
-                    <p className="text-sm text-muted-foreground">
-                      <span className="text-foreground font-semibold">Sete Lagoas</span> e região
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {cities.map((city, index) => (
-                    <span 
-                      key={city}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                        index === 0 
-                          ? 'bg-primary text-primary-foreground' 
-                          : 'bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary'
-                      }`}
-                    >
-                      {city}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="pt-5 border-t border-border/50">
-                  <p className="text-sm text-muted-foreground flex items-start gap-2">
-                    <MapPin className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    Consulte disponibilidade para outras localidades da região
-                  </p>
-                </div>
-              </div>
-            </div>
+          <div className="text-center mb-10 md:mb-14 opacity-0 animate-fade-in-up">
+            <span className="badge-industrial mb-4">
+              <Star className="w-4 h-4" />
+              Depoimentos
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground">
+              O que nossos clientes <span className="text-gradient-vivid">dizem</span>
+            </h2>
           </div>
+
+          <div className="grid md:grid-cols-3 gap-5 md:gap-6 mb-12">
+            {testimonials.map((testimonial, index) => (
+              <TestimonialCard
+                key={testimonial.name}
+                name={testimonial.name}
+                location={testimonial.location}
+                text={testimonial.text}
+                rating={testimonial.rating}
+                delay={(index + 1) * 100}
+              />
+            ))}
+          </div>
+
+          {/* Client logos */}
+          <ClientLogos className="opacity-0 animate-fade-in-up stagger-3" />
         </div>
       </section>
 
-      {/* Final CTA Section */}
-      <section className="py-20 md:py-32 relative overflow-hidden mb-20 md:mb-0">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_50%,hsl(28_100%_50%/0.1),transparent)]" />
-        
-        {/* Decorative circles */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] md:w-[700px] h-[500px] md:h-[700px] border border-primary/10 rounded-full" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[500px] h-[300px] md:h-[500px] border border-primary/15 rounded-full" />
+      {/* ===== SECTION 7: CTA + FORM ===== */}
+      <section id="form-section" className="py-16 md:py-24 bg-gradient-to-br from-secondary via-secondary to-muted relative overflow-hidden">
+        {/* Background decorations */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_60%_at_50%_120%,hsl(28_100%_50%/0.15),transparent)]" />
+        <div className="absolute top-0 left-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-[120px]" />
         
         <div className="container-ddm relative z-10">
-          <div className="max-w-2xl mx-auto text-center space-y-6 md:space-y-8">
-            <div className="opacity-0 animate-fade-in-up">
-              <span className="badge-industrial">
-                <Zap className="w-4 h-4" />
-                Resposta rápida garantida
-              </span>
-            </div>
-            
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground opacity-0 animate-fade-in-up stagger-1">
-              Pronto para começar seu <span className="text-gradient-vivid">projeto?</span>
-            </h2>
-            
-            <p className="text-base md:text-lg text-muted-foreground opacity-0 animate-fade-in-up stagger-2">
-              Preencha o formulário e receba atendimento pelo WhatsApp em minutos.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center opacity-0 animate-fade-in-up stagger-3">
-              <Button variant="cta" size="xl" asChild className="group w-full sm:w-auto">
-                <Link to="/contato">
-                  <MessageCircle className="w-5 h-5" />
-                  Solicitar Orçamento
-                  <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </Button>
-              <Button variant="outline" size="xl" asChild className="group w-full sm:w-auto">
-                <a href="tel:+5531971067272">
-                  <Phone className="w-5 h-5" />
-                  (31) 97106-7272
-                </a>
-              </Button>
+          <div className="max-w-4xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+              {/* Left - Text */}
+              <div className="text-center lg:text-left opacity-0 animate-fade-in-up">
+                <span className="badge-industrial mb-4">
+                  <MessageCircle className="w-4 h-4" />
+                  Orçamento Grátis
+                </span>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
+                  Pronto para <span className="text-gradient-vivid">começar?</span>
+                </h2>
+                <p className="text-muted-foreground mb-6">
+                  Preencha o formulário e receba seu orçamento sem compromisso. 
+                  Respondemos rapidamente pelo WhatsApp!
+                </p>
+                
+                <div className="space-y-3">
+                  {[
+                    'Orçamento sem compromisso',
+                    'Resposta em até 2 horas',
+                    'Atendimento personalizado',
+                  ].map((item) => (
+                    <div key={item} className="flex items-center gap-3 justify-center lg:justify-start">
+                      <CheckCircle2 className="w-5 h-5 text-ddm-success flex-shrink-0" />
+                      <span className="text-muted-foreground">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right - Form */}
+              <div className="card-premium p-6 md:p-8 opacity-0 animate-fade-in-up stagger-1">
+                <QuickContactForm />
+              </div>
             </div>
           </div>
         </div>
