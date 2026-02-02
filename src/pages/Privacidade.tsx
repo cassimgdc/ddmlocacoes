@@ -70,7 +70,7 @@ const Privacidade = () => {
             <hr className="border-border" />
 
             <p className="text-xs text-muted-foreground">
-              <em>Última atualização: Janeiro de 2025</em>
+              <em>Última atualização: Janeiro de 2026</em>
             </p>
           </div>
         </div>
