@@ -242,7 +242,7 @@ const Index = () => {
             </div>
 
             {/* Right - Image */}
-            <div className="order-1 lg:order-2 flex flex-col items-center gap-4 opacity-0 animate-fade-in-up">
+            <div className="order-1 lg:order-2 flex justify-center opacity-0 animate-fade-in-up">
               <div className="relative">
                 {/* Glow effect */}
                 <div className="absolute inset-0 bg-gradient-radial from-primary/25 via-primary/10 to-transparent blur-3xl scale-125" />
@@ -259,17 +259,6 @@ const Index = () => {
                     height={450}
                     fetchPriority="high"
                   />
-                </div>
-              </div>
-
-              {/* Price badge - below image */}
-              <div className="px-5 py-3 rounded-2xl bg-card/80 backdrop-blur-sm border border-border shadow-lg flex items-center gap-4">
-                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-cta">
-                  <Zap className="w-5 h-5 text-primary-foreground" />
-                </div>
-                <div>
-                  <p className="text-xs text-muted-foreground">A partir de</p>
-                  <p className="text-xl font-bold text-foreground">R$ 200<span className="text-sm font-normal text-muted-foreground">/hora</span></p>
                 </div>
               </div>
             </div>
