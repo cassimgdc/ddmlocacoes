@@ -86,13 +86,6 @@ const Equipamento = () => {
                 <span className="flex items-center gap-1"><Zap className="w-3 h-3 text-primary" /> Pronta entrega</span>
               </div>
 
-              <Button variant="cta" size="default" asChild className="group mt-2">
-                <Link to="/contato">
-                  <MessageCircle className="w-4 h-4" />
-                  Pedir Orçamento
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                </Link>
-              </Button>
             </div>
 
             {/* Specs Mini */}
@@ -118,7 +111,7 @@ const Equipamento = () => {
             <div className="order-1 lg:order-1">
               <div className="text-center lg:text-left mb-4">
                 <h2 className="text-lg md:text-xl font-display font-bold text-foreground">
-                  Veja a máquina <span className="text-gradient-vivid">trabalhando</span>
+                  Case 580M <span className="text-gradient-vivid">em ação</span>
                 </h2>
               </div>
               
