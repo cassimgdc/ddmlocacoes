@@ -54,11 +54,12 @@
     --whatsapp: 142 70% 45%;
     --surface: 0 0% 100%;
 
-    /* Shadows - Soft and elegant */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+    /* Shadows - Refined and subtle */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.02);
+    --shadow-md: 0 2px 8px -2px rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+    --shadow-lg: 0 8px 24px -4px rgba(0, 0, 0, 0.08), 0 2px 8px -2px rgba(0, 0, 0, 0.04);
+    --shadow-xl: 0 16px 40px -8px rgba(0, 0, 0, 0.1), 0 4px 12px -4px rgba(0, 0, 0, 0.05);
+    --shadow-elevated: 0 12px 32px -4px rgba(0, 0, 0, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.06);
 
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 222 47% 11%;
@@ -172,14 +173,20 @@
     @apply py-12 md:py-16 lg:py-20;
   }
 
-  /* Premium card styling - Clean */
+  /* Premium card styling - Enterprise */
   .card-premium {
-    @apply relative bg-card rounded-xl border border-border overflow-hidden transition-all duration-200;
+    @apply relative bg-card rounded-xl border border-border/80 overflow-hidden transition-all duration-200;
     box-shadow: var(--shadow-md);
   }
 
   .card-premium:hover {
+    @apply border-border;
     box-shadow: var(--shadow-lg);
+  }
+
+  /* Elevated shadow utility */
+  .shadow-elevated {
+    box-shadow: var(--shadow-elevated);
   }
 
   /* Hover lift effect */

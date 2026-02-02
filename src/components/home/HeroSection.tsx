@@ -17,7 +17,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
-import { MessageCircle, ArrowRight, Truck, Wrench, ShieldCheck, ChevronRight } from 'lucide-react';
+import { MessageCircle, ArrowRight, Truck, Wrench, ShieldCheck, Clock, MapPin, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import heroBg from '@/assets/hero-bg.jpg';
 import { motion } from 'framer-motion';
@@ -64,68 +64,94 @@ const HeroSection = () => {
     window.open(`https://wa.me/5531971067272?text=${encodeURIComponent(message)}`, '_blank');
   };
 
-  const differentials = [
-    { icon: Truck, text: 'Entrega rápida' },
-    { icon: Wrench, text: 'Operador incluso' },
-    { icon: ShieldCheck, text: 'Equipamento revisado' },
-  ];
-
   const stats = [
-    { value: '+500', label: 'locações' },
-    { value: '10+', label: 'anos' },
-    { value: '8+', label: 'cidades' },
+    { value: '+500', label: 'locações realizadas', icon: Truck },
+    { value: '10+', label: 'anos de experiência', icon: Calendar },
+    { value: '8+', label: 'cidades atendidas', icon: MapPin },
   ];
 
   return (
-    <section className="relative min-h-[85vh] lg:min-h-[80vh] flex items-center">
-      {/* Background */}
+    <section className="relative min-h-[90vh] lg:min-h-[85vh] flex items-center overflow-hidden">
+      {/* Background with diagonal clip */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src={heroBg} 
-          alt="Equipamentos DDM Locações" 
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-graphite/95 via-graphite/85 to-graphite/60" />
+        <div 
+          className="absolute inset-0"
+          style={{
+            clipPath: 'polygon(0 0, 100% 0, 100% 85%, 0 100%)',
+          }}
+        >
+          <img 
+            src={heroBg} 
+            alt="Equipamentos DDM Locações" 
+            className="w-full h-full object-cover"
+          />
+          {/* Primary overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-graphite/95 via-graphite/90 to-graphite/70" />
+          
+          {/* Subtle technical pattern overlay */}
+          <div 
+            className="absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage: `
+                linear-gradient(45deg, transparent 45%, currentColor 45%, currentColor 55%, transparent 55%),
+                linear-gradient(-45deg, transparent 45%, currentColor 45%, currentColor 55%, transparent 55%)
+              `,
+              backgroundSize: '30px 30px',
+              color: 'white',
+            }}
+          />
+        </div>
+        
+        {/* Bottom fade to page background */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
       </div>
 
-      <div className="container-ddm relative z-10 py-16 lg:py-20">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div className="container-ddm relative z-10 pt-24 pb-16 lg:pt-28 lg:pb-20">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-start">
           {/* Left Content - 7 columns */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-7 space-y-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-7 space-y-8"
           >
-            {/* Headline */}
+            {/* Headline - Shorter with smart breaks */}
             <div className="space-y-4">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
-                Locação de equipamentos para obra, com entrega rápida.
+              <h1 className="text-3xl sm:text-4xl lg:text-[3.25rem] font-bold text-white leading-[1.1] tracking-tight">
+                Locação de equipamentos<br className="hidden sm:block" />
+                <span className="text-copper">para sua obra.</span>
               </h1>
-              <p className="text-lg text-white/80 max-w-xl">
-                Atendemos Sete Lagoas e toda a região metropolitana. Orçamento sem compromisso.
+              <p className="text-base lg:text-lg text-white/70 max-w-lg leading-relaxed">
+                Retroescavadeiras e máquinas pesadas com operador incluso. 
+                Atendemos Sete Lagoas e região.
               </p>
             </div>
 
-            {/* Differentials */}
-            <div className="flex flex-wrap gap-x-6 gap-y-2 text-white/90">
-              {differentials.map((item, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <item.icon className="w-4 h-4 text-copper" />
-                  <span className="text-sm font-medium">{item.text}</span>
-                </div>
-              ))}
+            {/* Differentials - Clean metadata line */}
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-white/80 text-sm">
+              <div className="flex items-center gap-1.5">
+                <Truck className="w-3.5 h-3.5 text-copper" />
+                <span>Entrega rápida</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <Wrench className="w-3.5 h-3.5 text-copper" />
+                <span>Operador incluso</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-copper" />
+                <span>Equipamento revisado</span>
+              </div>
             </div>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-3 pt-2">
+            {/* CTAs - Primary action first */}
+            <div className="flex flex-wrap gap-3">
               <Button 
                 asChild 
                 size="lg" 
-                className="bg-copper hover:bg-copper/90 text-white"
+                className="h-12 px-6 bg-primary hover:bg-primary/90 text-primary-foreground font-medium"
               >
-                <Link to="/contato">
-                  Pedir orçamento
+                <Link to="/catalogo">
+                  Ver catálogo
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
@@ -133,48 +159,52 @@ const HeroSection = () => {
                 asChild 
                 variant="outline" 
                 size="lg"
-                className="border-white/30 text-white hover:bg-white/10"
+                className="h-12 px-6 border-white/25 text-white hover:bg-white/10 hover:border-white/40 font-medium"
               >
-                <Link to="/catalogo">
-                  Ver catálogo
+                <Link to="/contato">
+                  Pedir orçamento
                 </Link>
               </Button>
             </div>
 
-            {/* Social proof - Stats */}
-            <div className="flex items-center gap-6 pt-4 border-t border-white/20 mt-6">
+            {/* Social proof - Stats - Discrete aligned row */}
+            <div className="flex items-center gap-8 pt-6 border-t border-white/10">
               {stats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <p className="text-2xl font-bold text-white">{stat.value}</p>
-                  <p className="text-xs text-white/60">{stat.label}</p>
+                <div key={index} className="flex items-center gap-2">
+                  <stat.icon className="w-4 h-4 text-copper/80" />
+                  <div>
+                    <span className="text-xl font-bold text-white">{stat.value}</span>
+                    <span className="text-xs text-white/50 ml-1.5">{stat.label}</span>
+                  </div>
                 </div>
               ))}
             </div>
           </motion.div>
 
-          {/* Right - Compact Quote Card - 5 columns */}
+          {/* Right - Enterprise Quote Card - 5 columns */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
             className="lg:col-span-5"
           >
-            <div className="bg-card rounded-xl border border-border p-5 md:p-6 shadow-elevated">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 rounded-lg bg-success/10 flex items-center justify-center">
-                  <MessageCircle className="w-5 h-5 text-success" />
+            <div className="bg-card rounded-2xl border border-border/80 p-6 shadow-lg">
+              {/* Card Header */}
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border/60">
+                <div className="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center">
+                  <Clock className="w-5 h-5 text-primary" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground">Orçamento rápido</h3>
-                  <p className="text-xs text-muted-foreground">Receba pelo WhatsApp</p>
+                  <p className="text-xs text-muted-foreground">Resposta em até 15 minutos</p>
                 </div>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <Label htmlFor="tipo" className="text-sm font-medium">Tipo de serviço</Label>
+                  <Label htmlFor="tipo" className="text-sm font-medium text-foreground">Tipo de serviço</Label>
                   <Select value={formData.tipo} onValueChange={(v) => handleChange('tipo', v)}>
-                    <SelectTrigger className="mt-1.5 h-11 bg-muted/50">
+                    <SelectTrigger className="mt-1.5 h-11 bg-muted/30 border-border/60 focus:border-primary/50">
                       <SelectValue placeholder="Selecione o serviço..." />
                     </SelectTrigger>
                     <SelectContent className="bg-card border-border">
@@ -188,31 +218,42 @@ const HeroSection = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="cidade" className="text-sm font-medium">Cidade</Label>
+                  <Label htmlFor="cidade" className="text-sm font-medium text-foreground">Cidade</Label>
                   <Input
                     id="cidade"
                     placeholder="Ex: Sete Lagoas"
                     value={formData.cidade}
                     onChange={(e) => handleChange('cidade', e.target.value)}
-                    className="mt-1.5 h-11 bg-muted/50"
+                    className="mt-1.5 h-11 bg-muted/30 border-border/60 focus:border-primary/50"
                   />
                 </div>
 
+                {/* Primary CTA - Graphite */}
                 <Button
                   onClick={handleQuickQuote}
                   disabled={!formData.tipo || !formData.cidade}
-                  className="w-full h-11 bg-success hover:bg-success/90 text-white font-medium"
+                  className="w-full h-11 bg-primary hover:bg-primary/90 text-primary-foreground font-medium"
                 >
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  Receber orçamento no WhatsApp
+                  Solicitar orçamento
+                  <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
 
-                {/* Expand modal trigger */}
+                {/* Secondary - WhatsApp outline */}
+                <Button
+                  variant="outline"
+                  onClick={() => window.open('https://wa.me/5531971067272', '_blank')}
+                  className="w-full h-10 border-success/30 text-success hover:bg-success/5 hover:border-success/50 font-medium text-sm"
+                >
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  Falar pelo WhatsApp
+                </Button>
+
+                {/* Expand modal trigger - Subtle link */}
                 <Dialog open={modalOpen} onOpenChange={setModalOpen}>
                   <DialogTrigger asChild>
-                    <button className="w-full text-center text-sm text-muted-foreground hover:text-copper transition-colors flex items-center justify-center gap-1">
+                    <button className="w-full text-center text-xs text-muted-foreground hover:text-copper transition-colors flex items-center justify-center gap-1 pt-1">
                       Adicionar período e detalhes
-                      <ChevronRight className="w-3.5 h-3.5" />
+                      <ArrowRight className="w-3 h-3" />
                     </button>
                   </DialogTrigger>
                   <DialogContent className="sm:max-w-md">
@@ -223,7 +264,7 @@ const HeroSection = () => {
                       <div>
                         <Label className="text-sm font-medium">Tipo de serviço</Label>
                         <Select value={formData.tipo} onValueChange={(v) => handleChange('tipo', v)}>
-                          <SelectTrigger className="mt-1.5 h-11 bg-muted/50">
+                          <SelectTrigger className="mt-1.5 h-11 bg-muted/30">
                             <SelectValue placeholder="Selecione o serviço..." />
                           </SelectTrigger>
                           <SelectContent className="bg-card border-border">
@@ -241,7 +282,7 @@ const HeroSection = () => {
                           placeholder="Ex: Sete Lagoas"
                           value={formData.cidade}
                           onChange={(e) => handleChange('cidade', e.target.value)}
-                          className="mt-1.5 h-11 bg-muted/50"
+                          className="mt-1.5 h-11 bg-muted/30"
                         />
                       </div>
                       <div>
@@ -250,7 +291,7 @@ const HeroSection = () => {
                           placeholder="Ex: 2 dias, 1 semana"
                           value={formData.periodo}
                           onChange={(e) => handleChange('periodo', e.target.value)}
-                          className="mt-1.5 h-11 bg-muted/50"
+                          className="mt-1.5 h-11 bg-muted/30"
                         />
                       </div>
                       <div>
@@ -259,7 +300,7 @@ const HeroSection = () => {
                           placeholder="Detalhes sobre o serviço..."
                           value={formData.observacao}
                           onChange={(e) => handleChange('observacao', e.target.value)}
-                          className="mt-1.5 bg-muted/50 min-h-[80px] resize-none"
+                          className="mt-1.5 bg-muted/30 min-h-[80px] resize-none"
                         />
                       </div>
                       <Button
@@ -268,10 +309,10 @@ const HeroSection = () => {
                           setModalOpen(false);
                         }}
                         disabled={!formData.tipo || !formData.cidade}
-                        className="w-full h-11 bg-success hover:bg-success/90 text-white font-medium"
+                        className="w-full h-11 bg-primary hover:bg-primary/90 text-primary-foreground font-medium"
                       >
-                        <MessageCircle className="w-4 h-4 mr-2" />
-                        Enviar pelo WhatsApp
+                        Solicitar orçamento
+                        <ArrowRight className="w-4 h-4 ml-2" />
                       </Button>
                     </div>
                   </DialogContent>
