@@ -6,106 +6,150 @@ const categories = [
   {
     icon: Shovel,
     title: 'Escavação',
-    description: 'Retroescavadeiras e mini escavadeiras para obras de qualquer porte',
+    description: 'Retroescavadeiras para obras de qualquer porte',
     href: '/catalogo?categoria=escavacao',
-    featured: true,
+    pattern: 'diagonal',
   },
   {
     icon: Mountain,
     title: 'Terraplanagem',
-    description: 'Pás carregadeiras, motoniveladoras e tratores de esteira',
+    description: 'Pás carregadeiras e motoniveladoras',
     href: '/catalogo?categoria=terraplanagem',
-    featured: true,
+    pattern: 'dots',
   },
   {
     icon: Construction,
     title: 'Compactação',
     description: 'Rolos compactadores e placas vibratórias',
     href: '/catalogo?categoria=compactacao',
-    featured: false,
+    pattern: 'lines',
   },
   {
     icon: Truck,
     title: 'Transporte',
     description: 'Caminhões basculantes e pipas',
     href: '/catalogo?categoria=transporte',
-    featured: false,
+    pattern: 'diagonal',
   },
   {
     icon: Trees,
     title: 'Limpeza de Lotes',
-    description: 'Remoção de entulhos, vegetação e preparo do terreno',
+    description: 'Remoção de entulhos e preparo do terreno',
     href: '/servicos#limpeza-lotes',
-    featured: false,
+    pattern: 'dots',
   },
   {
     icon: Tractor,
     title: 'Serviços Rurais',
     description: 'Açudes, estradas rurais e curvas de nível',
     href: '/servicos#servicos-rurais',
-    featured: false,
+    pattern: 'lines',
   },
 ];
 
+const getPatternStyle = (pattern: string) => {
+  switch (pattern) {
+    case 'diagonal':
+      return {
+        backgroundImage: `repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 10px,
+          currentColor 10px,
+          currentColor 11px
+        )`,
+        opacity: 0.03,
+      };
+    case 'dots':
+      return {
+        backgroundImage: `radial-gradient(circle, currentColor 1px, transparent 1px)`,
+        backgroundSize: '16px 16px',
+        opacity: 0.04,
+      };
+    case 'lines':
+      return {
+        backgroundImage: `repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 20px,
+          currentColor 20px,
+          currentColor 21px
+        )`,
+        opacity: 0.03,
+      };
+    default:
+      return {};
+  }
+};
+
 const CategoriesBento = () => {
   return (
-    <section className="py-12 md:py-16 bg-background">
+    <section className="py-16 md:py-20 bg-background">
       <div className="container-ddm">
-        <div className="flex items-center justify-between mb-8">
+        {/* Header */}
+        <div className="flex items-end justify-between mb-10">
           <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground">Categorias</h2>
-            <p className="text-muted-foreground mt-1">Encontre o equipamento ideal para sua obra</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight">
+              Categorias de Equipamentos
+            </h2>
+            <p className="text-muted-foreground mt-2 text-base">
+              Encontre a solução ideal para sua obra ou projeto
+            </p>
           </div>
           <Link 
             to="/catalogo" 
-            className="hidden sm:flex items-center gap-2 text-sm font-medium text-copper hover:underline"
+            className="hidden sm:flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors group"
           >
             Ver catálogo completo
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+        {/* Bento Grid - 6 large cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
           {categories.map((category, index) => (
             <motion.div
               key={category.title}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.4, delay: index * 0.08 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.4, delay: index * 0.07 }}
             >
               <Link
                 to={category.href}
-                className={`group relative block overflow-hidden rounded-xl border border-border bg-card p-5 md:p-6 transition-all duration-300 hover:border-copper/40 hover:shadow-elevated ${
-                  category.featured ? 'md:row-span-1' : ''
-                }`}
+                className="group relative flex flex-col h-full min-h-[180px] md:min-h-[200px] overflow-hidden rounded-2xl border border-border bg-card p-5 md:p-6 transition-all duration-300 hover:border-primary/20 hover:shadow-lg hover:-translate-y-1"
               >
-              {/* Background subtle gradient on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-copper/0 to-copper/0 group-hover:from-copper/5 group-hover:to-transparent transition-all duration-300" />
-              
-              <div className="relative z-10">
-                {/* Icon */}
-                <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-muted flex items-center justify-center mb-4 group-hover:bg-copper group-hover:scale-105 transition-all duration-300">
-                  <category.icon className="w-6 h-6 md:w-7 md:h-7 text-copper group-hover:text-white transition-colors" />
+                {/* Subtle pattern overlay */}
+                <div 
+                  className="absolute inset-0 text-foreground pointer-events-none"
+                  style={getPatternStyle(category.pattern)}
+                />
+                
+                {/* Accent corner */}
+                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-copper/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                
+                <div className="relative z-10 flex flex-col h-full">
+                  {/* Icon */}
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-muted/80 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:scale-105 transition-all duration-300">
+                    <category.icon className="w-6 h-6 md:w-7 md:h-7 text-copper group-hover:text-white transition-colors" />
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1">
+                    <h3 className="text-base md:text-lg font-semibold text-foreground group-hover:text-primary transition-colors mb-1.5">
+                      {category.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2">
+                      {category.description}
+                    </p>
+                  </div>
+
+                  {/* CTA Arrow */}
+                  <div className="flex items-center gap-1 text-sm font-medium text-copper mt-4 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-0 group-hover:translate-x-1">
+                    Explorar
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
                 </div>
-
-                {/* Title */}
-                <h3 className="text-base md:text-lg font-semibold text-foreground group-hover:text-copper transition-colors mb-2">
-                  {category.title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
-                  {category.description}
-                </p>
-
-                {/* CTA */}
-                <div className="flex items-center gap-1 text-sm font-medium text-copper opacity-0 group-hover:opacity-100 transition-opacity">
-                  Ver
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </div>
               </Link>
             </motion.div>
           ))}
@@ -114,10 +158,10 @@ const CategoriesBento = () => {
         {/* Mobile link */}
         <Link 
           to="/catalogo" 
-          className="flex sm:hidden items-center justify-center gap-2 text-sm font-medium text-copper mt-6"
+          className="flex sm:hidden items-center justify-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mt-8"
         >
           Ver catálogo completo
-          <ArrowRight className="w-4 h-4" />
+          <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>
     </section>
