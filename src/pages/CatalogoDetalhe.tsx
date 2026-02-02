@@ -68,7 +68,7 @@ Nossa máquina passa por manutenção preventiva rigorosa, garantindo disponibil
       },
     ],
     video: {
-      url: 'https://youtube.com/shorts/YOUR_VIDEO_ID',
+      url: 'https://www.youtube.com/shorts/cTclcnHgReA',
       highlights: ['Terraplanagem', 'Abertura de valas', 'Operador experiente', 'Sete Lagoas'],
     },
   },
