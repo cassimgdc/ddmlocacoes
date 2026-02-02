@@ -179,6 +179,63 @@
     @apply py-12 md:py-16 lg:py-20;
   }
 
+  /* ========================================
+     DDM BRAND SIGNATURE - Proprietary Styles
+     ======================================== */
+  
+  /* Chamfer DDM - Primary brand signature shape */
+  .ddm-chamfer {
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+
+  .ddm-chamfer-sm {
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  }
+
+  .ddm-chamfer-lg {
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  }
+
+  /* Chamfer top-right only (most common) */
+  .ddm-chamfer-tr {
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+  }
+
+  .ddm-chamfer-tr-sm {
+    clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+  }
+
+  /* Chamfer bottom-left only */
+  .ddm-chamfer-bl {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+
+  /* Card with chamfer and glow effect */
+  .card-ddm {
+    @apply relative bg-card rounded-xl border border-border/80 overflow-hidden transition-all duration-300;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    box-shadow: var(--shadow-md);
+  }
+
+  .card-ddm::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300 pointer-events-none;
+    background: linear-gradient(135deg, hsl(var(--accent) / 0.1) 0%, transparent 50%);
+  }
+
+  .card-ddm:hover {
+    @apply border-accent/20 -translate-y-0.5;
+    box-shadow: var(--shadow-lg), 0 0 0 1px hsl(var(--accent) / 0.1);
+  }
+
+  .card-ddm:hover::before {
+    @apply opacity-100;
+  }
+
+  /* ========================================
+     EXISTING STYLES (refined)
+     ======================================== */
+
   /* Premium card styling - Enterprise */
   .card-premium {
     @apply relative bg-card rounded-xl border border-border/80 overflow-hidden transition-all duration-200;

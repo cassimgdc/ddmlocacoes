@@ -32,6 +32,7 @@ import { useSpamProtection } from '@/hooks/useSpamProtection';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import DDMPattern from '@/components/brand/DDMPattern';
 
 const WEBHOOK_URL = 'https://n8n2.easybr.site/webhook/14f30970-8945-456f-9c1e-eba82b566d91';
 
@@ -287,9 +288,10 @@ const Contato = () => {
       <section className="py-6 md:py-10">
         <div className="container-ddm">
           <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
-            {/* Left: Form */}
+            {/* Left: Form with DDM chamfer */}
             <div className="lg:col-span-2">
-              <div className="rounded-lg bg-card border border-border p-5 md:p-6">
+              <div className="relative ddm-chamfer-tr bg-card border border-border p-5 md:p-6 overflow-hidden">
+                <DDMPattern variant="minimal" />
                 {/* Mensagem de sucesso */}
                 {isSuccess && (
                   <div className="mb-5 p-3 bg-success/10 border border-success/30 rounded-lg flex items-center gap-3">
@@ -493,11 +495,11 @@ const Contato = () => {
                     />
                   </div>
 
-                  {/* Submit */}
+                  {/* Submit with DDM chamfer */}
                   <Button
                     type="submit"
                     variant="default"
-                    className="w-full"
+                    className="w-full ddm-chamfer-tr-sm"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
@@ -517,9 +519,9 @@ const Contato = () => {
               
               <div className="space-y-3">
                 {contactInfo.map((item) => (
-                  <div key={item.title} className="p-3 rounded-lg bg-card border border-border">
+                  <div key={item.title} className="card-ddm p-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
+                      <div className="w-8 h-8 ddm-chamfer-tr-sm bg-muted flex items-center justify-center">
                         <item.icon className="w-4 h-4 text-accent" />
                       </div>
                       <div>
@@ -537,8 +539,8 @@ const Contato = () => {
                 ))}
               </div>
 
-              {/* Quick tip */}
-              <div className="p-4 rounded-lg bg-accent/5 border border-accent/20">
+              {/* Quick tip with DDM chamfer */}
+              <div className="ddm-chamfer-tr-sm p-4 bg-accent/5 border border-accent/20">
                 <p className="text-sm font-medium text-foreground mb-1">Dica rápida</p>
                 <p className="text-xs text-muted-foreground">
                   Para um orçamento mais preciso, envie fotos ou vídeos do local do serviço pelo WhatsApp.

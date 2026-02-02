@@ -16,6 +16,8 @@ import {
 } from 'lucide-react';
 import logoImg from '@/assets/logo-ddm.png';
 import { motion } from 'framer-motion';
+import SteelDivider from '@/components/brand/SteelDivider';
+import DDMPattern from '@/components/brand/DDMPattern';
 
 const Sobre = () => {
   const valores = [
@@ -58,16 +60,13 @@ const Sobre = () => {
         <link rel="canonical" href="https://ddmlocacoes.com.br/sobre" />
       </Helmet>
 
-      {/* Hero Section with Large Logo */}
+      {/* Hero Section with Large Logo and DDM Pattern */}
       <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden bg-gradient-to-b from-muted/50 to-background">
-        {/* Subtle pattern background */}
-        <div 
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `radial-gradient(circle, currentColor 1px, transparent 1px)`,
-            backgroundSize: '24px 24px',
-          }}
-        />
+        {/* DDM Technical Pattern */}
+        <DDMPattern variant="minimal" />
+        
+        {/* Accent bar */}
+        <div className="absolute top-0 left-0 w-32 h-0.5 bg-accent" />
         
         <div className="container-ddm relative z-10">
           <motion.div
@@ -113,6 +112,8 @@ const Sobre = () => {
       {/* História - Editorial 2 columns */}
       <section className="py-12 md:py-16">
         <div className="container-ddm">
+          <SteelDivider icon="cog" className="mb-8" />
+          
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
             {/* Left - Text */}
             <motion.div 
@@ -139,7 +140,7 @@ const Sobre = () => {
               </div>
             </motion.div>
 
-            {/* Right - Values cards */}
+            {/* Right - Values cards with DDM chamfer */}
             <motion.div 
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -150,9 +151,9 @@ const Sobre = () => {
               {valores.map((valor, index) => (
                 <div 
                   key={valor.titulo} 
-                  className="p-5 rounded-xl bg-card border border-border hover:border-accent/30 transition-colors"
+                  className="card-ddm p-5"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center mb-3">
+                  <div className="w-10 h-10 ddm-chamfer-tr-sm bg-accent/10 flex items-center justify-center mb-3">
                     <valor.icon className="w-5 h-5 text-accent" />
                   </div>
                   <h3 className="font-semibold text-foreground mb-1">{valor.titulo}</h3>
@@ -164,17 +165,21 @@ const Sobre = () => {
         </div>
       </section>
 
-      {/* Diferenciais */}
-      <section className="py-12 md:py-16 bg-muted/30 border-y border-border">
-        <div className="container-ddm">
+      {/* Diferenciais with DDM Pattern */}
+      <section className="relative py-12 md:py-16 bg-muted/30 border-y border-border overflow-hidden">
+        <DDMPattern variant="minimal" />
+        
+        <div className="container-ddm relative z-10">
           <div className="max-w-3xl mx-auto">
+            <SteelDivider icon="shovel" variant="centered" className="mb-6" />
+            
             <h2 className="text-xl md:text-2xl font-bold text-foreground text-center mb-8">
               Por que nos escolher
             </h2>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {diferenciais.map((item) => (
-                <div key={item} className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border">
+                <div key={item} className="card-ddm flex items-center gap-3 p-4">
                   <CheckCircle2 className="w-5 h-5 text-success flex-shrink-0" />
                   <span className="text-foreground">{item}</span>
                 </div>
@@ -184,7 +189,7 @@ const Sobre = () => {
         </div>
       </section>
 
-      {/* Info cards */}
+      {/* Info cards with DDM chamfer */}
       <section className="py-12 md:py-16">
         <div className="container-ddm">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
@@ -194,7 +199,7 @@ const Sobre = () => {
               { icon: Shield, label: 'Seguro Incluso' },
               { icon: Star, label: 'Avaliações Positivas' },
             ].map((item) => (
-              <div key={item.label} className="p-4 rounded-xl bg-card border border-border text-center hover:border-accent/30 transition-colors">
+              <div key={item.label} className="card-ddm p-4 text-center">
                 <item.icon className="w-6 h-6 text-accent mx-auto mb-2" />
                 <p className="text-sm font-medium text-foreground">{item.label}</p>
               </div>
@@ -203,9 +208,13 @@ const Sobre = () => {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-12 md:py-16 bg-muted/30 border-t border-border">
-        <div className="container-ddm">
+      {/* CTA with brand signature */}
+      <section className="relative py-12 md:py-16 bg-muted/30 border-t border-border overflow-hidden">
+        <DDMPattern variant="minimal" />
+        
+        <div className="container-ddm relative z-10">
+          <SteelDivider icon="truck" variant="centered" className="mb-6" />
+          
           <div className="max-w-xl mx-auto text-center">
             <h2 className="text-xl md:text-2xl font-bold text-foreground mb-3">
               Vamos trabalhar juntos?
@@ -214,7 +223,7 @@ const Sobre = () => {
               Entre em contato e descubra como podemos ajudar na sua obra.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Button variant="default" size="lg" asChild>
+              <Button variant="default" size="lg" asChild className="ddm-chamfer-tr-sm">
                 <Link to="/contato">
                   <MessageCircle className="w-4 h-4" />
                   Fale Conosco

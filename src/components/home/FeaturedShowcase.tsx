@@ -1,14 +1,16 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Clock, MessageCircle, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, MessageCircle, CheckCircle2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { equipamentos } from '@/data/equipamentos';
 import case580m from '@/assets/case-580m.png';
 import { motion } from 'framer-motion';
+import SteelDivider from '@/components/brand/SteelDivider';
+import DDMPlaceholder from '@/components/brand/DDMPlaceholder';
 
 // Get image for equipment
 const getEquipImage = (slug: string) => {
   if (slug === 'retroescavadeira-case-580m') return case580m;
-  return '/placeholder.svg';
+  return null; // Return null to trigger placeholder
 };
 
 const FeaturedShowcase = () => {
@@ -34,6 +36,9 @@ const FeaturedShowcase = () => {
   return (
     <section className="py-16 md:py-20 bg-muted/40 border-y border-border/60">
       <div className="container-ddm">
+        {/* Steel Divider - Brand signature */}
+        <SteelDivider icon="truck" className="mb-8" />
+        
         {/* Header */}
         <div className="flex items-end justify-between mb-10">
           <div>
@@ -59,37 +64,40 @@ const FeaturedShowcase = () => {
 
         {/* Featured Layout: 1 Hero + Grid */}
         <div className="grid lg:grid-cols-2 gap-5 md:gap-6">
-          {/* Hero Item - Large Card */}
+          {/* Hero Item - Large Card with DDM chamfer */}
           {heroItem && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.4 }}
-              className="group bg-card rounded-2xl border border-border overflow-hidden hover:border-primary/20 hover:shadow-lg transition-all duration-300 lg:row-span-2"
+              className="card-ddm group overflow-hidden lg:row-span-2"
             >
               {/* Image */}
               <Link 
                 to={`/catalogo/${heroItem.slug}`} 
                 className="block relative aspect-[4/3] overflow-hidden bg-muted"
               >
-                {heroItem.status === 'disponivel' ? (
+                {getEquipImage(heroItem.slug) ? (
                   <>
                     <img
-                      src={getEquipImage(heroItem.slug)}
+                      src={getEquipImage(heroItem.slug)!}
                       alt={heroItem.nome}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />
-                    <span className="absolute top-4 left-4 text-xs px-3 py-1.5 rounded-full bg-success text-white font-medium shadow-sm">
-                      Disponível agora
-                    </span>
+                    {heroItem.status === 'disponivel' && (
+                      <span className="absolute top-4 left-4 text-xs px-3 py-1.5 rounded-full bg-success text-white font-medium shadow-sm">
+                        Disponível agora
+                      </span>
+                    )}
                   </>
                 ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center bg-muted p-4">
-                    <Clock className="w-10 h-10 text-muted-foreground mb-2" />
-                    <span className="text-sm text-muted-foreground">Sob consulta</span>
-                  </div>
+                  <DDMPlaceholder 
+                    aspectRatio="video" 
+                    showConsultBadge={heroItem.status !== 'disponivel'}
+                    className="aspect-[4/3]"
+                  />
                 )}
               </Link>
 
@@ -108,7 +116,7 @@ const FeaturedShowcase = () => {
                 {/* Specs */}
                 <div className="flex flex-wrap gap-2 mt-4">
                   {heroItem.specs.slice(0, 3).map((spec, i) => (
-                    <span key={i} className="text-xs px-2.5 py-1 rounded-lg bg-muted text-muted-foreground">
+                    <span key={i} className="text-xs px-2.5 py-1 ddm-chamfer-tr-sm bg-muted text-muted-foreground">
                       {spec.value}
                     </span>
                   ))}
@@ -150,7 +158,7 @@ const FeaturedShowcase = () => {
             </motion.div>
           )}
 
-          {/* Grid Items - 2x2 */}
+          {/* Grid Items - 2x2 with DDM chamfer */}
           <div className="grid grid-cols-2 gap-4 md:gap-5">
             {gridItems.map((equip, index) => (
               <motion.div
@@ -159,30 +167,33 @@ const FeaturedShowcase = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: (index + 1) * 0.08 }}
-                className="group bg-card rounded-xl border border-border overflow-hidden hover:border-primary/20 hover:shadow-md transition-all duration-300"
+                className="card-ddm group overflow-hidden"
               >
                 {/* Image */}
                 <Link 
                   to={`/catalogo/${equip.slug}`} 
                   className="block relative aspect-[16/10] overflow-hidden bg-muted"
                 >
-                  {equip.status === 'disponivel' ? (
+                  {getEquipImage(equip.slug) ? (
                     <>
                       <img
-                        src={getEquipImage(equip.slug)}
+                        src={getEquipImage(equip.slug)!}
                         alt={equip.nome}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         loading="lazy"
                       />
-                      <span className="absolute top-2 left-2 text-[10px] px-2 py-0.5 rounded-full bg-success/90 text-white font-medium">
-                        Disponível
-                      </span>
+                      {equip.status === 'disponivel' && (
+                        <span className="absolute top-2 left-2 text-[10px] px-2 py-0.5 rounded-full bg-success/90 text-white font-medium">
+                          Disponível
+                        </span>
+                      )}
                     </>
                   ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center bg-muted p-3">
-                      <Clock className="w-6 h-6 text-muted-foreground mb-1" />
-                      <span className="text-xs text-muted-foreground">Consulte</span>
-                    </div>
+                    <DDMPlaceholder 
+                      aspectRatio="video" 
+                      showConsultBadge={equip.status !== 'disponivel'}
+                      className="aspect-[16/10]"
+                    />
                   )}
                 </Link>
 

@@ -1,14 +1,18 @@
 import { Link } from 'react-router-dom';
-import { MapPin, MessageCircle, Clock, Phone } from 'lucide-react';
+import { MapPin, MessageCircle, Clock, Phone, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import logoImg from '@/assets/logo-ddm.png';
+import DDMPattern from '@/components/brand/DDMPattern';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-card border-t border-border pb-24 md:pb-0">
-      <div className="container-ddm py-10 md:py-12">
+    <footer className="relative bg-card border-t border-border pb-24 md:pb-0 overflow-hidden">
+      {/* DDM Technical Pattern - Brand signature */}
+      <DDMPattern variant="minimal" className="z-0" />
+      
+      <div className="container-ddm relative z-10 py-10 md:py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo e descrição */}
           <div>
@@ -89,7 +93,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* CTA */}
+          {/* CTA with DDM chamfer */}
           <div>
             <h3 className="font-semibold text-foreground mb-4 text-sm">
               Orçamento Rápido
@@ -97,7 +101,7 @@ const Footer = () => {
             <p className="text-muted-foreground text-sm mb-4">
               Solicite um orçamento sem compromisso. Resposta em minutos!
             </p>
-            <Button variant="default" size="default" className="w-full" asChild>
+            <Button variant="default" size="default" className="w-full ddm-chamfer-tr-sm" asChild>
               <Link to="/contato">
                 <MessageCircle className="w-4 h-4" />
                 Pedir Orçamento
@@ -107,22 +111,37 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="border-t border-border">
+      {/* Brand Signature Bottom bar */}
+      <div className="relative border-t border-border bg-muted/30">
+        {/* Accent bar */}
+        <div className="absolute top-0 left-0 w-24 h-0.5 bg-accent" />
+        
         <div className="container-ddm py-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-2 text-center md:text-left">
-            <p className="text-muted-foreground text-xs">
-              © {currentYear} DDM Locações. Todos os direitos reservados.
-            </p>
-            <div className="flex items-center gap-4 text-xs text-muted-foreground">
-              <Link to="/privacidade" className="hover:text-foreground transition-colors">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left">
+            {/* Brand signature */}
+            <div className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+              <p className="text-muted-foreground text-xs">
+                © {currentYear} <span className="text-foreground font-medium">DDM Locações</span> — Sete Lagoas e Região
+              </p>
+            </div>
+            
+            {/* Links + CTA */}
+            <div className="flex items-center gap-4 text-xs">
+              <Link to="/privacidade" className="text-muted-foreground hover:text-foreground transition-colors">
                 Privacidade
               </Link>
-              <Link to="/termos" className="hover:text-foreground transition-colors">
+              <Link to="/termos" className="text-muted-foreground hover:text-foreground transition-colors">
                 Termos
               </Link>
-              <span className="hidden md:inline text-border">|</span>
-              <span>Sete Lagoas - MG</span>
+              <span className="hidden md:block text-border">|</span>
+              <Link 
+                to="/contato" 
+                className="hidden md:flex items-center gap-1 text-accent hover:text-accent/80 font-medium transition-colors"
+              >
+                Pedir orçamento
+                <ArrowRight className="w-3 h-3" />
+              </Link>
             </div>
           </div>
         </div>
