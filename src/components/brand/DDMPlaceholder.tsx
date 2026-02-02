@@ -70,7 +70,7 @@ const DDMPlaceholder = ({
       {showConsultBadge && (
         <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-card/80 backdrop-blur-sm border border-border text-xs font-medium text-muted-foreground">
           <Clock className="w-3 h-3" />
-          Sob consulta
+          Em breve
         </div>
       )}
 

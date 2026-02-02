@@ -16,7 +16,7 @@ const RelatedEquipmentCard = ({ equipamento, image }: RelatedEquipmentCardProps)
       className: 'bg-success/10 text-success border-success/20',
     },
     'sob-consulta': {
-      label: 'Sob consulta',
+      label: 'Em breve',
       className: 'bg-muted text-muted-foreground border-border',
     },
     indisponivel: {
@@ -83,7 +83,7 @@ const RelatedEquipmentCard = ({ equipamento, image }: RelatedEquipmentCardProps)
               <p className="text-sm font-semibold text-foreground">{equipamento.preco}</p>
             </div>
           ) : (
-            <span className="text-xs text-muted-foreground">Valores sob consulta</span>
+            <span className="text-xs text-muted-foreground">Em breve</span>
           )}
           <span className="text-xs text-muted-foreground group-hover:text-accent transition-colors flex items-center gap-1">
             Ver mais

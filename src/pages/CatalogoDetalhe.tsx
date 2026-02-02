@@ -134,7 +134,7 @@ const CatalogoDetalhe = () => {
       className: 'bg-success/10 text-success',
     },
     'sob-consulta': {
-      label: 'Sob consulta',
+      label: 'Em breve',
       className: 'bg-muted text-muted-foreground',
     },
     indisponivel: {

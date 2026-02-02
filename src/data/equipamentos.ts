@@ -22,7 +22,7 @@ export const categorias = [
 
 export const statusOptions = [
   { id: 'disponivel', nome: 'Disponível' },
-  { id: 'sob-consulta', nome: 'Sob consulta' },
+  { id: 'sob-consulta', nome: 'Em breve' },
 ];
 
 // Seed data - easily replaceable with API/database later
