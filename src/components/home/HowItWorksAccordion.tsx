@@ -63,7 +63,7 @@ const HowItWorksAccordion = () => {
               value={`item-${index}`}
               className="rounded-lg bg-card border border-border px-4"
             >
-              <AccordionTrigger className="text-left text-sm font-medium text-foreground hover:text-copper py-3">
+              <AccordionTrigger className="text-left text-sm font-medium text-foreground hover:text-accent py-3">
                 {item.question}
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground text-sm pb-3">

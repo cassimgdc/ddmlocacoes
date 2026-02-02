@@ -56,7 +56,7 @@ const CategoryGrid = () => {
           <Link
             key={category.title}
             to={category.href}
-            className="group p-3 rounded-lg bg-card border border-border hover:border-copper/30 transition-all"
+            className="group p-3 rounded-lg bg-card border border-border hover:border-accent/30 transition-all"
           >
             <div className="flex items-start gap-3">
               <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center flex-shrink-0 group-hover:bg-accent group-hover:text-white transition-colors">

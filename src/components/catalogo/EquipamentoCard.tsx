@@ -46,7 +46,7 @@ const EquipamentoCard = ({ equipamento, onQuote, delay = 0 }: EquipamentoCardPro
 
   return (
     <div
-      className="group flex flex-col h-full rounded-lg bg-card border border-border overflow-hidden hover:border-copper/30 hover:shadow-soft transition-all"
+      className="group flex flex-col h-full rounded-lg bg-card border border-border overflow-hidden hover:border-accent/30 hover:shadow-soft transition-all"
       style={{ animationDelay: `${delay}ms` }}
     >
       {/* Image */}
@@ -72,7 +72,7 @@ const EquipamentoCard = ({ equipamento, onQuote, delay = 0 }: EquipamentoCardPro
         {/* Featured badge */}
         {equipamento.destaque && (
           <div className="absolute top-2 right-2">
-            <Badge className="bg-copper/90 text-white border-0 text-xs">
+            <Badge className="bg-accent/90 text-white border-0 text-xs">
               Destaque
             </Badge>
           </div>

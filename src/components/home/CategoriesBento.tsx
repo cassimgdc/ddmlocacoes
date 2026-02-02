@@ -126,7 +126,7 @@ const CategoriesBento = () => {
                 />
                 
                 {/* Accent corner */}
-                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-copper/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 
                 <div className="relative z-10 flex flex-col h-full">
                   {/* Icon */}

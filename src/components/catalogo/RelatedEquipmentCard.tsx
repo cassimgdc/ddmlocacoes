@@ -31,7 +31,7 @@ const RelatedEquipmentCard = ({ equipamento, image }: RelatedEquipmentCardProps)
   return (
     <Link
       to={`/catalogo/${equipamento.slug}`}
-      className="group flex flex-col h-full rounded-lg bg-card border border-border overflow-hidden hover:border-copper/30 hover:shadow-soft transition-all"
+      className="group flex flex-col h-full rounded-lg bg-card border border-border overflow-hidden hover:border-accent/30 hover:shadow-soft transition-all"
     >
       {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden">
@@ -56,7 +56,7 @@ const RelatedEquipmentCard = ({ equipamento, image }: RelatedEquipmentCardProps)
 
       {/* Content */}
       <div className="flex flex-col flex-1 p-4">
-        <h4 className="font-semibold text-foreground group-hover:text-copper transition-colors line-clamp-1 mb-1">
+        <h4 className="font-semibold text-foreground group-hover:text-accent transition-colors line-clamp-1 mb-1">
           {equipamento.nome}
         </h4>
         
@@ -79,7 +79,7 @@ const RelatedEquipmentCard = ({ equipamento, image }: RelatedEquipmentCardProps)
           ) : (
             <span className="text-xs text-muted-foreground">Valores sob consulta</span>
           )}
-          <span className="text-xs text-muted-foreground group-hover:text-copper transition-colors flex items-center gap-1">
+          <span className="text-xs text-muted-foreground group-hover:text-accent transition-colors flex items-center gap-1">
             Ver mais
             <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
           </span>
