@@ -13,30 +13,25 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import Layout from '@/components/layout/Layout';
-import InternalHero from '@/components/layout/InternalHero';
+import PageHeaderCompact from '@/components/layout/PageHeaderCompact';
 import {
   MessageCircle,
   MapPin,
   Clock,
-  ArrowRight,
   Loader2,
   User,
   Phone,
   CheckCircle,
-  Wrench,
   Mail,
   Building2,
   Calendar,
   FileText,
-  Home,
-  ChevronRight,
 } from 'lucide-react';
 import { usePhoneFormat } from '@/hooks/usePhoneFormat';
 import { useSpamProtection } from '@/hooks/useSpamProtection';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
-import { Link } from 'react-router-dom';
 
 const WEBHOOK_URL = 'https://n8n2.easybr.site/webhook/14f30970-8945-456f-9c1e-eba82b566d91';
 
@@ -90,34 +85,28 @@ const Contato = () => {
   const isTelefoneValid = isValidPhone();
   const isItensValid = formData.itensInteresse !== '';
 
-  const contactCards = [
+  const contactInfo = [
     {
       icon: Phone,
       title: 'Telefone',
       value: '(31) 97106-7272',
       href: 'tel:+5531971067272',
-      color: 'text-primary',
     },
     {
       icon: MessageCircle,
       title: 'WhatsApp',
       value: '(31) 97106-7272',
       href: 'https://wa.me/5531971067272',
-      color: 'text-green-500',
-    },
-    {
-      icon: Mail,
-      title: 'Email',
-      value: 'contato@ddmlocacoes.com.br',
-      href: 'mailto:contato@ddmlocacoes.com.br',
-      color: 'text-blue-500',
     },
     {
       icon: MapPin,
-      title: 'Endereço',
-      value: 'Sete Lagoas, MG',
-      href: 'https://maps.google.com/?q=Sete+Lagoas+MG',
-      color: 'text-accent',
+      title: 'Região',
+      value: 'Sete Lagoas e região',
+    },
+    {
+      icon: Clock,
+      title: 'Atendimento',
+      value: 'Seg-Sáb: 7h-18h',
     },
   ];
 
@@ -285,55 +274,29 @@ const Contato = () => {
         <meta property="og:title" content="Solicitar Orçamento | DDM Locações" />
         <meta property="og:description" content="Orçamento rápido para retroescavadeira em Sete Lagoas." />
         <meta property="og:url" content="https://ddmlocacoes.com.br/contato" />
-        <meta property="og:image" content="https://ddmlocacoes.com.br/og-image.png" />
         <meta property="og:type" content="website" />
       </Helmet>
 
-      {/* Hero interno com breadcrumb */}
-      <section className="pt-28 md:pt-32 pb-6 bg-gradient-to-b from-secondary/30 to-transparent">
+      <PageHeaderCompact
+        title="Solicitar Orçamento"
+        subtitle="Preencha o formulário e receba seu orçamento pelo WhatsApp"
+        breadcrumbs={[{ label: 'Orçamento' }]}
+      />
+
+      {/* Main Content: 2 columns */}
+      <section className="py-6 md:py-10">
         <div className="container-ddm">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-4" aria-label="Breadcrumb">
-            <Link to="/" className="hover:text-foreground transition-colors flex items-center gap-1">
-              <Home className="w-4 h-4" />
-              Início
-            </Link>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-foreground font-medium">Orçamento</span>
-          </nav>
-
-          <div className="text-center max-w-xl mx-auto">
-            <span className="badge-industrial mb-4">
-              <MessageCircle className="w-4 h-4" />
-              Contato
-            </span>
-            <h1 className="text-2xl md:text-4xl font-display font-black text-foreground mb-3">
-              Solicitar <span className="text-gradient-vivid">Orçamento</span>
-            </h1>
-            <p className="text-muted-foreground">
-              Preencha o formulário e receba um orçamento rápido pelo WhatsApp
-            </p>
-          </div>
-        </div>
-      </section>
-
-
-      {/* Formulário Principal */}
-      <section className="pb-12 md:pb-20">
-        <div className="container-ddm">
-          <div className="max-w-2xl mx-auto">
-            {/* Card do Formulário */}
-            <div className="relative opacity-0 animate-fade-in-up stagger-2">
-              <div className="absolute -inset-3 bg-gradient-to-r from-primary/20 via-accent/10 to-primary/20 rounded-3xl blur-xl opacity-40" />
-              
-              <div className="relative card-premium p-6 md:p-8">
+          <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
+            {/* Left: Form */}
+            <div className="lg:col-span-2">
+              <div className="rounded-lg bg-card border border-border p-5 md:p-6">
                 {/* Mensagem de sucesso */}
                 {isSuccess && (
-                  <div className="mb-6 p-4 bg-ddm-success/10 border border-ddm-success/30 rounded-xl flex items-center gap-3">
-                    <CheckCircle className="w-5 h-5 text-ddm-success flex-shrink-0" />
+                  <div className="mb-5 p-3 bg-success/10 border border-success/30 rounded-lg flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
                     <div>
-                      <p className="font-medium text-foreground">Orçamento solicitado!</p>
-                      <p className="text-sm text-muted-foreground">WhatsApp aberto. Entraremos em contato em breve.</p>
+                      <p className="font-medium text-foreground text-sm">Orçamento solicitado!</p>
+                      <p className="text-xs text-muted-foreground">WhatsApp aberto. Entraremos em contato em breve.</p>
                     </div>
                   </div>
                 )}
@@ -353,9 +316,9 @@ const Contato = () => {
 
                   <div className="grid md:grid-cols-2 gap-4">
                     {/* Nome */}
-                    <div className="space-y-1.5">
-                      <Label htmlFor="nome" className="text-sm flex items-center gap-2">
-                        <User className="w-4 h-4 text-primary" />
+                    <div className="space-y-1">
+                      <Label htmlFor="nome" className="text-sm flex items-center gap-1.5">
+                        <User className="w-3.5 h-3.5 text-copper" />
                         Seu nome *
                       </Label>
                       <InputWithCheck
@@ -363,7 +326,7 @@ const Contato = () => {
                         placeholder="Nome completo"
                         value={formData.nome}
                         onChange={(e) => handleInputChange('nome', e.target.value)}
-                        className="h-11 bg-muted/50 border-border/50"
+                        className="h-10 bg-muted/50 border-border"
                         maxLength={100}
                         isValid={isNomeValid}
                         hasError={!!errors.nome}
@@ -372,9 +335,9 @@ const Contato = () => {
                     </div>
 
                     {/* Empresa */}
-                    <div className="space-y-1.5">
-                      <Label htmlFor="empresa" className="text-sm flex items-center gap-2">
-                        <Building2 className="w-4 h-4 text-primary" />
+                    <div className="space-y-1">
+                      <Label htmlFor="empresa" className="text-sm flex items-center gap-1.5">
+                        <Building2 className="w-3.5 h-3.5 text-copper" />
                         Empresa (opcional)
                       </Label>
                       <Input
@@ -382,7 +345,7 @@ const Contato = () => {
                         placeholder="Nome da empresa"
                         value={formData.empresa}
                         onChange={(e) => handleInputChange('empresa', e.target.value)}
-                        className="h-11 bg-muted/50 border-border/50"
+                        className="h-10 bg-muted/50 border-border"
                         maxLength={100}
                       />
                     </div>
@@ -390,16 +353,16 @@ const Contato = () => {
 
                   <div className="grid md:grid-cols-2 gap-4">
                     {/* WhatsApp */}
-                    <div className="space-y-1.5">
-                      <Label htmlFor="telefone" className="text-sm flex items-center gap-2">
-                        <Phone className="w-4 h-4 text-primary" />
+                    <div className="space-y-1">
+                      <Label htmlFor="telefone" className="text-sm flex items-center gap-1.5">
+                        <Phone className="w-3.5 h-3.5 text-copper" />
                         WhatsApp *
                       </Label>
                       <div className="flex gap-2">
                         <Input
                           value={ddi}
                           onChange={(e) => handleDdiChange(e.target.value)}
-                          className="h-11 w-16 text-center bg-muted/50 border-border/50 font-medium"
+                          className="h-10 w-14 text-center bg-muted/50 border-border text-sm"
                           maxLength={4}
                         />
                         <div className="relative flex-1">
@@ -414,13 +377,13 @@ const Contato = () => {
                               if (errors.telefone) setErrors((prev) => ({ ...prev, telefone: '' }));
                             }}
                             className={cn(
-                              "h-11 bg-muted/50 border-border/50",
+                              "h-10 bg-muted/50 border-border",
                               errors.telefone && "border-red-500",
-                              isTelefoneValid && !errors.telefone && "border-green-500/50 pr-10"
+                              isTelefoneValid && !errors.telefone && "border-success/50 pr-9"
                             )}
                           />
                           {isTelefoneValid && !errors.telefone && (
-                            <CheckCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-green-500" />
+                            <CheckCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-success" />
                           )}
                         </div>
                       </div>
@@ -428,9 +391,9 @@ const Contato = () => {
                     </div>
 
                     {/* Email */}
-                    <div className="space-y-1.5">
-                      <Label htmlFor="email" className="text-sm flex items-center gap-2">
-                        <Mail className="w-4 h-4 text-primary" />
+                    <div className="space-y-1">
+                      <Label htmlFor="email" className="text-sm flex items-center gap-1.5">
+                        <Mail className="w-3.5 h-3.5 text-copper" />
                         Email (opcional)
                       </Label>
                       <Input
@@ -439,7 +402,7 @@ const Contato = () => {
                         placeholder="seu@email.com"
                         value={formData.email}
                         onChange={(e) => handleInputChange('email', e.target.value)}
-                        className="h-11 bg-muted/50 border-border/50"
+                        className="h-10 bg-muted/50 border-border"
                         maxLength={100}
                       />
                     </div>
@@ -447,9 +410,9 @@ const Contato = () => {
 
                   <div className="grid md:grid-cols-2 gap-4">
                     {/* Cidade */}
-                    <div className="space-y-1.5">
-                      <Label htmlFor="cidade" className="text-sm flex items-center gap-2">
-                        <MapPin className="w-4 h-4 text-primary" />
+                    <div className="space-y-1">
+                      <Label htmlFor="cidade" className="text-sm flex items-center gap-1.5">
+                        <MapPin className="w-3.5 h-3.5 text-copper" />
                         Cidade *
                       </Label>
                       <InputWithCheck
@@ -457,7 +420,7 @@ const Contato = () => {
                         placeholder="Ex: Sete Lagoas"
                         value={formData.cidade}
                         onChange={(e) => handleInputChange('cidade', e.target.value)}
-                        className="h-11 bg-muted/50 border-border/50"
+                        className="h-10 bg-muted/50 border-border"
                         maxLength={100}
                         isValid={isCidadeValid}
                         hasError={!!errors.cidade}
@@ -466,9 +429,9 @@ const Contato = () => {
                     </div>
 
                     {/* Período */}
-                    <div className="space-y-1.5">
-                      <Label htmlFor="periodo" className="text-sm flex items-center gap-2">
-                        <Calendar className="w-4 h-4 text-primary" />
+                    <div className="space-y-1">
+                      <Label htmlFor="periodo" className="text-sm flex items-center gap-1.5">
+                        <Calendar className="w-3.5 h-3.5 text-copper" />
                         Período (opcional)
                       </Label>
                       <Input
@@ -476,169 +439,110 @@ const Contato = () => {
                         placeholder="Ex: 2 dias, 1 semana..."
                         value={formData.periodo}
                         onChange={(e) => handleInputChange('periodo', e.target.value)}
-                        className="h-11 bg-muted/50 border-border/50"
+                        className="h-10 bg-muted/50 border-border"
                         maxLength={100}
                       />
                     </div>
                   </div>
 
-                  {/* Itens de interesse */}
-                  <div className="space-y-1.5">
-                    <Label className="text-sm flex items-center gap-2">
-                      <Wrench className="w-4 h-4 text-primary" />
-                      Item de interesse *
+                  {/* Tipo de serviço */}
+                  <div className="space-y-1">
+                    <Label htmlFor="itensInteresse" className="text-sm flex items-center gap-1.5">
+                      <FileText className="w-3.5 h-3.5 text-copper" />
+                      Tipo de serviço *
                     </Label>
-                    <div className="relative">
-                      <Select
-                        value={formData.itensInteresse}
-                        onValueChange={(value) => handleInputChange('itensInteresse', value)}
-                      >
-                        <SelectTrigger className={cn(
-                          "h-11 bg-muted/50 border-border/50",
+                    <Select
+                      value={formData.itensInteresse}
+                      onValueChange={(v) => {
+                        handleInputChange('itensInteresse', v);
+                        if (errors.itens) setErrors((prev) => ({ ...prev, itens: '' }));
+                      }}
+                    >
+                      <SelectTrigger
+                        id="itensInteresse"
+                        className={cn(
+                          "h-10 bg-muted/50 border-border",
                           errors.itens && "border-red-500",
-                          isItensValid && !errors.itens && "border-green-500/50"
-                        )}>
-                          <SelectValue placeholder="Selecione o serviço ou equipamento" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-card border-border">
-                          {serviceTypes.map((type) => (
-                            <SelectItem key={type} value={type}>
-                              {type}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      {isItensValid && !errors.itens && (
-                        <CheckCircle className="absolute right-10 top-1/2 -translate-y-1/2 w-4 h-4 text-green-500 pointer-events-none" />
-                      )}
-                    </div>
+                          isItensValid && "border-success/50"
+                        )}
+                      >
+                        <SelectValue placeholder="Selecione o serviço..." />
+                      </SelectTrigger>
+                      <SelectContent className="bg-card border-border z-50">
+                        {serviceTypes.map((type) => (
+                          <SelectItem key={type} value={type}>
+                            {type}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     {errors.itens && <p className="text-xs text-red-500">{errors.itens}</p>}
                   </div>
 
-                  {/* Observações */}
-                  <div className="space-y-1.5">
-                    <Label htmlFor="mensagem" className="text-sm flex items-center gap-2">
-                      <FileText className="w-4 h-4 text-primary" />
-                      Observações (opcional)
-                    </Label>
+                  {/* Mensagem */}
+                  <div className="space-y-1">
+                    <Label htmlFor="mensagem" className="text-sm">Mensagem (opcional)</Label>
                     <Textarea
                       id="mensagem"
-                      placeholder="Descreva brevemente o serviço, local, dimensões do terreno..."
-                      rows={3}
+                      placeholder="Descreva brevemente o serviço..."
                       value={formData.mensagem}
                       onChange={(e) => handleInputChange('mensagem', e.target.value)}
-                      className="bg-muted/50 border-border/50 resize-none"
+                      rows={3}
+                      className="bg-muted/50 border-border resize-none"
                       maxLength={500}
                     />
                   </div>
 
-                  {/* Botão de envio */}
-                  <Button 
-                    type="submit" 
-                    variant="whatsapp" 
-                    size="xl" 
-                    className="w-full group"
+                  {/* Submit */}
+                  <Button
+                    type="submit"
+                    variant="default"
+                    className="w-full"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
-                      <>
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                        Enviando...
-                      </>
+                      <Loader2 className="w-4 h-4 animate-spin" />
                     ) : (
-                      <>
-                        <MessageCircle className="w-5 h-5" />
-                        Solicitar Orçamento
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                      </>
+                      <MessageCircle className="w-4 h-4" />
                     )}
+                    Enviar e Abrir WhatsApp
                   </Button>
-
-                  <p className="text-center text-muted-foreground text-xs">
-                    📷 Após enviar, você pode anexar fotos/vídeos do terreno no WhatsApp
-                  </p>
                 </form>
               </div>
             </div>
 
-            {/* Cards de contato */}
-            <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-              {contactCards.map((card, index) => (
-                <a
-                  key={card.title}
-                  href={card.href}
-                  target={card.href.startsWith('http') ? '_blank' : undefined}
-                  rel={card.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="group p-4 rounded-xl bg-card border border-border/50 hover:border-primary/30 hover:shadow-lg transition-all duration-300 text-center opacity-0 animate-fade-in-up"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className={`w-10 h-10 rounded-xl bg-muted/50 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform`}>
-                    <card.icon className={`w-5 h-5 ${card.color}`} />
+            {/* Right: Contact Info */}
+            <div className="space-y-4">
+              <h3 className="text-base font-semibold text-foreground">Informações de Contato</h3>
+              
+              <div className="space-y-3">
+                {contactInfo.map((item) => (
+                  <div key={item.title} className="p-3 rounded-lg bg-card border border-border">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
+                        <item.icon className="w-4 h-4 text-copper" />
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground">{item.title}</p>
+                        {item.href ? (
+                          <a href={item.href} className="text-sm font-medium text-foreground hover:text-copper transition-colors">
+                            {item.value}
+                          </a>
+                        ) : (
+                          <p className="text-sm font-medium text-foreground">{item.value}</p>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <p className="text-xs text-muted-foreground mb-1">{card.title}</p>
-                  <p className="text-sm font-medium text-foreground truncate">{card.value}</p>
-                </a>
-              ))}
-            </div>
-
-            {/* Área de Atendimento */}
-            <div className="mt-8 p-6 rounded-2xl bg-muted/30 border border-border/50 opacity-0 animate-fade-in-up stagger-3">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2.5 rounded-xl bg-primary/10">
-                  <MapPin className="w-5 h-5 text-primary" />
-                </div>
-                <h3 className="font-display font-bold text-foreground">Área de Atendimento</h3>
-              </div>
-              
-              <p className="text-muted-foreground mb-4">
-                Atendemos <span className="text-foreground font-semibold">Sete Lagoas</span> e cidades vizinhas:
-              </p>
-              
-              <div className="flex flex-wrap gap-2">
-                {[
-                  'Sete Lagoas',
-                  'Prudente de Morais',
-                  'Capim Branco',
-                  'Funilândia',
-                  'Jequitibá',
-                  'Paraopeba',
-                  'Caetanópolis',
-                  'Baldim',
-                ].map((city, index) => (
-                  <span 
-                    key={city}
-                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                      index === 0 
-                        ? 'bg-primary/20 text-primary' 
-                        : 'bg-muted text-muted-foreground'
-                    }`}
-                  >
-                    {city}
-                  </span>
                 ))}
               </div>
 
-              <p className="text-sm text-muted-foreground mt-4">
-                Para outras localidades, consulte disponibilidade e valor de deslocamento.
-              </p>
-            </div>
-
-            {/* Informações adicionais */}
-            <div className="mt-8 grid grid-cols-3 gap-4 text-center opacity-0 animate-fade-in-up stagger-4">
-              <div className="p-4 rounded-xl bg-muted/20">
-                <MessageCircle className="w-6 h-6 text-green-500 mx-auto mb-2" />
-                <p className="text-sm font-medium text-foreground">Resposta rápida</p>
-                <p className="text-xs text-muted-foreground">Em até 2 horas</p>
-              </div>
-              <div className="p-4 rounded-xl bg-muted/20">
-                <Clock className="w-6 h-6 text-primary mx-auto mb-2" />
-                <p className="text-sm font-medium text-foreground">Horário</p>
-                <p className="text-xs text-muted-foreground">Seg-Sáb 7h-18h</p>
-              </div>
-              <div className="p-4 rounded-xl bg-muted/20">
-                <CheckCircle className="w-6 h-6 text-ddm-success mx-auto mb-2" />
-                <p className="text-sm font-medium text-foreground">Sem compromisso</p>
-                <p className="text-xs text-muted-foreground">Orçamento grátis</p>
+              {/* Quick tip */}
+              <div className="p-4 rounded-lg bg-copper/5 border border-copper/20">
+                <p className="text-sm font-medium text-foreground mb-1">Dica rápida</p>
+                <p className="text-xs text-muted-foreground">
+                  Para um orçamento mais preciso, envie fotos ou vídeos do local do serviço pelo WhatsApp.
+                </p>
               </div>
             </div>
           </div>

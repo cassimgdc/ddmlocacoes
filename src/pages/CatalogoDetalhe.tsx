@@ -2,26 +2,17 @@ import { useMemo } from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/layout/Layout';
+import PageHeaderCompact from '@/components/layout/PageHeaderCompact';
 import ProductGallery from '@/components/catalogo/ProductGallery';
 import ProductQuoteForm from '@/components/catalogo/ProductQuoteForm';
 import RelatedEquipmentCard from '@/components/catalogo/RelatedEquipmentCard';
-import { Badge } from '@/components/ui/badge';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import {
-  ChevronRight,
-  CheckCircle2,
-  AlertCircle,
-  Info,
-  Search,
-  CalendarCheck,
-  Truck,
-  Home,
-} from 'lucide-react';
+import { CheckCircle2, Info, ArrowRight } from 'lucide-react';
 import { getEquipamentoBySlug, equipamentos } from '@/data/equipamentos';
 import case580m from '@/assets/case-580m.png';
 
@@ -105,7 +96,7 @@ const CatalogoDetalhe = () => {
     if (!equipamento) return [];
     return equipamentos
       .filter((e) => e.categoria === equipamento.categoria && e.id !== equipamento.id)
-      .slice(0, 6);
+      .slice(0, 3);
   }, [equipamento]);
 
   // Get image for equipment
@@ -121,15 +112,15 @@ const CatalogoDetalhe = () => {
   const statusConfig = {
     disponivel: {
       label: 'Disponível',
-      className: 'bg-ddm-success/10 text-ddm-success border-ddm-success/20',
+      className: 'bg-success/10 text-success',
     },
     'sob-consulta': {
       label: 'Sob consulta',
-      className: 'bg-accent/10 text-accent border-accent/20',
+      className: 'bg-muted text-muted-foreground',
     },
     indisponivel: {
       label: 'Indisponível',
-      className: 'bg-muted text-muted-foreground border-border',
+      className: 'bg-muted text-muted-foreground',
     },
   };
 
@@ -150,47 +141,33 @@ const CatalogoDetalhe = () => {
         <meta property="og:title" content={`${equipamento.nome} | DDM Locações`} />
         <meta property="og:description" content={`${equipamento.descricaoCurta} Aluguel em Sete Lagoas.`} />
         <meta property="og:url" content={`https://ddmlocacoes.com.br/catalogo/${slug}`} />
-        <meta property="og:image" content="https://ddmlocacoes.com.br/og-image.png" />
         <meta property="og:type" content="website" />
       </Helmet>
 
-      {/* Breadcrumb + Header */}
-      <section className="pt-28 md:pt-32 pb-6 bg-gradient-to-b from-secondary/30 to-transparent">
-        <div className="container-ddm">
-          {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-4" aria-label="Breadcrumb">
-            <Link to="/" className="hover:text-foreground transition-colors flex items-center gap-1">
-              <Home className="w-4 h-4" />
-              Início
-            </Link>
-            <ChevronRight className="w-4 h-4" />
-            <Link to="/catalogo" className="hover:text-foreground transition-colors">
-              Catálogo
-            </Link>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-foreground font-medium truncate max-w-[200px]">
-              {equipamento.nome}
-            </span>
-          </nav>
+      {/* Header */}
+      <PageHeaderCompact
+        title={equipamento.nome}
+        breadcrumbs={[
+          { label: 'Catálogo', href: '/catalogo' },
+          { label: equipamento.nome },
+        ]}
+      />
 
-          {/* Title + Badge */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold text-foreground">
-              {equipamento.nome}
-            </h1>
-            <Badge variant="outline" className={`${status.className} w-fit`}>
-              {status.label}
-            </Badge>
-          </div>
+      {/* Status badge below header */}
+      <div className="border-b border-border bg-background">
+        <div className="container-ddm py-2">
+          <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${status.className}`}>
+            {status.label}
+          </span>
         </div>
-      </section>
+      </div>
 
       {/* Main Content: 2 columns */}
-      <section className="py-8 md:py-12">
+      <section className="py-6 md:py-8">
         <div className="container-ddm">
-          <div className="grid lg:grid-cols-3 gap-8 lg:gap-10">
+          <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
             {/* Left Column: Gallery + Details */}
-            <div className="lg:col-span-2 space-y-8">
+            <div className="lg:col-span-2 space-y-6">
               {/* Gallery */}
               <ProductGallery
                 images={extendedData.imagens}
@@ -199,12 +176,12 @@ const CatalogoDetalhe = () => {
 
               {/* Description */}
               <div>
-                <h2 className="text-lg font-display font-bold text-foreground mb-3">
+                <h2 className="text-base font-semibold text-foreground mb-2">
                   Sobre o Equipamento
                 </h2>
-                <div className="prose prose-sm max-w-none text-muted-foreground">
+                <div className="text-sm text-muted-foreground space-y-2">
                   {fullDescription.split('\n').map((paragraph, index) => (
-                    <p key={index} className="mb-3 last:mb-0 whitespace-pre-line">
+                    <p key={index} className="whitespace-pre-line">
                       {paragraph}
                     </p>
                   ))}
@@ -213,40 +190,41 @@ const CatalogoDetalhe = () => {
 
               {/* Specifications */}
               <div>
-                <h2 className="text-lg font-display font-bold text-foreground mb-4">
+                <h2 className="text-base font-semibold text-foreground mb-3">
                   Especificações
                 </h2>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {equipamento.specs.map((spec) => (
-                    <div
-                      key={spec.label}
-                      className="p-4 rounded-xl bg-muted/30 border border-border/30"
-                    >
-                      <p className="text-xs text-muted-foreground mb-1">{spec.label}</p>
-                      <p className="font-bold text-foreground">{spec.value}</p>
-                    </div>
-                  ))}
+                <div className="overflow-hidden rounded-lg border border-border">
+                  <table className="w-full text-sm">
+                    <tbody>
+                      {equipamento.specs.map((spec, index) => (
+                        <tr key={spec.label} className={index % 2 === 0 ? 'bg-muted/30' : 'bg-card'}>
+                          <td className="px-3 py-2 text-muted-foreground">{spec.label}</td>
+                          <td className="px-3 py-2 font-medium text-foreground text-right">{spec.value}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
 
               {/* Included items */}
               <div>
-                <h2 className="text-lg font-display font-bold text-foreground mb-4">
+                <h2 className="text-base font-semibold text-foreground mb-3">
                   Incluso no Aluguel
                 </h2>
-                <div className="grid sm:grid-cols-2 gap-3">
+                <div className="grid sm:grid-cols-2 gap-2">
                   {extendedData.inclusos.map((item) => (
-                    <div key={item} className="flex items-center gap-3 p-3 rounded-lg bg-ddm-success/5 border border-ddm-success/10">
-                      <CheckCircle2 className="w-5 h-5 text-ddm-success flex-shrink-0" />
+                    <div key={item} className="flex items-center gap-2 p-2.5 rounded-lg bg-success/5 border border-success/10">
+                      <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0" />
                       <span className="text-sm text-foreground">{item}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Observations / FAQ Accordion */}
+              {/* Observations Accordion */}
               <div>
-                <h2 className="text-lg font-display font-bold text-foreground mb-4">
+                <h2 className="text-base font-semibold text-foreground mb-3">
                   Informações Importantes
                 </h2>
                 <Accordion type="single" collapsible className="space-y-2">
@@ -254,17 +232,17 @@ const CatalogoDetalhe = () => {
                     <AccordionItem
                       key={index}
                       value={`item-${index}`}
-                      className="border border-border/50 rounded-lg px-4 bg-card"
+                      className="border border-border rounded-lg px-3 bg-card"
                     >
-                      <AccordionTrigger className="hover:no-underline py-4">
-                        <div className="flex items-center gap-3">
-                          <Info className="w-4 h-4 text-primary" />
+                      <AccordionTrigger className="hover:no-underline py-3 text-sm">
+                        <div className="flex items-center gap-2">
+                          <Info className="w-3.5 h-3.5 text-copper" />
                           <span className="font-medium text-foreground text-left">
                             {obs.titulo}
                           </span>
                         </div>
                       </AccordionTrigger>
-                      <AccordionContent className="pb-4 text-muted-foreground">
+                      <AccordionContent className="pb-3 text-muted-foreground text-sm">
                         {obs.conteudo}
                       </AccordionContent>
                     </AccordionItem>
@@ -275,7 +253,7 @@ const CatalogoDetalhe = () => {
 
             {/* Right Column: Sticky Quote Form */}
             <div className="lg:col-span-1">
-              <div className="lg:sticky lg:top-28">
+              <div className="lg:sticky lg:top-20">
                 <ProductQuoteForm
                   equipamentoNome={equipamento.nome}
                   preco={equipamento.preco}
@@ -288,12 +266,18 @@ const CatalogoDetalhe = () => {
 
       {/* Related Equipment */}
       {relatedEquipamentos.length > 0 && (
-        <section className="py-12 md:py-16 bg-secondary/30">
+        <section className="py-6 md:py-8 bg-muted/30 border-t border-border">
           <div className="container-ddm">
-            <h2 className="text-xl md:text-2xl font-display font-bold text-foreground mb-6">
-              Equipamentos <span className="text-gradient-vivid">Relacionados</span>
-            </h2>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-base font-semibold text-foreground">
+                Equipamentos Relacionados
+              </h2>
+              <Link to="/catalogo" className="text-sm text-copper hover:underline flex items-center gap-1">
+                Ver todos
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {relatedEquipamentos.map((equip) => (
                 <RelatedEquipmentCard
                   key={equip.id}
@@ -305,38 +289,6 @@ const CatalogoDetalhe = () => {
           </div>
         </section>
       )}
-
-      {/* Mini How it Works */}
-      <section className="py-12 md:py-16">
-        <div className="container-ddm">
-          <div className="text-center mb-8">
-            <h2 className="text-xl md:text-2xl font-display font-bold text-foreground">
-              Como <span className="text-gradient-vivid">Funciona</span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-3 gap-4 md:gap-8 max-w-3xl mx-auto">
-            {[
-              { icon: Search, step: 1, title: 'Escolha', desc: 'Selecione o equipamento' },
-              { icon: CalendarCheck, step: 2, title: 'Agende', desc: 'Defina data e período' },
-              { icon: Truck, step: 3, title: 'Receba', desc: 'Entregamos no local' },
-            ].map((item) => (
-              <div key={item.step} className="text-center">
-                <div className="relative inline-block mb-3">
-                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-cta mx-auto">
-                    <item.icon className="w-6 h-6 md:w-7 md:h-7 text-primary-foreground" />
-                  </div>
-                  <span className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-card border-2 border-primary flex items-center justify-center text-xs font-bold text-primary">
-                    {item.step}
-                  </span>
-                </div>
-                <h3 className="font-bold text-foreground text-sm md:text-base mb-1">{item.title}</h3>
-                <p className="text-muted-foreground text-xs md:text-sm">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
     </Layout>
   );
 };

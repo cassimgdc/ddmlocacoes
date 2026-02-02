@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/layout/Layout';
-import InternalHero from '@/components/layout/InternalHero';
-import { Shield } from 'lucide-react';
+import PageHeaderCompact from '@/components/layout/PageHeaderCompact';
 
 const Privacidade = () => {
   return (
@@ -16,25 +15,22 @@ const Privacidade = () => {
         <meta property="og:type" content="website" />
       </Helmet>
 
-      <InternalHero
-        badge="Legal"
-        badgeIcon={Shield}
-        title="Política de"
-        titleHighlight="Privacidade"
+      <PageHeaderCompact
+        title="Política de Privacidade"
         breadcrumbs={[{ label: 'Política de Privacidade' }]}
       />
 
-      <section className="py-12 md:py-16">
+      <section className="py-6 md:py-10">
         <div className="container-ddm">
-          <div className="max-w-3xl mx-auto prose prose-sm md:prose-base prose-invert prose-headings:font-display prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-li:text-muted-foreground">
+          <div className="max-w-2xl mx-auto prose prose-sm prose-invert prose-headings:text-foreground prose-headings:font-semibold prose-headings:text-base prose-p:text-muted-foreground prose-strong:text-foreground prose-li:text-muted-foreground prose-li:text-sm">
             
-            <p className="lead">
+            <p className="text-sm text-muted-foreground">
               A DDM Locações valoriza a privacidade de seus clientes. Esta política explica como coletamos, usamos e protegemos suas informações.
             </p>
 
-            <h2>1. Dados Coletados</h2>
+            <h2 className="mt-6">1. Dados Coletados</h2>
             <p>Coletamos apenas informações necessárias para atendê-lo:</p>
-            <ul>
+            <ul className="text-sm">
               <li><strong>Dados de contato:</strong> nome, telefone, e-mail</li>
               <li><strong>Dados do serviço:</strong> local da obra, tipo de serviço solicitado</li>
               <li><strong>Dados técnicos:</strong> informações do navegador para melhorar o site</li>
@@ -42,7 +38,7 @@ const Privacidade = () => {
 
             <h2>2. Uso dos Dados</h2>
             <p>Utilizamos seus dados para:</p>
-            <ul>
+            <ul className="text-sm">
               <li>Responder suas solicitações de orçamento</li>
               <li>Entrar em contato sobre os serviços</li>
               <li>Melhorar nosso atendimento</li>
@@ -60,7 +56,7 @@ const Privacidade = () => {
 
             <h2>5. Seus Direitos</h2>
             <p>Você pode solicitar a qualquer momento:</p>
-            <ul>
+            <ul className="text-sm">
               <li>Acesso aos seus dados pessoais</li>
               <li>Correção de informações incorretas</li>
               <li>Exclusão dos seus dados</li>
@@ -71,9 +67,9 @@ const Privacidade = () => {
               Dúvidas sobre esta política? Entre em contato pelo WhatsApp: <strong>(31) 97106-7272</strong>.
             </p>
 
-            <hr />
+            <hr className="border-border" />
 
-            <p className="text-sm">
+            <p className="text-xs text-muted-foreground">
               <em>Última atualização: Janeiro de 2025</em>
             </p>
           </div>

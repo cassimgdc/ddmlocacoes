@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/layout/Layout';
-import InternalHero from '@/components/layout/InternalHero';
-import { FileText } from 'lucide-react';
+import PageHeaderCompact from '@/components/layout/PageHeaderCompact';
 
 const Termos = () => {
   return (
@@ -16,29 +15,26 @@ const Termos = () => {
         <meta property="og:type" content="website" />
       </Helmet>
 
-      <InternalHero
-        badge="Legal"
-        badgeIcon={FileText}
-        title="Termos de"
-        titleHighlight="Uso"
+      <PageHeaderCompact
+        title="Termos de Uso"
         breadcrumbs={[{ label: 'Termos de Uso' }]}
       />
 
-      <section className="py-12 md:py-16">
+      <section className="py-6 md:py-10">
         <div className="container-ddm">
-          <div className="max-w-3xl mx-auto prose prose-sm md:prose-base prose-invert prose-headings:font-display prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-li:text-muted-foreground">
+          <div className="max-w-2xl mx-auto prose prose-sm prose-invert prose-headings:text-foreground prose-headings:font-semibold prose-headings:text-base prose-p:text-muted-foreground prose-strong:text-foreground prose-li:text-muted-foreground prose-li:text-sm">
             
-            <p className="lead">
+            <p className="text-sm text-muted-foreground">
               Ao utilizar o site da DDM Locações, você concorda com os termos abaixo.
             </p>
 
-            <h2>1. Serviços</h2>
+            <h2 className="mt-6">1. Serviços</h2>
             <p>
               A DDM Locações oferece serviços de locação de retroescavadeira com operador em Sete Lagoas e região. Os valores, prazos e condições específicas são definidos em cada orçamento individual.
             </p>
 
             <h2>2. Orçamentos</h2>
-            <ul>
+            <ul className="text-sm">
               <li>Os orçamentos são válidos por 7 dias, salvo indicação contrária</li>
               <li>Valores podem variar conforme tipo de serviço, local e condições do terreno</li>
               <li>Deslocamento pode ser cobrado conforme a distância</li>
@@ -46,7 +42,7 @@ const Termos = () => {
 
             <h2>3. Contratação</h2>
             <p>A contratação é formalizada mediante:</p>
-            <ul>
+            <ul className="text-sm">
               <li>Aceite do orçamento enviado</li>
               <li>Definição de data e local do serviço</li>
               <li>Condições de pagamento acordadas</li>
@@ -54,14 +50,14 @@ const Termos = () => {
 
             <h2>4. Responsabilidades</h2>
             <p><strong>Da DDM Locações:</strong></p>
-            <ul>
+            <ul className="text-sm">
               <li>Fornecer máquina em bom estado de funcionamento</li>
               <li>Disponibilizar operador qualificado</li>
               <li>Cumprir horários e prazos acordados</li>
             </ul>
             
             <p><strong>Do Cliente:</strong></p>
-            <ul>
+            <ul className="text-sm">
               <li>Garantir acesso adequado ao local do serviço</li>
               <li>Informar condições especiais do terreno</li>
               <li>Efetuar pagamento conforme acordado</li>
@@ -87,9 +83,9 @@ const Termos = () => {
               Dúvidas? Entre em contato pelo WhatsApp: <strong>(31) 97106-7272</strong>.
             </p>
 
-            <hr />
+            <hr className="border-border" />
 
-            <p className="text-sm">
+            <p className="text-xs text-muted-foreground">
               <em>Última atualização: Janeiro de 2025</em>
             </p>
           </div>

@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/layout/Layout';
-import InternalHero from '@/components/layout/InternalHero';
+import PageHeaderCompact from '@/components/layout/PageHeaderCompact';
 import { Button } from '@/components/ui/button';
 import {
-  Users,
   ArrowRight,
   MessageCircle,
   MapPin,
@@ -58,26 +57,23 @@ const Sobre = () => {
         <link rel="canonical" href="https://ddmlocacoes.com.br/sobre" />
       </Helmet>
 
-      <InternalHero
-        badge="Sobre nós"
-        badgeIcon={Users}
-        title="Conheça a"
-        titleHighlight="DDM Locações"
-        subtitle="Mais do que aluguel de máquinas: uma parceria para sua obra dar certo."
+      <PageHeaderCompact
+        title="Sobre a DDM Locações"
+        subtitle="Mais do que aluguel de máquinas: uma parceria para sua obra dar certo"
         breadcrumbs={[{ label: 'Sobre' }]}
       />
 
-      {/* História */}
-      <section className="section-padding">
+      {/* História - Editorial 2 columns */}
+      <section className="py-6 md:py-10">
         <div className="container-ddm">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-            {/* Texto */}
-            <div className="space-y-5">
-              <h2 className="text-xl md:text-2xl font-semibold text-foreground">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+            {/* Left - Text */}
+            <div className="space-y-4">
+              <h2 className="text-lg font-semibold text-foreground">
                 Experiência e dedicação em cada obra
               </h2>
               
-              <div className="space-y-4 text-muted-foreground text-sm">
+              <div className="space-y-3 text-sm text-muted-foreground">
                 <p>
                   A DDM Locações nasceu da paixão por máquinas e do desejo de oferecer um serviço diferenciado para quem precisa de retroescavadeira em Sete Lagoas e região.
                 </p>
@@ -89,81 +85,30 @@ const Sobre = () => {
                 </p>
               </div>
 
-              {/* Stats */}
-              <div className="grid grid-cols-3 gap-3 pt-2">
+              {/* Stats inline */}
+              <div className="grid grid-cols-3 gap-2 pt-2">
                 {[
-                  { valor: '50+', label: 'Projetos realizados' },
-                  { valor: '8+', label: 'Cidades atendidas' },
-                  { valor: '100%', label: 'Clientes satisfeitos' },
+                  { valor: '50+', label: 'Projetos' },
+                  { valor: '8+', label: 'Cidades' },
+                  { valor: '100%', label: 'Satisfeitos' },
                 ].map((stat) => (
                   <div key={stat.label} className="text-center p-3 rounded-lg bg-muted border border-border">
-                    <p className="text-xl font-semibold text-copper">{stat.valor}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">{stat.label}</p>
+                    <p className="text-lg font-semibold text-copper">{stat.valor}</p>
+                    <p className="text-xs text-muted-foreground">{stat.label}</p>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Visual */}
-            <div className="relative">
-              <div className="rounded-xl bg-muted border border-border p-6">
-                <div className="grid grid-cols-2 gap-3">
-                  {[
-                    { icon: MapPin, label: 'Sete Lagoas e Região' },
-                    { icon: Clock, label: 'Atendimento Rápido' },
-                    { icon: Shield, label: 'Seguro Incluso' },
-                    { icon: Star, label: 'Avaliações Positivas' },
-                  ].map((item) => (
-                    <div key={item.label} className="p-4 rounded-lg bg-card border border-border text-center">
-                      <item.icon className="w-6 h-6 text-copper mx-auto mb-2" />
-                      <p className="text-sm font-medium text-foreground">{item.label}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Valores */}
-      <section className="section-padding bg-muted/50 border-y border-border">
-        <div className="container-ddm">
-          <div className="text-center mb-8">
-            <h2 className="text-xl md:text-2xl font-semibold text-foreground">
-              Nossos valores
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {valores.map((valor) => (
-              <div key={valor.titulo} className="p-4 rounded-xl bg-card border border-border text-center">
-                <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center mx-auto mb-3">
-                  <valor.icon className="w-5 h-5 text-copper" />
-                </div>
-                <h3 className="font-medium text-foreground mb-1 text-sm">{valor.titulo}</h3>
-                <p className="text-xs text-muted-foreground">{valor.descricao}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Diferenciais */}
-      <section className="section-padding">
-        <div className="container-ddm">
-          <div className="max-w-2xl mx-auto">
-            <div className="text-center mb-8">
-              <h2 className="text-xl md:text-2xl font-semibold text-foreground">
-                Por que nos escolher
-              </h2>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-2">
-              {diferenciais.map((item) => (
-                <div key={item} className="flex items-center gap-3 p-3 rounded-lg bg-muted border border-border">
-                  <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0" />
-                  <span className="text-foreground text-sm">{item}</span>
+            {/* Right - Values cards */}
+            <div className="grid grid-cols-2 gap-3">
+              {valores.map((valor) => (
+                <div key={valor.titulo} className="p-4 rounded-lg bg-card border border-border">
+                  <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center mb-2">
+                    <valor.icon className="w-4 h-4 text-copper" />
+                  </div>
+                  <h3 className="font-medium text-foreground mb-1 text-sm">{valor.titulo}</h3>
+                  <p className="text-xs text-muted-foreground">{valor.descricao}</p>
                 </div>
               ))}
             </div>
@@ -171,17 +116,56 @@ const Sobre = () => {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="section-padding bg-muted/50 border-t border-border">
+      {/* Diferenciais */}
+      <section className="py-6 md:py-10 bg-muted/30 border-y border-border">
         <div className="container-ddm">
-          <div className="max-w-xl mx-auto text-center">
-            <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-3">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-lg font-semibold text-foreground text-center mb-4">
+              Por que nos escolher
+            </h2>
+
+            <div className="grid sm:grid-cols-2 gap-2">
+              {diferenciais.map((item) => (
+                <div key={item} className="flex items-center gap-2 p-3 rounded-lg bg-card border border-border">
+                  <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0" />
+                  <span className="text-sm text-foreground">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Info cards */}
+      <section className="py-6 md:py-10">
+        <div className="container-ddm">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-2xl mx-auto">
+            {[
+              { icon: MapPin, label: 'Sete Lagoas e Região' },
+              { icon: Clock, label: 'Atendimento Rápido' },
+              { icon: Shield, label: 'Seguro Incluso' },
+              { icon: Star, label: 'Avaliações Positivas' },
+            ].map((item) => (
+              <div key={item.label} className="p-3 rounded-lg bg-card border border-border text-center">
+                <item.icon className="w-5 h-5 text-copper mx-auto mb-1.5" />
+                <p className="text-xs font-medium text-foreground">{item.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-6 md:py-10 bg-muted/30 border-t border-border">
+        <div className="container-ddm">
+          <div className="max-w-lg mx-auto text-center">
+            <h2 className="text-lg font-semibold text-foreground mb-2">
               Vamos trabalhar juntos?
             </h2>
-            <p className="text-muted-foreground text-sm mb-6">
+            <p className="text-sm text-muted-foreground mb-4">
               Entre em contato e descubra como podemos ajudar na sua obra.
             </p>
-            <Button variant="default" size="lg" asChild>
+            <Button variant="default" size="default" asChild>
               <Link to="/contato">
                 <MessageCircle className="w-4 h-4" />
                 Fale Conosco
