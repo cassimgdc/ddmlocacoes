@@ -42,7 +42,9 @@ const Footer = () => {
             <ul className="space-y-3">
               {[
                 { label: 'Início', href: '/' },
-                { label: 'Equipamento', href: '/equipamento' },
+                { label: 'Catálogo', href: '/catalogo' },
+                { label: 'Serviços', href: '/servicos' },
+                { label: 'Sobre Nós', href: '/sobre' },
                 { label: 'Dúvidas', href: '/duvidas' },
                 { label: 'Contato', href: '/contato' },
               ].map((link) => (
@@ -137,7 +139,12 @@ const Footer = () => {
               © {currentYear} DDM Locações. Todos os direitos reservados.
             </p>
             <div className="flex items-center gap-4 text-xs text-muted-foreground">
-              <span>Aluguel de Retroescavadeira</span>
+              <Link to="/politica-de-privacidade" className="hover:text-primary transition-colors">
+                Privacidade
+              </Link>
+              <Link to="/termos" className="hover:text-primary transition-colors">
+                Termos
+              </Link>
               <span className="hidden md:inline text-border">|</span>
               <span>Sete Lagoas - MG</span>
             </div>
