@@ -6,15 +6,22 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/layout/ScrollToTop";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+
+// Pages
 import Index from "./pages/Index";
-import Equipamento from "./pages/Equipamento";
-import Duvidas from "./pages/Duvidas";
+import Catalogo from "./pages/Catalogo";
+import CatalogoDetalhe from "./pages/CatalogoDetalhe";
+import Servicos from "./pages/Servicos";
+import Sobre from "./pages/Sobre";
 import Contato from "./pages/Contato";
+import Duvidas from "./pages/Duvidas";
+import Privacidade from "./pages/Privacidade";
+import Termos from "./pages/Termos";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const siteUrl = "https://dig-and-haul-pro.lovable.app";
+const siteUrl = "https://ddmlocacoes.lovable.app";
 const ogImageUrl = `${siteUrl}/og-image.png`;
 
 const App = () => (
@@ -126,9 +133,16 @@ const App = () => (
             <ScrollToTop />
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/equipamento" element={<Equipamento />} />
-              <Route path="/duvidas" element={<Duvidas />} />
+              <Route path="/catalogo" element={<Catalogo />} />
+              <Route path="/catalogo/:slug" element={<CatalogoDetalhe />} />
+              <Route path="/servicos" element={<Servicos />} />
+              <Route path="/sobre" element={<Sobre />} />
               <Route path="/contato" element={<Contato />} />
+              <Route path="/duvidas" element={<Duvidas />} />
+              <Route path="/politica-de-privacidade" element={<Privacidade />} />
+              <Route path="/termos" element={<Termos />} />
+              {/* Redirects para rotas antigas */}
+              <Route path="/equipamento" element={<CatalogoDetalhe />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

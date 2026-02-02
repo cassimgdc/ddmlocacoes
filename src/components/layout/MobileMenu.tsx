@@ -10,8 +10,9 @@ interface MobileMenuProps {
 
 const navLinks = [
   { href: '/', label: 'Início', icon: Home },
-  { href: '/equipamento', label: 'Equipamento', icon: Tractor },
-  { href: '/duvidas', label: 'Dúvidas', icon: HelpCircle },
+  { href: '/catalogo', label: 'Catálogo', icon: Tractor },
+  { href: '/servicos', label: 'Serviços', icon: Wrench },
+  { href: '/sobre', label: 'Sobre', icon: HelpCircle },
   { href: '/contato', label: 'Contato', icon: Phone },
 ];
 
