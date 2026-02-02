@@ -211,11 +211,18 @@ const Contato = () => {
       </Helmet>
       
       {/* Header */}
-      <section className="pt-20 pb-4 md:pt-32 md:pb-8">
-        <div className="container-ddm">
+      <section className="pt-24 pb-6 md:pt-36 md:pb-10 relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/30" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-[100px]" />
+        
+        <div className="container-ddm relative z-10">
           <div className="max-w-xl mx-auto text-center animate-fade-in">
-            <h1 className="text-2xl md:text-4xl font-black text-foreground mb-2 md:mb-4">
-              Solicitar Orçamento
+            <span className="badge-industrial mb-4">
+              <MessageCircle className="w-4 h-4" />
+              Contato
+            </span>
+            <h1 className="text-2xl md:text-4xl lg:text-5xl font-display font-black text-foreground mb-3">
+              Solicitar <span className="text-gradient-vivid">Orçamento</span>
             </h1>
             <p className="text-muted-foreground text-sm md:text-base">
               Preencha seus dados e você será direcionado ao WhatsApp.
