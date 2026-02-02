@@ -1,10 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Menu, MessageCircle, Phone } from 'lucide-react';
+import { Menu, Phone } from 'lucide-react';
 import logoImg from '@/assets/logo-ddm.png';
 import MobileMenu from './MobileMenu';
-import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -64,7 +62,7 @@ const Header = () => {
           isScrolled ? 'max-h-0 opacity-0' : 'max-h-8 opacity-100'
         }`}>
           <div className="container-ddm">
-            <div className="flex items-center justify-between py-1.5 text-[11px]">
+            <div className="flex items-center justify-center py-1.5 text-[11px]">
               <div className="flex items-center gap-3 text-muted-foreground">
                 <a 
                   href="tel:+5531971067272" 
@@ -78,7 +76,6 @@ const Header = () => {
                 <span className="text-border/80">•</span>
                 <span>Seg - Sáb: 7h às 18h</span>
               </div>
-              <ThemeToggle />
             </div>
           </div>
         </div>
@@ -119,36 +116,11 @@ const Header = () => {
               ))}
             </nav>
 
-            {/* Desktop CTA - Single button */}
-            <div className="hidden lg:flex items-center gap-2">
-              {isScrolled && <ThemeToggle />}
-              <Button 
-                variant="default" 
-                size="sm" 
-                asChild
-                className="h-9 px-4 text-sm font-medium"
-              >
-                <Link to="/contato">
-                  <MessageCircle className="w-3.5 h-3.5" />
-                  Pedir Orçamento
-                </Link>
-              </Button>
-            </div>
+            {/* Spacer for layout balance */}
+            <div className="hidden lg:block w-1" />
 
             {/* Mobile Controls */}
             <div className="lg:hidden flex items-center gap-2">
-              {/* Mobile CTA */}
-              <div className={`transition-all duration-200 ${showMobileCTA ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                <Button variant="default" size="sm" asChild className="h-8 px-3 text-xs">
-                  <Link to="/contato">
-                    <MessageCircle className="w-3.5 h-3.5" />
-                    Orçamento
-                  </Link>
-                </Button>
-              </div>
-              
-              <ThemeToggle />
-              
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
                 className={`w-9 h-9 flex items-center justify-center rounded-lg transition-colors ${

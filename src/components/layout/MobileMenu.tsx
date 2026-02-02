@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { X, MessageCircle, Home, Wrench, Tractor, Phone, ArrowRight, HelpCircle } from 'lucide-react';
 import { useEffect } from 'react';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -121,6 +122,12 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </Button>
+        </div>
+
+        {/* Theme Toggle */}
+        <div className="px-3 pb-4 flex items-center justify-between border-t border-border/30 pt-3 mt-1">
+          <span className="text-xs text-muted-foreground">Alternar tema</span>
+          <ThemeToggle />
         </div>
       </div>
     </>
