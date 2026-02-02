@@ -45,7 +45,7 @@ const CategoryGrid = () => {
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold text-foreground">Categorias</h2>
-        <Link to="/catalogo" className="text-sm text-copper hover:underline flex items-center gap-1">
+        <Link to="/catalogo" className="text-sm text-accent hover:underline flex items-center gap-1">
           Ver todos
           <ArrowRight className="w-3.5 h-3.5" />
         </Link>
@@ -59,11 +59,11 @@ const CategoryGrid = () => {
             className="group p-3 rounded-lg bg-card border border-border hover:border-copper/30 transition-all"
           >
             <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center flex-shrink-0 group-hover:bg-copper group-hover:text-white transition-colors">
-                <category.icon className="w-4 h-4 text-copper group-hover:text-white" />
+              <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center flex-shrink-0 group-hover:bg-accent group-hover:text-white transition-colors">
+                <category.icon className="w-4 h-4 text-accent group-hover:text-white" />
               </div>
               <div className="min-w-0 flex-1">
-                <h3 className="text-sm font-medium text-foreground group-hover:text-copper transition-colors truncate">
+                <h3 className="text-sm font-medium text-foreground group-hover:text-accent transition-colors truncate">
                   {category.title}
                 </h3>
                 <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">

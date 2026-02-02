@@ -37,7 +37,7 @@ const TestimonialsSimple = () => {
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className={`w-3.5 h-3.5 ${i < item.rating ? 'fill-copper text-copper' : 'text-muted'}`}
+                  className={`w-3.5 h-3.5 ${i < item.rating ? 'fill-accent text-accent' : 'text-muted'}`}
                 />
               ))}
             </div>
@@ -48,7 +48,7 @@ const TestimonialsSimple = () => {
             {/* Author */}
             <div className="flex items-center gap-2">
               <div className="w-6 h-6 rounded-full bg-muted flex items-center justify-center">
-                <span className="text-copper font-medium text-xs">{item.name.charAt(0)}</span>
+                <span className="text-accent font-medium text-xs">{item.name.charAt(0)}</span>
               </div>
               <div>
                 <p className="text-xs font-medium text-foreground">{item.name}</p>

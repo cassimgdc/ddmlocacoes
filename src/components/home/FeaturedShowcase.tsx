@@ -115,10 +115,10 @@ const FeaturedShowcase = () => {
                 </div>
 
                 {/* Price & CTAs */}
-                <div className="flex items-center justify-between mt-6 pt-4 border-t border-border/60">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mt-6 pt-4 border-t border-border/60">
                   {heroItem.preco ? (
                     <div>
-                      <span className="text-2xl font-bold text-accent">{heroItem.preco}</span>
+                      <span className="text-xl sm:text-2xl font-bold text-accent">{heroItem.preco}</span>
                       <span className="text-sm text-muted-foreground ml-1">/dia</span>
                     </div>
                   ) : (
@@ -130,19 +130,19 @@ const FeaturedShowcase = () => {
                       variant="outline" 
                       size="sm" 
                       asChild 
-                      className="h-9 px-4"
+                      className="h-9 px-3 text-xs sm:text-sm sm:px-4"
                     >
                       <Link to={`/catalogo/${heroItem.slug}`}>
-                        Ver detalhes
+                        Detalhes
                       </Link>
                     </Button>
                     <Button 
                       size="sm" 
-                      className="h-9 px-4 bg-primary hover:bg-primary/90"
+                      className="h-9 px-3 text-xs sm:text-sm sm:px-4 bg-primary hover:bg-primary/90"
                       onClick={() => handleQuote(heroItem.nome)}
                     >
-                      <MessageCircle className="w-4 h-4 mr-1.5" />
-                      Orçar
+                      <MessageCircle className="w-4 h-4 sm:mr-1.5" />
+                      <span className="hidden sm:inline">Orçar</span>
                     </Button>
                   </div>
                 </div>
