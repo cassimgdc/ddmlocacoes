@@ -1,45 +1,152 @@
-import { Link } from 'react-router-dom';
+import { useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Search, ArrowUpDown, Package, Tractor } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import InternalHero from '@/components/layout/InternalHero';
+import CatalogoFilters from '@/components/catalogo/CatalogoFilters';
+import MobileFiltersDrawer from '@/components/catalogo/MobileFiltersDrawer';
+import EquipamentoCard from '@/components/catalogo/EquipamentoCard';
+import QuoteModal from '@/components/catalogo/QuoteModal';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
-  Tractor,
-  ArrowRight,
-  CheckCircle2,
-  Fuel,
-  User,
-  Clock,
-  MessageCircle,
-} from 'lucide-react';
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { equipamentos, Equipamento } from '@/data/equipamentos';
 import case580m from '@/assets/case-580m.png';
 
-const equipamentos = [
-  {
-    slug: 'retroescavadeira-case-580m',
-    nome: 'Retroescavadeira Case 580M',
-    categoria: 'Retroescavadeira',
-    imagem: case580m,
-    descricao: 'Máquina versátil para escavação, terraplanagem e carregamento. Ideal para obras residenciais e comerciais.',
-    destaques: [
-      'Operador experiente incluso',
-      'Combustível incluso',
-      'Manutenção em dia',
-    ],
-    disponivel: true,
-    precoHora: 'R$ 200',
-  },
-];
+const ITEMS_PER_PAGE = 12;
+
+type SortOption = 'relevancia' | 'nome-asc' | 'nome-desc' | 'disponivel';
+
+// Override placeholder image for Case 580M with real image
+const getEquipamentoImage = (equip: Equipamento) => {
+  if (equip.slug === 'retroescavadeira-case-580m') {
+    return case580m;
+  }
+  return equip.imagemPlaceholder;
+};
 
 const Catalogo = () => {
+  // State
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedStatus, setSelectedStatus] = useState<string[]>([]);
+  const [sortBy, setSortBy] = useState<SortOption>('relevancia');
+  const [currentPage, setCurrentPage] = useState(1);
+  
+  // Quote modal state
+  const [quoteModalOpen, setQuoteModalOpen] = useState(false);
+  const [selectedEquipamento, setSelectedEquipamento] = useState<Equipamento | null>(null);
+
+  // Handlers
+  const handleCategoryChange = (categoryId: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(categoryId)
+        ? prev.filter((c) => c !== categoryId)
+        : [...prev, categoryId]
+    );
+    setCurrentPage(1);
+  };
+
+  const handleStatusChange = (statusId: string) => {
+    setSelectedStatus((prev) =>
+      prev.includes(statusId)
+        ? prev.filter((s) => s !== statusId)
+        : [...prev, statusId]
+    );
+    setCurrentPage(1);
+  };
+
+  const handleClearFilters = () => {
+    setSelectedCategories([]);
+    setSelectedStatus([]);
+    setSearchQuery('');
+    setCurrentPage(1);
+  };
+
+  const handleQuote = (equipamento: Equipamento) => {
+    setSelectedEquipamento(equipamento);
+    setQuoteModalOpen(true);
+  };
+
+  // Filter and sort
+  const filteredEquipamentos = useMemo(() => {
+    let result = [...equipamentos];
+
+    // Search filter
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter(
+        (e) =>
+          e.nome.toLowerCase().includes(query) ||
+          e.descricaoCurta.toLowerCase().includes(query) ||
+          e.categoria.toLowerCase().includes(query)
+      );
+    }
+
+    // Category filter
+    if (selectedCategories.length > 0) {
+      result = result.filter((e) => selectedCategories.includes(e.categoria));
+    }
+
+    // Status filter
+    if (selectedStatus.length > 0) {
+      result = result.filter((e) => selectedStatus.includes(e.status));
+    }
+
+    // Sort
+    switch (sortBy) {
+      case 'nome-asc':
+        result.sort((a, b) => a.nome.localeCompare(b.nome));
+        break;
+      case 'nome-desc':
+        result.sort((a, b) => b.nome.localeCompare(a.nome));
+        break;
+      case 'disponivel':
+        result.sort((a, b) => {
+          if (a.status === 'disponivel' && b.status !== 'disponivel') return -1;
+          if (a.status !== 'disponivel' && b.status === 'disponivel') return 1;
+          return 0;
+        });
+        break;
+      case 'relevancia':
+      default:
+        result.sort((a, b) => {
+          if (a.destaque && !b.destaque) return -1;
+          if (!a.destaque && b.destaque) return 1;
+          if (a.status === 'disponivel' && b.status !== 'disponivel') return -1;
+          if (a.status !== 'disponivel' && b.status === 'disponivel') return 1;
+          return 0;
+        });
+        break;
+    }
+
+    return result;
+  }, [searchQuery, selectedCategories, selectedStatus, sortBy]);
+
+  // Pagination
+  const totalPages = Math.ceil(filteredEquipamentos.length / ITEMS_PER_PAGE);
+  const paginatedEquipamentos = filteredEquipamentos.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  const activeFiltersCount = selectedCategories.length + selectedStatus.length;
+
   return (
     <Layout>
       <Helmet>
         <title>Catálogo de Equipamentos | DDM Locações - Sete Lagoas</title>
-        <meta name="description" content="Confira nosso catálogo de máquinas para locação. Retroescavadeira Case 580M com operador incluso. Aluguel por hora ou diária em Sete Lagoas e região." />
+        <meta
+          name="description"
+          content="Confira nosso catálogo de equipamentos para locação: retroescavadeiras, escavadeiras, rolos compactadores e mais. Aluguel em Sete Lagoas e região."
+        />
         <link rel="canonical" href="https://ddmlocacoes.lovable.app/catalogo" />
-        <meta property="og:title" content="Catálogo de Equipamentos | DDM Locações" />
-        <meta property="og:description" content="Máquinas para locação com operador incluso em Sete Lagoas." />
       </Helmet>
 
       <InternalHero
@@ -47,139 +154,184 @@ const Catalogo = () => {
         badgeIcon={Tractor}
         title="Nossos"
         titleHighlight="Equipamentos"
-        subtitle="Máquinas revisadas e prontas para trabalhar. Todos os aluguéis incluem operador experiente e combustível."
+        subtitle="Encontre o equipamento ideal para seu projeto. Todos os aluguéis incluem operador e combustível."
         breadcrumbs={[{ label: 'Catálogo' }]}
       />
 
-      {/* Grid de Equipamentos */}
-      <section className="py-12 md:py-20">
+      <section className="py-8 md:py-12">
         <div className="container-ddm">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {equipamentos.map((equip) => (
-              <div
-                key={equip.slug}
-                className="group relative rounded-2xl bg-card border border-border/50 overflow-hidden card-hover-lift"
-              >
-                {/* Badge disponível */}
-                {equip.disponivel && (
-                  <div className="absolute top-4 right-4 z-10">
-                    <span className="px-3 py-1 rounded-full bg-ddm-success/20 text-ddm-success text-xs font-semibold">
-                      Disponível
-                    </span>
-                  </div>
+          {/* Top bar: Search + Sort */}
+          <div className="flex flex-col sm:flex-row gap-4 mb-6 md:mb-8">
+            {/* Search */}
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder="Buscar equipamento..."
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setCurrentPage(1);
+                }}
+                className="pl-10 bg-card border-border"
+                aria-label="Buscar equipamentos"
+              />
+            </div>
+
+            {/* Mobile filters */}
+            <div className="flex gap-3 sm:hidden">
+              <MobileFiltersDrawer
+                selectedCategories={selectedCategories}
+                selectedStatus={selectedStatus}
+                onCategoryChange={handleCategoryChange}
+                onStatusChange={handleStatusChange}
+                onClearFilters={handleClearFilters}
+                activeFiltersCount={activeFiltersCount}
+              />
+              
+              {/* Sort mobile */}
+              <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
+                <SelectTrigger className="w-[140px] bg-card border-border">
+                  <ArrowUpDown className="w-4 h-4 mr-2" />
+                  <SelectValue placeholder="Ordenar" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border z-50">
+                  <SelectItem value="relevancia">Relevância</SelectItem>
+                  <SelectItem value="nome-asc">Nome A-Z</SelectItem>
+                  <SelectItem value="nome-desc">Nome Z-A</SelectItem>
+                  <SelectItem value="disponivel">Disponíveis</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Sort desktop */}
+            <div className="hidden sm:block">
+              <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
+                <SelectTrigger className="w-[180px] bg-card border-border">
+                  <ArrowUpDown className="w-4 h-4 mr-2" />
+                  <SelectValue placeholder="Ordenar por" />
+                </SelectTrigger>
+                <SelectContent className="bg-card border-border z-50">
+                  <SelectItem value="relevancia">Relevância</SelectItem>
+                  <SelectItem value="nome-asc">Nome A-Z</SelectItem>
+                  <SelectItem value="nome-desc">Nome Z-A</SelectItem>
+                  <SelectItem value="disponivel">Disponíveis primeiro</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Main content: Sidebar + Grid */}
+          <div className="flex gap-8">
+            {/* Desktop sidebar filters */}
+            <aside className="hidden lg:block w-64 flex-shrink-0">
+              <div className="sticky top-28 card-premium p-5">
+                <CatalogoFilters
+                  selectedCategories={selectedCategories}
+                  selectedStatus={selectedStatus}
+                  onCategoryChange={handleCategoryChange}
+                  onStatusChange={handleStatusChange}
+                  onClearFilters={handleClearFilters}
+                />
+              </div>
+            </aside>
+
+            {/* Equipment grid */}
+            <div className="flex-1">
+              {/* Results count */}
+              <div className="flex items-center justify-between mb-6">
+                <p className="text-sm text-muted-foreground">
+                  {filteredEquipamentos.length} equipamento{filteredEquipamentos.length !== 1 ? 's' : ''} encontrado{filteredEquipamentos.length !== 1 ? 's' : ''}
+                </p>
+                {activeFiltersCount > 0 && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleClearFilters}
+                    className="text-muted-foreground hover:text-foreground lg:hidden"
+                  >
+                    Limpar filtros ({activeFiltersCount})
+                  </Button>
                 )}
+              </div>
 
-                {/* Imagem */}
-                <div className="relative h-48 md:h-56 bg-gradient-to-br from-secondary/50 to-muted/30 flex items-center justify-center p-6">
-                  <img
-                    src={equip.imagem}
-                    alt={equip.nome}
-                    className="max-h-full w-auto object-contain group-hover:scale-105 transition-transform duration-500"
-                  />
+              {/* Grid */}
+              {paginatedEquipamentos.length > 0 ? (
+                <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-5 md:gap-6">
+                  {paginatedEquipamentos.map((equipamento, index) => (
+                    <EquipamentoCard
+                      key={equipamento.id}
+                      equipamento={{
+                        ...equipamento,
+                        imagemPlaceholder: getEquipamentoImage(equipamento),
+                      }}
+                      onQuote={handleQuote}
+                      delay={(index % ITEMS_PER_PAGE) * 50}
+                    />
+                  ))}
                 </div>
-
-                {/* Conteúdo */}
-                <div className="p-5 md:p-6">
-                  <span className="text-xs text-primary font-semibold uppercase tracking-wider">
-                    {equip.categoria}
-                  </span>
-                  <h3 className="text-lg md:text-xl font-display font-bold text-foreground mt-1 mb-2">
-                    {equip.nome}
+              ) : (
+                <div className="text-center py-16">
+                  <Package className="w-16 h-16 text-muted-foreground/50 mx-auto mb-4" />
+                  <h3 className="font-display font-bold text-foreground mb-2">
+                    Nenhum equipamento encontrado
                   </h3>
-                  <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-                    {equip.descricao}
+                  <p className="text-muted-foreground mb-4">
+                    Tente ajustar os filtros ou termo de busca
                   </p>
-
-                  {/* Destaques */}
-                  <ul className="space-y-1.5 mb-5">
-                    {equip.destaques.map((item) => (
-                      <li key={item} className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-ddm-success flex-shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* Preço e CTA */}
-                  <div className="flex items-center justify-between gap-4">
-                    <div>
-                      <p className="text-xs text-muted-foreground">A partir de</p>
-                      <p className="text-lg font-bold text-gradient-vivid">
-                        {equip.precoHora}
-                        <span className="text-sm font-normal text-muted-foreground">/hora</span>
-                      </p>
-                    </div>
-                    <Button variant="outline" size="sm" asChild className="group/btn">
-                      <Link to={`/catalogo/${equip.slug}`}>
-                        Ver Detalhes
-                        <ArrowRight className="w-3.5 h-3.5 ml-1 group-hover/btn:translate-x-0.5 transition-transform" />
-                      </Link>
-                    </Button>
-                  </div>
+                  <Button variant="outline" onClick={handleClearFilters}>
+                    Limpar filtros
+                  </Button>
                 </div>
-              </div>
-            ))}
+              )}
 
-            {/* Card placeholder - Em breve */}
-            <div className="rounded-2xl bg-muted/20 border border-dashed border-border/50 p-6 flex flex-col items-center justify-center text-center min-h-[300px]">
-              <div className="w-16 h-16 rounded-xl bg-muted/50 flex items-center justify-center mb-4">
-                <Tractor className="w-8 h-8 text-muted-foreground/50" />
-              </div>
-              <h3 className="text-lg font-display font-bold text-muted-foreground mb-2">
-                Novos Equipamentos
-              </h3>
-              <p className="text-sm text-muted-foreground/70">
-                Em breve, mais máquinas para atender sua obra.
-              </p>
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-center gap-2 mt-10">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                    disabled={currentPage === 1}
+                  >
+                    Anterior
+                  </Button>
+                  
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <Button
+                        key={page}
+                        variant={currentPage === page ? 'default' : 'ghost'}
+                        size="sm"
+                        onClick={() => setCurrentPage(page)}
+                        className="w-9"
+                      >
+                        {page}
+                      </Button>
+                    ))}
+                  </div>
+
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                    disabled={currentPage === totalPages}
+                  >
+                    Próximo
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Incluso no aluguel */}
-      <section className="py-12 md:py-16 bg-secondary/30">
-        <div className="container-ddm">
-          <div className="text-center mb-10">
-            <h2 className="text-xl md:text-2xl font-display font-bold text-foreground">
-              O que está <span className="text-gradient-vivid">incluso</span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-3xl mx-auto">
-            {[
-              { icon: User, label: 'Operador experiente' },
-              { icon: Fuel, label: 'Combustível' },
-              { icon: Clock, label: 'Mínimo 2h' },
-              { icon: CheckCircle2, label: 'Máquina revisada' },
-            ].map((item) => (
-              <div key={item.label} className="p-4 rounded-xl bg-card border border-border/50 text-center">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mx-auto mb-2">
-                  <item.icon className="w-5 h-5 text-primary" />
-                </div>
-                <p className="text-xs md:text-sm text-muted-foreground">{item.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-12 md:py-16">
-        <div className="container-ddm">
-          <div className="text-center">
-            <h2 className="text-xl md:text-2xl font-display font-bold text-foreground mb-4">
-              Precisa de um orçamento?
-            </h2>
-            <Button variant="cta" size="lg" asChild className="group">
-              <Link to="/contato">
-                <MessageCircle className="w-5 h-5" />
-                Solicitar Orçamento
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+      {/* Quote Modal */}
+      <QuoteModal
+        equipamento={selectedEquipamento}
+        isOpen={quoteModalOpen}
+        onClose={() => setQuoteModalOpen(false)}
+      />
     </Layout>
   );
 };
