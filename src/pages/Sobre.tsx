@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Layout from '@/components/layout/Layout';
-import PageHeaderCompact from '@/components/layout/PageHeaderCompact';
 import { Button } from '@/components/ui/button';
 import {
   ArrowRight,
@@ -15,6 +14,8 @@ import {
   Handshake,
   CheckCircle2,
 } from 'lucide-react';
+import logoImg from '@/assets/logo-ddm.png';
+import { motion } from 'framer-motion';
 
 const Sobre = () => {
   const valores = [
@@ -57,25 +58,77 @@ const Sobre = () => {
         <link rel="canonical" href="https://ddmlocacoes.com.br/sobre" />
       </Helmet>
 
-      <PageHeaderCompact
-        title="Sobre a DDM Locações"
-        subtitle="Mais do que aluguel de máquinas: uma parceria para sua obra dar certo"
-        breadcrumbs={[{ label: 'Sobre' }]}
-      />
+      {/* Hero Section with Large Logo */}
+      <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden bg-gradient-to-b from-muted/50 to-background">
+        {/* Subtle pattern background */}
+        <div 
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `radial-gradient(circle, currentColor 1px, transparent 1px)`,
+            backgroundSize: '24px 24px',
+          }}
+        />
+        
+        <div className="container-ddm relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col items-center text-center"
+          >
+            {/* Large Logo */}
+            <div className="mb-8">
+              <img 
+                src={logoImg} 
+                alt="DDM Locações" 
+                className="h-32 sm:h-40 md:h-52 lg:h-64 w-auto"
+              />
+            </div>
+
+            {/* Tagline */}
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground tracking-tight max-w-2xl">
+              Mais do que aluguel de máquinas
+            </h1>
+            <p className="text-lg md:text-xl text-accent font-medium mt-2">
+              Uma parceria para sua obra dar certo
+            </p>
+
+            {/* Stats row */}
+            <div className="flex items-center justify-center gap-8 md:gap-12 mt-10 pt-8 border-t border-border/60">
+              {[
+                { valor: '500+', label: 'Locações realizadas' },
+                { valor: '10+', label: 'Anos de experiência' },
+                { valor: '8+', label: 'Cidades atendidas' },
+              ].map((stat) => (
+                <div key={stat.label} className="text-center">
+                  <p className="text-2xl md:text-3xl font-bold text-foreground">{stat.valor}</p>
+                  <p className="text-xs md:text-sm text-muted-foreground mt-1">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
       {/* História - Editorial 2 columns */}
-      <section className="py-6 md:py-10">
+      <section className="py-12 md:py-16">
         <div className="container-ddm">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
             {/* Left - Text */}
-            <div className="space-y-4">
-              <h2 className="text-lg font-semibold text-foreground">
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="space-y-5"
+            >
+              <h2 className="text-xl md:text-2xl font-bold text-foreground">
                 Experiência e dedicação em cada obra
               </h2>
               
-              <div className="space-y-3 text-sm text-muted-foreground">
+              <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  A DDM Locações nasceu da paixão por máquinas e do desejo de oferecer um serviço diferenciado para quem precisa de retroescavadeira em Sete Lagoas e região.
+                  A DDM Locações nasceu da paixão por máquinas e do desejo de oferecer um serviço diferenciado para quem precisa de retroescavadeira em <span className="text-foreground font-medium">Sete Lagoas e região</span>.
                 </p>
                 <p>
                   Sabemos que cada obra tem suas particularidades. Por isso, oferecemos atendimento personalizado, com orçamento justo e sem surpresas. Nossa máquina está sempre revisada e nosso operador é experiente e comprometido com o resultado.
@@ -84,51 +137,46 @@ const Sobre = () => {
                   Atendemos desde pequenas obras residenciais até projetos maiores, sempre com o mesmo cuidado e atenção aos detalhes.
                 </p>
               </div>
-
-              {/* Stats inline */}
-              <div className="grid grid-cols-3 gap-2 pt-2">
-                {[
-                  { valor: '50+', label: 'Projetos' },
-                  { valor: '8+', label: 'Cidades' },
-                  { valor: '100%', label: 'Satisfeitos' },
-                ].map((stat) => (
-                  <div key={stat.label} className="text-center p-3 rounded-lg bg-muted border border-border">
-                    <p className="text-lg font-semibold text-copper">{stat.valor}</p>
-                    <p className="text-xs text-muted-foreground">{stat.label}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+            </motion.div>
 
             {/* Right - Values cards */}
-            <div className="grid grid-cols-2 gap-3">
-              {valores.map((valor) => (
-                <div key={valor.titulo} className="p-4 rounded-lg bg-card border border-border">
-                  <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center mb-2">
-                    <valor.icon className="w-4 h-4 text-copper" />
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="grid grid-cols-2 gap-4"
+            >
+              {valores.map((valor, index) => (
+                <div 
+                  key={valor.titulo} 
+                  className="p-5 rounded-xl bg-card border border-border hover:border-accent/30 transition-colors"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center mb-3">
+                    <valor.icon className="w-5 h-5 text-accent" />
                   </div>
-                  <h3 className="font-medium text-foreground mb-1 text-sm">{valor.titulo}</h3>
-                  <p className="text-xs text-muted-foreground">{valor.descricao}</p>
+                  <h3 className="font-semibold text-foreground mb-1">{valor.titulo}</h3>
+                  <p className="text-sm text-muted-foreground">{valor.descricao}</p>
                 </div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
       {/* Diferenciais */}
-      <section className="py-6 md:py-10 bg-muted/30 border-y border-border">
+      <section className="py-12 md:py-16 bg-muted/30 border-y border-border">
         <div className="container-ddm">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-lg font-semibold text-foreground text-center mb-4">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-xl md:text-2xl font-bold text-foreground text-center mb-8">
               Por que nos escolher
             </h2>
 
-            <div className="grid sm:grid-cols-2 gap-2">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {diferenciais.map((item) => (
-                <div key={item} className="flex items-center gap-2 p-3 rounded-lg bg-card border border-border">
-                  <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0" />
-                  <span className="text-sm text-foreground">{item}</span>
+                <div key={item} className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border">
+                  <CheckCircle2 className="w-5 h-5 text-success flex-shrink-0" />
+                  <span className="text-foreground">{item}</span>
                 </div>
               ))}
             </div>
@@ -137,18 +185,18 @@ const Sobre = () => {
       </section>
 
       {/* Info cards */}
-      <section className="py-6 md:py-10">
+      <section className="py-12 md:py-16">
         <div className="container-ddm">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-2xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
             {[
               { icon: MapPin, label: 'Sete Lagoas e Região' },
               { icon: Clock, label: 'Atendimento Rápido' },
               { icon: Shield, label: 'Seguro Incluso' },
               { icon: Star, label: 'Avaliações Positivas' },
             ].map((item) => (
-              <div key={item.label} className="p-3 rounded-lg bg-card border border-border text-center">
-                <item.icon className="w-5 h-5 text-copper mx-auto mb-1.5" />
-                <p className="text-xs font-medium text-foreground">{item.label}</p>
+              <div key={item.label} className="p-4 rounded-xl bg-card border border-border text-center hover:border-accent/30 transition-colors">
+                <item.icon className="w-6 h-6 text-accent mx-auto mb-2" />
+                <p className="text-sm font-medium text-foreground">{item.label}</p>
               </div>
             ))}
           </div>
@@ -156,22 +204,33 @@ const Sobre = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-6 md:py-10 bg-muted/30 border-t border-border">
+      <section className="py-12 md:py-16 bg-muted/30 border-t border-border">
         <div className="container-ddm">
-          <div className="max-w-lg mx-auto text-center">
-            <h2 className="text-lg font-semibold text-foreground mb-2">
+          <div className="max-w-xl mx-auto text-center">
+            <h2 className="text-xl md:text-2xl font-bold text-foreground mb-3">
               Vamos trabalhar juntos?
             </h2>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-muted-foreground mb-6">
               Entre em contato e descubra como podemos ajudar na sua obra.
             </p>
-            <Button variant="default" size="default" asChild>
-              <Link to="/contato">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <Button variant="default" size="lg" asChild>
+                <Link to="/contato">
+                  <MessageCircle className="w-4 h-4" />
+                  Fale Conosco
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-success/30 text-success hover:bg-success/5 hover:border-success/50"
+                onClick={() => window.open('https://wa.me/5531971067272', '_blank')}
+              >
                 <MessageCircle className="w-4 h-4" />
-                Fale Conosco
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </Button>
+                WhatsApp Direto
+              </Button>
+            </div>
           </div>
         </div>
       </section>
