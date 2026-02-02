@@ -90,18 +90,21 @@ const Duvidas = () => {
       </Helmet>
 
       {/* Header */}
-      <section className="pt-20 pb-6 md:pt-32 md:pb-12">
-        <div className="container-ddm">
+      <section className="pt-24 pb-8 md:pt-36 md:pb-14 relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-secondary/30" />
+        <div className="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full blur-[100px]" />
+        
+        <div className="container-ddm relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-in-up">
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4">
+            <span className="badge-industrial mb-4">
               <HelpCircle className="w-4 h-4" />
-              <span className="text-sm font-medium">FAQ</span>
-            </div>
-            <h1 className="text-2xl md:text-4xl font-black text-foreground mb-3">
-              Dúvidas Frequentes
+              FAQ
+            </span>
+            <h1 className="text-2xl md:text-4xl lg:text-5xl font-display font-black text-foreground mb-4">
+              Dúvidas <span className="text-gradient-vivid">Frequentes</span>
             </h1>
-            <p className="text-muted-foreground text-sm md:text-lg">
-              Respostas rápidas para as perguntas mais comuns sobre nossos serviços.
+            <p className="text-muted-foreground text-sm md:text-lg max-w-xl mx-auto">
+              Respostas rápidas para as perguntas mais comuns sobre nossos serviços de locação.
             </p>
           </div>
         </div>
@@ -159,19 +162,19 @@ const Duvidas = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-10 md:py-16 bg-muted/30 mb-20 md:mb-0">
+      <section className="py-16 md:py-24 bg-secondary/30 section-glow mb-20 md:mb-0">
         <div className="container-ddm text-center animate-fade-in-up">
-          <h2 className="text-lg md:text-2xl font-bold text-foreground mb-2">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-display font-bold text-foreground mb-3">
             Ainda tem dúvidas?
           </h2>
-          <p className="text-muted-foreground text-sm md:text-base mb-5 max-w-md mx-auto">
+          <p className="text-muted-foreground text-sm md:text-base mb-6 max-w-md mx-auto">
             Fale diretamente conosco pelo WhatsApp. Respondemos rápido!
           </p>
-          <Button variant="cta" size="lg" className="group touch-feedback" asChild>
+          <Button variant="cta" size="lg" className="group" asChild>
             <Link to="/contato">
-              <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
+              <MessageCircle className="w-5 h-5" />
               Pedir Orçamento
-              <ArrowRight className="w-3.5 h-3.5 md:w-4 md:h-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </Button>
         </div>

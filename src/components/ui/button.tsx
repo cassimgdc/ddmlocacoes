@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2.5 whitespace-nowrap rounded-lg text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -14,7 +14,7 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-destructive-foreground shadow-md hover:bg-destructive/90",
         outline:
-          "border-2 border-primary/50 bg-transparent text-primary hover:bg-primary hover:text-primary-foreground hover:border-primary",
+          "border-2 border-border bg-transparent text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary",
         secondary:
           "bg-secondary text-secondary-foreground shadow-md hover:bg-secondary/80 hover:shadow-lg",
         ghost: 
@@ -22,21 +22,21 @@ const buttonVariants = cva(
         link: 
           "text-primary underline-offset-4 hover:underline",
         cta:
-          "bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-cta hover:scale-105 hover:shadow-[0_15px_50px_-10px_hsl(45_100%_51%_/_0.6)] active:scale-100",
+          "bg-gradient-to-r from-primary to-[hsl(35,100%,52%)] text-primary-foreground font-bold shadow-cta hover:scale-[1.03] hover:shadow-[0_12px_40px_-8px_hsl(28_100%_50%_/_0.6)] active:scale-100",
         whatsapp:
           "bg-ddm-whatsapp text-white shadow-md hover:bg-[hsl(142_70%_40%)] hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0",
         hero:
-          "bg-gradient-to-r from-primary to-accent text-primary-foreground font-bold shadow-cta hover:scale-105 active:scale-100",
+          "bg-gradient-to-r from-primary to-[hsl(35,100%,52%)] text-primary-foreground font-bold shadow-cta hover:scale-[1.03] active:scale-100",
         heroOutline:
           "border-2 border-white/30 bg-white/10 text-white backdrop-blur-sm hover:bg-white/20 hover:border-white/50",
         premium:
           "bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_100%] text-primary-foreground font-bold shadow-cta hover:bg-[position:100%_0] transition-all duration-500",
       },
       size: {
-        default: "h-11 px-6 py-2",
-        sm: "h-9 rounded-lg px-4 text-xs",
-        lg: "h-12 md:h-12 rounded-xl px-6 md:px-8 text-base min-h-[48px]",
-        xl: "h-14 rounded-xl px-10 text-lg min-h-[56px]",
+        default: "h-11 px-6 py-2.5",
+        sm: "h-9 rounded-md px-4 text-xs",
+        lg: "h-12 md:h-13 rounded-lg px-7 text-base min-h-[48px]",
+        xl: "h-14 rounded-lg px-10 text-base font-bold min-h-[56px]",
         icon: "h-10 w-10 rounded-lg",
       },
     },

@@ -52,16 +52,16 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
 
       {/* Drawer */}
       <div
-        className={`md:hidden fixed inset-y-0 right-0 z-50 w-[85%] max-w-[320px] bg-background border-l border-border shadow-2xl transition-transform duration-300 ease-out ${
+        className={`md:hidden fixed inset-y-0 right-0 z-50 w-[85%] max-w-[320px] bg-background/98 backdrop-blur-xl border-l border-border/50 shadow-2xl transition-transform duration-300 ease-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between h-16 px-5 border-b border-border/50">
-          <span className="text-lg font-bold text-foreground">Menu</span>
+        <div className="flex items-center justify-between h-16 px-5 border-b border-border/30">
+          <span className="text-lg font-display font-bold text-foreground">Menu</span>
           <button
             onClick={onClose}
-            className="w-10 h-10 flex items-center justify-center rounded-xl bg-muted text-foreground hover:bg-muted/80 active:scale-95 transition-all"
+            className="w-10 h-10 flex items-center justify-center rounded-lg bg-muted/80 text-foreground hover:bg-primary hover:text-primary-foreground active:scale-95 transition-all"
             aria-label="Fechar menu"
           >
             <X className="w-5 h-5" />
