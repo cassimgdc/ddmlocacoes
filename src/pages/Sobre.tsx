@@ -56,11 +56,6 @@ const Sobre = () => {
         <title>Sobre a DDM Locações | Aluguel de Retroescavadeira - Sete Lagoas</title>
         <meta name="description" content="Conheça a DDM Locações: locação de retroescavadeira com operador em Sete Lagoas e região. Anos de experiência, equipamento de qualidade e atendimento diferenciado." />
         <link rel="canonical" href="https://ddmlocacoes.com.br/sobre" />
-        <meta property="og:title" content="Sobre a DDM Locações" />
-        <meta property="og:description" content="Locação de retroescavadeira com qualidade em Sete Lagoas." />
-        <meta property="og:url" content="https://ddmlocacoes.com.br/sobre" />
-        <meta property="og:image" content="https://ddmlocacoes.com.br/og-image.png" />
-        <meta property="og:type" content="website" />
       </Helmet>
 
       <InternalHero
@@ -73,16 +68,16 @@ const Sobre = () => {
       />
 
       {/* História */}
-      <section className="py-12 md:py-20">
+      <section className="section-padding">
         <div className="container-ddm">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             {/* Texto */}
-            <div className="space-y-6">
-              <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground">
-                Experiência e dedicação em <span className="text-gradient-vivid">cada obra</span>
+            <div className="space-y-5">
+              <h2 className="text-xl md:text-2xl font-semibold text-foreground">
+                Experiência e dedicação em cada obra
               </h2>
               
-              <div className="space-y-4 text-muted-foreground">
+              <div className="space-y-4 text-muted-foreground text-sm">
                 <p>
                   A DDM Locações nasceu da paixão por máquinas e do desejo de oferecer um serviço diferenciado para quem precisa de retroescavadeira em Sete Lagoas e região.
                 </p>
@@ -95,15 +90,15 @@ const Sobre = () => {
               </div>
 
               {/* Stats */}
-              <div className="grid grid-cols-3 gap-4 pt-4">
+              <div className="grid grid-cols-3 gap-3 pt-2">
                 {[
                   { valor: '50+', label: 'Projetos realizados' },
                   { valor: '8+', label: 'Cidades atendidas' },
                   { valor: '100%', label: 'Clientes satisfeitos' },
                 ].map((stat) => (
-                  <div key={stat.label} className="text-center p-4 rounded-xl bg-muted/30 border border-border/30">
-                    <p className="text-2xl md:text-3xl font-display font-bold text-gradient-vivid">{stat.valor}</p>
-                    <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
+                  <div key={stat.label} className="text-center p-3 rounded-lg bg-muted border border-border">
+                    <p className="text-xl font-semibold text-copper">{stat.valor}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{stat.label}</p>
                   </div>
                 ))}
               </div>
@@ -111,16 +106,16 @@ const Sobre = () => {
 
             {/* Visual */}
             <div className="relative">
-              <div className="rounded-2xl bg-gradient-to-br from-primary/20 to-accent/10 p-8 border border-border/50">
-                <div className="grid grid-cols-2 gap-4">
+              <div className="rounded-xl bg-muted border border-border p-6">
+                <div className="grid grid-cols-2 gap-3">
                   {[
                     { icon: MapPin, label: 'Sete Lagoas e Região' },
                     { icon: Clock, label: 'Atendimento Rápido' },
                     { icon: Shield, label: 'Seguro Incluso' },
                     { icon: Star, label: 'Avaliações Positivas' },
                   ].map((item) => (
-                    <div key={item.label} className="p-4 rounded-xl bg-card/80 backdrop-blur-sm border border-border/30 text-center">
-                      <item.icon className="w-8 h-8 text-primary mx-auto mb-2" />
+                    <div key={item.label} className="p-4 rounded-lg bg-card border border-border text-center">
+                      <item.icon className="w-6 h-6 text-copper mx-auto mb-2" />
                       <p className="text-sm font-medium text-foreground">{item.label}</p>
                     </div>
                   ))}
@@ -132,22 +127,22 @@ const Sobre = () => {
       </section>
 
       {/* Valores */}
-      <section className="py-12 md:py-16 bg-secondary/30">
+      <section className="section-padding bg-muted/50 border-y border-border">
         <div className="container-ddm">
-          <div className="text-center mb-10">
-            <h2 className="text-xl md:text-2xl font-display font-bold text-foreground">
-              Nossos <span className="text-gradient-vivid">valores</span>
+          <div className="text-center mb-8">
+            <h2 className="text-xl md:text-2xl font-semibold text-foreground">
+              Nossos valores
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {valores.map((valor) => (
-              <div key={valor.titulo} className="p-5 rounded-xl bg-card border border-border/50 text-center card-hover-lift">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <valor.icon className="w-6 h-6 text-primary" />
+              <div key={valor.titulo} className="p-4 rounded-xl bg-card border border-border text-center">
+                <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center mx-auto mb-3">
+                  <valor.icon className="w-5 h-5 text-copper" />
                 </div>
-                <h3 className="font-display font-bold text-foreground mb-2">{valor.titulo}</h3>
-                <p className="text-sm text-muted-foreground">{valor.descricao}</p>
+                <h3 className="font-medium text-foreground mb-1 text-sm">{valor.titulo}</h3>
+                <p className="text-xs text-muted-foreground">{valor.descricao}</p>
               </div>
             ))}
           </div>
@@ -155,20 +150,20 @@ const Sobre = () => {
       </section>
 
       {/* Diferenciais */}
-      <section className="py-12 md:py-16">
+      <section className="section-padding">
         <div className="container-ddm">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-10">
-              <h2 className="text-xl md:text-2xl font-display font-bold text-foreground">
-                Por que <span className="text-gradient-vivid">nos escolher</span>
+          <div className="max-w-2xl mx-auto">
+            <div className="text-center mb-8">
+              <h2 className="text-xl md:text-2xl font-semibold text-foreground">
+                Por que nos escolher
               </h2>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-3">
+            <div className="grid sm:grid-cols-2 gap-2">
               {diferenciais.map((item) => (
-                <div key={item} className="flex items-center gap-3 p-4 rounded-xl bg-muted/30 border border-border/30">
-                  <CheckCircle2 className="w-5 h-5 text-ddm-success flex-shrink-0" />
-                  <span className="text-foreground">{item}</span>
+                <div key={item} className="flex items-center gap-3 p-3 rounded-lg bg-muted border border-border">
+                  <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0" />
+                  <span className="text-foreground text-sm">{item}</span>
                 </div>
               ))}
             </div>
@@ -177,20 +172,20 @@ const Sobre = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-16 md:py-24 bg-muted/20">
+      <section className="section-padding bg-muted/50 border-t border-border">
         <div className="container-ddm">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-4">
-              Vamos trabalhar <span className="text-gradient-vivid">juntos</span>?
+          <div className="max-w-xl mx-auto text-center">
+            <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-3">
+              Vamos trabalhar juntos?
             </h2>
-            <p className="text-muted-foreground mb-6">
+            <p className="text-muted-foreground text-sm mb-6">
               Entre em contato e descubra como podemos ajudar na sua obra.
             </p>
-            <Button variant="cta" size="lg" asChild className="group">
+            <Button variant="default" size="lg" asChild>
               <Link to="/contato">
-                <MessageCircle className="w-5 h-5" />
+                <MessageCircle className="w-4 h-4" />
                 Fale Conosco
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4" />
               </Link>
             </Button>
           </div>

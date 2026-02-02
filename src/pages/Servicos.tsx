@@ -82,11 +82,6 @@ const Servicos = () => {
         <title>Serviços de Retroescavadeira | DDM Locações - Sete Lagoas</title>
         <meta name="description" content="Serviços completos de retroescavadeira: abertura de valas, terraplanagem, limpeza de lotes, escavação e muito mais. Operador experiente incluso. Sete Lagoas e região." />
         <link rel="canonical" href="https://ddmlocacoes.com.br/servicos" />
-        <meta property="og:title" content="Serviços de Retroescavadeira | DDM Locações" />
-        <meta property="og:description" content="Terraplanagem, valas, limpeza de lotes e mais. Operador incluso." />
-        <meta property="og:url" content="https://ddmlocacoes.com.br/servicos" />
-        <meta property="og:image" content="https://ddmlocacoes.com.br/og-image.png" />
-        <meta property="og:type" content="website" />
       </Helmet>
 
       <InternalHero
@@ -99,48 +94,43 @@ const Servicos = () => {
       />
 
       {/* Grid de Serviços */}
-      <section className="py-12 md:py-20">
+      <section className="section-padding">
         <div className="container-ddm">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {servicos.map((servico, index) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {servicos.map((servico) => (
               <div
                 key={servico.id}
-                className="group rounded-2xl bg-card border border-border/50 overflow-hidden card-hover-lift animate-fade-in-up"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className="rounded-xl bg-card border border-border overflow-hidden"
               >
                 {/* Imagem */}
-                <div className="relative h-44 overflow-hidden">
+                <div className="relative h-40 overflow-hidden">
                   <img
                     src={servico.imagem}
                     alt={`Serviço de ${servico.titulo} - DDM Locações`}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-cover"
                     loading="lazy"
-                    decoding="async"
-                    width={400}
-                    height={176}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-                  <div className="absolute bottom-4 left-4">
-                    <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-                      <servico.icon className="w-5 h-5 text-primary-foreground" />
+                  <div className="absolute bottom-3 left-3">
+                    <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
+                      <servico.icon className="w-4 h-4 text-primary-foreground" />
                     </div>
                   </div>
                 </div>
 
                 {/* Conteúdo */}
-                <div className="p-5">
-                  <h3 className="text-lg font-display font-bold text-foreground mb-2">
+                <div className="p-4">
+                  <h3 className="text-base font-medium text-foreground mb-1">
                     {servico.titulo}
                   </h3>
-                  <p className="text-sm text-muted-foreground mb-4">
+                  <p className="text-sm text-muted-foreground mb-3">
                     {servico.descricao}
                   </p>
 
                   {/* Aplicações */}
-                  <div className="space-y-1.5">
+                  <div className="space-y-1">
                     {servico.aplicacoes.slice(0, 3).map((app) => (
                       <div key={app} className="flex items-center gap-2">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-ddm-success flex-shrink-0" />
+                        <CheckCircle2 className="w-3 h-3 text-success flex-shrink-0" />
                         <span className="text-xs text-muted-foreground">{app}</span>
                       </div>
                     ))}
@@ -153,26 +143,26 @@ const Servicos = () => {
       </section>
 
       {/* Como funciona */}
-      <section className="py-12 md:py-16 bg-secondary/30">
+      <section className="section-padding bg-muted/50 border-y border-border">
         <div className="container-ddm">
-          <div className="text-center mb-10">
-            <h2 className="text-xl md:text-2xl font-display font-bold text-foreground">
-              Como <span className="text-gradient-vivid">funciona</span>
+          <div className="text-center mb-8">
+            <h2 className="text-xl md:text-2xl font-semibold text-foreground">
+              Como funciona
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto">
             {[
               { step: '1', title: 'Solicite orçamento', desc: 'Entre em contato pelo WhatsApp ou formulário. Resposta rápida!' },
               { step: '2', title: 'Agende o serviço', desc: 'Combinamos data, horário e local. Flexibilidade para atender você.' },
               { step: '3', title: 'Trabalho feito', desc: 'Chegamos com máquina e operador. Você só acompanha o resultado.' },
             ].map((item) => (
-              <div key={item.step} className="text-center p-6 rounded-xl bg-card border border-border/50">
-                <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground font-bold text-xl flex items-center justify-center mx-auto mb-4">
+              <div key={item.step} className="text-center p-5 rounded-xl bg-card border border-border">
+                <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground font-semibold flex items-center justify-center mx-auto mb-3">
                   {item.step}
                 </div>
-                <h3 className="font-display font-bold text-foreground mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.desc}</p>
+                <h3 className="font-medium text-foreground mb-1 text-sm">{item.title}</h3>
+                <p className="text-xs text-muted-foreground">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -180,21 +170,21 @@ const Servicos = () => {
       </section>
 
       {/* CTA Final */}
-      <section className="py-16 md:py-24">
+      <section className="section-padding">
         <div className="container-ddm">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground mb-4">
-              Pronto para começar sua <span className="text-gradient-vivid">obra</span>?
+          <div className="max-w-xl mx-auto text-center">
+            <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-3">
+              Pronto para começar sua obra?
             </h2>
-            <p className="text-muted-foreground mb-6">
+            <p className="text-muted-foreground text-sm mb-6">
               Solicite um orçamento gratuito agora mesmo. Respondemos em poucos minutos.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="cta" size="lg" asChild className="group">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button variant="default" size="lg" asChild>
                 <Link to="/contato">
-                  <MessageCircle className="w-5 h-5" />
-                  Pedir Orçamento Grátis
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <MessageCircle className="w-4 h-4" />
+                  Pedir Orçamento
+                  <ArrowRight className="w-4 h-4" />
                 </Link>
               </Button>
               <Button variant="outline" size="lg" asChild>

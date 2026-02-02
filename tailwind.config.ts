@@ -9,7 +9,7 @@ export default {
       center: true,
       padding: "1.5rem",
       screens: {
-        "2xl": "1400px",
+        "2xl": "1200px",
       },
     },
     extend: {
@@ -47,15 +47,14 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        ddm: {
-          orange: "hsl(var(--ddm-orange))",
-          yellow: "hsl(var(--ddm-yellow))",
-          charcoal: "hsl(var(--ddm-charcoal))",
-          slate: "hsl(var(--ddm-slate))",
-          light: "hsl(var(--ddm-light))",
-          success: "hsl(var(--ddm-success))",
-          whatsapp: "hsl(var(--ddm-whatsapp))",
-        },
+        // Custom semantic colors
+        graphite: "hsl(var(--graphite))",
+        ink: "hsl(var(--ink))",
+        slate: "hsl(var(--slate))",
+        copper: "hsl(var(--copper))",
+        success: "hsl(var(--success))",
+        whatsapp: "hsl(var(--whatsapp))",
+        surface: "hsl(var(--surface))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -68,8 +67,12 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Outfit', 'Inter', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+      },
+      fontSize: {
+        'display-lg': ['3rem', { lineHeight: '1.1', fontWeight: '700' }],
+        'display-md': ['2.25rem', { lineHeight: '1.15', fontWeight: '700' }],
+        'display-sm': ['1.875rem', { lineHeight: '1.2', fontWeight: '600' }],
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -77,14 +80,12 @@ export default {
         sm: "calc(var(--radius) - 4px)",
         xl: "calc(var(--radius) + 4px)",
         "2xl": "calc(var(--radius) + 8px)",
-        "3xl": "1.5rem",
       },
       boxShadow: {
-        'cta': 'var(--shadow-cta)',
-        'glow': 'var(--shadow-glow)',
+        'soft': 'var(--shadow-md)',
+        'elevated': 'var(--shadow-lg)',
         'card': 'var(--shadow-md)',
-        'card-hover': 'var(--shadow-xl)',
-        'industrial': '0 4px 24px -6px rgba(0, 0, 0, 0.3)',
+        'card-hover': 'var(--shadow-lg)',
       },
       keyframes: {
         "accordion-down": {
@@ -100,45 +101,15 @@ export default {
           to: { opacity: "1" },
         },
         "fade-in-up": {
-          from: { opacity: "0", transform: "translateY(24px)" },
+          from: { opacity: "0", transform: "translateY(12px)" },
           to: { opacity: "1", transform: "translateY(0)" },
-        },
-        "slide-in-right": {
-          from: { opacity: "0", transform: "translateX(24px)" },
-          to: { opacity: "1", transform: "translateX(0)" },
-        },
-        "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 0 24px -4px hsl(28 100% 50% / 0.3)" },
-          "50%": { boxShadow: "0 0 32px -4px hsl(28 100% 50% / 0.5)" },
-        },
-        "float": {
-          "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-10px)" },
-        },
-        "bounce-subtle": {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-4px)" },
-        },
-        "wiggle": {
-          "0%, 100%": { transform: "rotate(-3deg)" },
-          "50%": { transform: "rotate(3deg)" },
         },
       },
       animation: {
-        "accordion-down": "accordion-down 0.3s ease-out",
-        "accordion-up": "accordion-up 0.3s ease-out",
-        "fade-in": "fade-in 0.6s ease-out forwards",
-        "fade-in-up": "fade-in-up 0.6s ease-out forwards",
-        "slide-in-right": "slide-in-right 0.6s ease-out forwards",
-        "pulse-glow": "pulse-glow 2.5s ease-in-out infinite",
-        "float": "float 5s ease-in-out infinite",
-        "bounce-subtle": "bounce-subtle 2s ease-in-out infinite",
-        "wiggle": "wiggle 0.8s ease-in-out infinite",
-      },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        'gradient-industrial': 'linear-gradient(135deg, hsl(28 100% 50%) 0%, hsl(35 100% 52%) 100%)',
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in": "fade-in 0.4s ease-out forwards",
+        "fade-in-up": "fade-in-up 0.4s ease-out forwards",
       },
     },
   },

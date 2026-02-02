@@ -147,11 +147,6 @@ const Catalogo = () => {
           content="Confira nosso catálogo de equipamentos para locação: retroescavadeiras, escavadeiras, rolos compactadores e mais. Aluguel em Sete Lagoas e região."
         />
         <link rel="canonical" href="https://ddmlocacoes.com.br/catalogo" />
-        <meta property="og:title" content="Catálogo de Equipamentos | DDM Locações" />
-        <meta property="og:description" content="Retroescavadeiras, escavadeiras e mais para locação em Sete Lagoas." />
-        <meta property="og:url" content="https://ddmlocacoes.com.br/catalogo" />
-        <meta property="og:image" content="https://ddmlocacoes.com.br/og-image.png" />
-        <meta property="og:type" content="website" />
       </Helmet>
 
       <InternalHero
@@ -163,13 +158,13 @@ const Catalogo = () => {
         breadcrumbs={[{ label: 'Catálogo' }]}
       />
 
-      <section className="py-8 md:py-12">
+      <section className="py-6 md:py-10">
         <div className="container-ddm">
           {/* Top bar: Search + Sort */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-6 md:mb-8">
+          <div className="flex flex-col sm:flex-row gap-3 mb-6">
             {/* Search */}
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 type="search"
                 placeholder="Buscar equipamento..."
@@ -178,13 +173,13 @@ const Catalogo = () => {
                   setSearchQuery(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="pl-10 bg-card border-border"
+                className="pl-9 bg-card border-border"
                 aria-label="Buscar equipamentos"
               />
             </div>
 
             {/* Mobile filters */}
-            <div className="flex gap-3 sm:hidden">
+            <div className="flex gap-2 sm:hidden">
               <MobileFiltersDrawer
                 selectedCategories={selectedCategories}
                 selectedStatus={selectedStatus}
@@ -196,8 +191,8 @@ const Catalogo = () => {
               
               {/* Sort mobile */}
               <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
-                <SelectTrigger className="w-[140px] bg-card border-border">
-                  <ArrowUpDown className="w-4 h-4 mr-2" />
+                <SelectTrigger className="w-[130px] bg-card border-border">
+                  <ArrowUpDown className="w-3.5 h-3.5 mr-1" />
                   <SelectValue placeholder="Ordenar" />
                 </SelectTrigger>
                 <SelectContent className="bg-card border-border z-50">
@@ -212,8 +207,8 @@ const Catalogo = () => {
             {/* Sort desktop */}
             <div className="hidden sm:block">
               <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
-                <SelectTrigger className="w-[180px] bg-card border-border">
-                  <ArrowUpDown className="w-4 h-4 mr-2" />
+                <SelectTrigger className="w-[160px] bg-card border-border">
+                  <ArrowUpDown className="w-3.5 h-3.5 mr-1" />
                   <SelectValue placeholder="Ordenar por" />
                 </SelectTrigger>
                 <SelectContent className="bg-card border-border z-50">
@@ -227,10 +222,10 @@ const Catalogo = () => {
           </div>
 
           {/* Main content: Sidebar + Grid */}
-          <div className="flex gap-8">
+          <div className="flex gap-6">
             {/* Desktop sidebar filters */}
-            <aside className="hidden lg:block w-64 flex-shrink-0">
-              <div className="sticky top-28 card-premium p-5">
+            <aside className="hidden lg:block w-56 flex-shrink-0">
+              <div className="sticky top-24 rounded-xl bg-card border border-border p-4">
                 <CatalogoFilters
                   selectedCategories={selectedCategories}
                   selectedStatus={selectedStatus}
@@ -244,7 +239,7 @@ const Catalogo = () => {
             {/* Equipment grid */}
             <div className="flex-1">
               {/* Results count */}
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center justify-between mb-4">
                 <p className="text-sm text-muted-foreground">
                   {filteredEquipamentos.length} equipamento{filteredEquipamentos.length !== 1 ? 's' : ''} encontrado{filteredEquipamentos.length !== 1 ? 's' : ''}
                 </p>
@@ -262,7 +257,7 @@ const Catalogo = () => {
 
               {/* Grid */}
               {paginatedEquipamentos.length > 0 ? (
-                <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-5 md:gap-6">
+                <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
                   {paginatedEquipamentos.map((equipamento, index) => (
                     <EquipamentoCard
                       key={equipamento.id}
@@ -276,15 +271,15 @@ const Catalogo = () => {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-16">
-                  <Package className="w-16 h-16 text-muted-foreground/50 mx-auto mb-4" />
-                  <h3 className="font-display font-bold text-foreground mb-2">
+                <div className="text-center py-12">
+                  <Package className="w-12 h-12 text-muted-foreground/50 mx-auto mb-3" />
+                  <h3 className="font-medium text-foreground mb-1">
                     Nenhum equipamento encontrado
                   </h3>
-                  <p className="text-muted-foreground mb-4">
+                  <p className="text-muted-foreground text-sm mb-4">
                     Tente ajustar os filtros ou termo de busca
                   </p>
-                  <Button variant="outline" onClick={handleClearFilters}>
+                  <Button variant="outline" size="sm" onClick={handleClearFilters}>
                     Limpar filtros
                   </Button>
                 </div>
@@ -292,7 +287,7 @@ const Catalogo = () => {
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex items-center justify-center gap-2 mt-10">
+                <div className="flex items-center justify-center gap-1 mt-8">
                   <Button
                     variant="outline"
                     size="sm"
@@ -302,14 +297,14 @@ const Catalogo = () => {
                     Anterior
                   </Button>
                   
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1 mx-2">
                     {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                       <Button
                         key={page}
                         variant={currentPage === page ? 'default' : 'ghost'}
                         size="sm"
                         onClick={() => setCurrentPage(page)}
-                        className="w-9"
+                        className="w-8"
                       >
                         {page}
                       </Button>

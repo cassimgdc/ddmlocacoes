@@ -111,7 +111,7 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
 
         {/* CTA Orçamento - Highlighted */}
         <div className="p-3 pt-0">
-          <Button variant="cta" size="default" className="w-full h-12 text-sm font-bold shadow-lg shadow-primary/30" asChild>
+          <Button variant="default" size="default" className="w-full h-11 text-sm font-semibold" asChild>
             <Link to="/contato" onClick={() => {
               onClose();
               window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
